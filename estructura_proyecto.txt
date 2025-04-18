@@ -7,3 +7,7 @@
 -Va a llevar un README.md con la descripcion del proyecto
 
 -En vista planteamos la estructura y estetica del proyecto
+
+-En model vamos a trabajar sobre la cracion de objetos agragando elementos a un json por ejemplo
+
+-realizar carpetas en el caso que se acceda a una vista que reprecente a una clase
