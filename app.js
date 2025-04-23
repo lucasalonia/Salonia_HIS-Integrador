@@ -39,6 +39,7 @@ app.get("/", function (req, res, next) {
 app.post("/login", (req, res) => {
 
   const { usuario, contraseña } = req.body;
+  
 
   const usuariosPath = path.join(__dirname, "ingresoTest.json");
 
