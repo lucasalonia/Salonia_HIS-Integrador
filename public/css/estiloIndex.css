@@ -1,0 +1,111 @@
+/* Estilo general para la fuente */
+body {
+    font-family: 'Arial', sans-serif; /* Fuente moderna y limpia */
+    font-size: 16px; /* Tamaño base de la fuente */
+    color: #333; /* Color del texto */
+    line-height: 1.5; /* Espaciado entre líneas */
+    margin: 0;
+    padding: 0;
+}
+/* Centrar div.formularioPaciente en el centro de la pantalla */
+div.formularioPaciente {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px;
+    width: 60%; /* Ajusta el ancho según tus necesidades */
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    position: relative;
+    top: 100px; /* Baja el formulario un poco para evitar el header */
+}
+
+/* Centrar div.formularioPaciente en el centro de la pantalla */
+div.formularioPaciente {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px;
+    width: 60%; /* Ajusta el ancho según tus necesidades */
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    position: relative;
+    top: 100px; /* Baja el formulario un poco para evitar el header */
+}
+
+/* Estilo general para el formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaciado entre los contenedores */
+    width: 100%;
+    position: relative; /* Necesario para posicionar el botón */
+    padding-bottom: 60px; /* Espacio para el botón */
+}
+
+/* Dividir los contenedores en dos columnas */
+div.contenedorUno, div.contenedorDos, div.contenedorTres, div.contenedorCuatro {
+    display: flex;
+    flex-direction: row; /* Organizar en filas */
+    justify-content: space-between; /* Espaciado entre los elementos */
+    gap: 20px; /* Espaciado entre los divs internos */
+}
+
+/* Centrar el campo "Obra Social" */
+div.contenedorCinco {
+    display: flex;
+    flex-direction: column; /* Organizar en columna */
+    align-items: center; /* Centrar horizontalmente el contenido */
+    gap: 10px; /* Espaciado entre los elementos */
+}
+
+/* Ajustar los divs internos dentro de cada contenedor */
+div.contenedorUno div, div.contenedorDos div, div.contenedorTres div, div.contenedorCuatro div, div.contenedorCinco div {
+    flex: 1; /* Hacer que cada div ocupe el mismo espacio */
+}
+
+/* Ajustar los inputs y selects */
+input, select {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    padding: 10px;
+    border: 1px solid #dcdcdc; /* Borde gris claro */
+    border-radius: 4px;
+    background-color: #f5f5f5; /* Fondo gris claro */
+    color: #333; /* Texto gris oscuro */
+    box-sizing: border-box;
+}
+
+/* Posicionar el botón en la esquina inferior derecha del formulario */
+form > div:last-child button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px; /* Espaciado interno del botón */
+    background-color: #368fee; /* Azul moderno */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form > div:last-child button:hover {
+    background-color: #2d6aac; /* Azul más oscuro al pasar el mouse */
+}
+.calendar{
+    width: 100%; /* Ajusta el ancho */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #dcdcdc; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #f5f5f5; /* Fondo gris claro */
+    color: #333; /* Color del texto */
+    font-family: 'Arial', sans-serif; /* Fuente del texto */
+    font-size: 14px; /* Tamaño del texto */
+    box-sizing: border-box;
+}

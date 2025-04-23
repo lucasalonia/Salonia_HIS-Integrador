@@ -1,0 +1,63 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href= estiloIndex)
+    link(rel='stylesheet', href= estiloHeader)
+  body
+    header
+      nav
+        ul
+          li: a(href='/index') Registro 
+          li: a(href='#') Enfermeria
+          li: a(href='#') Medicina 
+          li: a(href='#') Alas 
+          li: a(href='#') Pacientes
+    
+    section
+      div.formularioPaciente
+        h2 Formulario Paciente 
+        form(action='/paciente-agregar', method='POST')
+            div.contenedorUno
+              div
+                  label(for='nombre') Nombre:
+                  input(type='text', name='nombre', required=true)
+              div
+                  label(for='apellido') Apellido:
+                  input(type='text', name='apellido', required=true)
+
+            div.contenedorDos
+              div
+                  label(for='dni') DNI:
+                  input(type='text', name='dni', required=true)
+              div
+                  label(for='numeroEmergencia') Numero Emergencia:
+                  input(type='number', name='numeroEmergencia', required=true)
+
+            div.contenedorTres
+              div
+                  label(for='natalicio') Fecha de Nacimiento:
+                  input.calendar(type='date', name='natalicio', required=true)
+              div
+                  label(for='direccion') Direccion:
+                  input(type='text', name='direccion', required=true)
+
+            div.contenedorCuatro
+              div
+                  label(for='sexo') Sexo:
+                  select(name='sexo', required=true)
+                      option(value='') Seleccionar...
+                      option(value='Masculino') Masculino
+                      option(value='Femenino') Femenino
+                      option(value='Otro') Otro
+              div
+                  label(for='apellido') Correo Electronico:
+                  input(type='email', name='apellido', required=true)
+
+            div.contenedorCinco
+              div 
+                  label(for='obraSocial') Obra Social:
+                  input(type='text', name='obraSocial', required=true)      
+
+            div
+                button(type='submit') Ingresar POST a /paciente-agregar y abre una modal con las camas

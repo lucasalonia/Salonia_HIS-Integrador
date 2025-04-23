@@ -1,0 +1,29 @@
+
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href= '/public/css/estiloIngreso.css')
+  body
+    h1 Bienvenido a "#{title}" 
+    div.validacion 
+        h2 Ingreso al sistema 
+        form(action='/login', method='POST')
+            div
+                label(for='usuario') Usuario:
+                input(type='text', name='usuario', required=true)
+            div
+                label(for='password') Contraseña:
+                input(type='password', name='password', required=true)
+            div
+                button(type='submit') Ingresar POST a /login
+
+    div#modalError(style='display:none; background:#fff; border:1px solid red; padding:10px;')
+        p #{error}
+        button(onclick='this.parentElement.style.display="none"') Cerrar
+
+    if error
+        script.
+          document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('modalError').style.display = 'block';
+          })
