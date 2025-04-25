@@ -2,8 +2,8 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href= '/public/css/estiloHeader.css')
-    link(rel='stylesheet', href= '/public/css/estiloIndex.css')
+    link(rel='stylesheet', href= '/css/estiloHeader.css')
+    link(rel='stylesheet', href= '/css/estiloIndex.css')
   body
     header
       nav
@@ -17,7 +17,7 @@ html
     section
       div.formularioPaciente
         h2 Formulario Paciente 
-        form(action='/paciente-agregar', method='POST')
+        form(action='/paciente/agregar', method='POST')
             div.contenedorUno
               div
                   label(for='nombre') Nombre:
@@ -51,8 +51,8 @@ html
                       option(value='Femenino') Femenino
                       option(value='Otro') Otro
               div
-                  label(for='apellido') Correo Electronico:
-                  input(type='email', name='apellido', required=true)
+                  label(for='correro') Correo Electronico:
+                  input(type='email', name='correro', required=true)
 
             div.contenedorCinco
               div 

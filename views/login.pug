@@ -3,12 +3,12 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href= '/public/css/estiloIngreso.css')
+    link(rel='stylesheet', href= '/css/estiloIngreso.css')
   body
     h1 Bienvenido a "#{title}" 
     div.validacion 
         h2 Ingreso al sistema 
-        form(action='/login', method='POST')
+        form(action='/ingreso', method='POST')
             div
                 label(for='usuario') Usuario:
                 input(type='text', name='usuario', required=true)

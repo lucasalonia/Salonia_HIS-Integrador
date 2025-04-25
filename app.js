@@ -11,14 +11,16 @@ const pug = require("pug");
 const fs = require("fs");
 const path = require("path");
 
-//Middleware urlencoded para recuperar los datos del formulario. Para que el body-parser pueda leer los datos del formulario.
+//Middleware urlencoded para recuperar los datos del formulario.
+// Para que el body-parser pueda leer los datos del formulario.
+//Los datos qque vienen en el cuerpo del post los va a poblar en el objeto req.body
 app.use(express.urlencoded());
 
 //Middleware json para recuperar los datos del formulario. Para que el body-parser pueda leer los datos del formulario.
 app.use(express.json());
 
-//Esto lo usamos para que el navegador pueda acceder a los archivos estaticos como css
-app.use('/public',express.static(__dirname + "/public"));
+//Esto lo usamos para que el navegador pueda acceder a los archivos estaticos como css, js, imagenes, etc
+app.use(express.static("public"));
 
 //TEST PUG
 //View engine
@@ -28,44 +30,81 @@ app.set("view engine", "pug");
 app.set("views", directorioVistas);
 
 //Las rutas a partir de aqui deberan ser protegidas por algun middleware de autenticacion
-app.get("/", function (req, res, next) {
+app.get("/login", function (req, res, next) {
   // Your route code
   var locals = {
-    title: "Ingreso"
+    title: "Ingreso",
   };
-  res.render("ingreso", { title: "Ingreso", error: "Usuario o contraseña incorrectos" });
+  res.render("login", {
+    title: "Ingreso",
+    error: "Usuario o contraseña incorrectos",
+  });
 });
 
-app.post("/login", (req, res) => {
-
+//Test Post login
+app.post("/ingreso", (req, res) => {
   const { usuario, contraseña } = req.body;
-  
 
   const usuariosPath = path.join(__dirname, "ingresoTest.json");
 
   fs.readFile(usuariosPath, "utf8", (err, data) => {
-
     if (err) {
-
       console.error("Error leyendo usuarios.json:", err);
       return res.status(500).send("Error interno del servidor");
-
     }
 
     const usuarioGuardado = JSON.parse(data);
 
-    if (usuario === usuarioGuardado.nombre &&contraseña === usuarioGuardado.contraseña ){
-
-      res.redirect("/index"); // 
-
-    } 
-    else {
-      res.render("ingreso", { error: "Usuario o contraseña incorrectos" }); 
+    if (
+      usuario === usuarioGuardado.nombre &&
+      contraseña === usuarioGuardado.contraseña
+    ) {
+      res.redirect("/index"); //
+    } else {
+      res.render("ingreso", { error: "Usuario o contraseña incorrectos" });
     }
   });
 });
 
-app.get("/index", function (req, res, next) {
+//Test agregar paciente a un json
+app.post("/paciente/agregar", (req, res) => {
+  const {
+    nombre,
+    apellido,
+    dni,
+    numeroEmergencia,
+    natalicio,
+    direccion,
+    sexo,
+    correro,
+    obraSocial,
+  } = req.body;
+  //Buscamos ruta y el la informacion que quiero escribir construyendo un objeto json
+  //apartir de un objeto java script
+  fs.readFile('pacientesTest.json','utf8',(error, data)=>{
+      if(error){
+          res.status(500).send("Error interno del servidor. Archivo no encontrado")
+          return;
+      }else{
+        //Tomamos el arreglo dentro del json y lo parseamos a un objeto de java script
+        //Y agregamos el nuevo abjeto generado con body al arreglo
+        const pacientes = JSON.parse(data);
+        pacientes.push({nombre, apellido, dni, numeroEmergencia, natalicio, direccion, sexo, correro, obraSocial});
+         //Para que sea legible el json
+          //El tercer parametro es un callback
+        fs.writeFile("pacientesTest.json",JSON.stringify(pacientes,null,2),(error)=>{
+            if(!error){
+              res.status(201).send("Paciente agregado correctamente");
+            }
+          }
+      
+        );
+        }
+    });
+
+});
+
+app.get("/", function (req, res, next) {
   const estiloIndex = "/css/estiloIndex.css";
   const estiloHeader = "/css/estiloHeader.css";
 
@@ -115,6 +154,12 @@ app.get("/persona/:name", (req, res) => {
     `<h2>Hola ${nombre} </h2><p>Coloro favorito: ${color} y lleva puesto una ${producto}</p>`
   );
 });
+
+
+app.use((req, res, next) => {
+  res.redirect("/"); 
+});
+;
 
 app.listen(3000, () => {
   console.log("Servidor en puerto http://localhost:3000");
