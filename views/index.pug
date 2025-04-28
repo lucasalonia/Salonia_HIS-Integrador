@@ -2,22 +2,15 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href= '/css/estiloHeader.css')
     link(rel='stylesheet', href= '/css/estiloIndex.css')
   body
-    header
-      nav
-        ul
-          li: a(href='/index') Registro 
-          li: a(href='#') Enfermeria
-          li: a(href='#') Medicina 
-          li: a(href='#') Alas 
-          li: a(href='#') Pacientes
-    
+
+    include includes/navBar.pug
+
     section
       div.formularioPaciente
         h2 Formulario Paciente 
-        form(action='/paciente/agregar', method='POST')
+        form.formularioData(action='/paciente/agregar', method='POST')
             div.contenedorUno
               div
                   label(for='nombre') Nombre:
@@ -60,4 +53,34 @@ html
                   input(type='text', name='obraSocial', required=true)      
 
             div
-                button(type='submit') Ingresar POST a /paciente-agregar y abre una modal con las camas
+              button.openModal(type='button') Elegir cama -abre modal-
+
+
+      section.modalRegistro 
+        div.modal-content
+          div.modal-header
+            span.closeModal &times;
+            h2 Asignar habitacion/cama segun ala
+          div.modal-body
+            form(action='/paciente/agregar', method='POST')
+              div 
+                label(for="ala") Ala:
+                select(name='ala')
+                  each ala in alas 
+                    option(value=ala)= ala
+              div 
+                label(for="habitacion") Habitacion:
+                select(name='habitacion')
+                  each habitacion in habitaciones 
+                    option(value=habitacion)= habitacion    
+              div 
+                label(for="cama") Cama:
+                select(name='cama')
+                 each cama in camas 
+                    option(value=cama)= cama
+          div.modal-footer
+            button(type='button', onclick='enviarInformacion()') Ingresar POST a /paciente-agregar 
+
+      script(src='/script/modalRegistro.js')
+           
+             

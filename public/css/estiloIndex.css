@@ -109,3 +109,100 @@ form > div:last-child button:hover {
     font-size: 14px; /* Tamaño del texto */
     box-sizing: border-box;
 }
+
+/* Estilo general para la sección de la modal */
+section.modalRegistro {
+    display: none; /* Oculta la modal por defecto */
+    position: fixed; /* Fija la modal en la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+}
+/* Contenedor de la modal */
+div.modal-content {
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    width: 50%; /* Ancho de la modal */
+    max-width: 600px; /* Ancho máximo */
+    padding: 20px; /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    animation: fadeIn 0.3s ease-in-out; /* Animación de entrada */
+}
+
+/* Encabezado de la modal */
+div.modal-header {
+    display: flex;
+    justify-content: space-between; /* Espaciado entre el título y el botón de cerrar */
+    align-items: center;
+    border-bottom: 1px solid #ddd; /* Línea divisoria */
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+div.modal-header h2 {
+    text-align: center;
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+   
+}
+
+/* Botón de cerrar */
+span.closeModal {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+span.closeModal:hover {
+    color: #ff0000; /* Cambia a rojo al pasar el mouse */
+}
+
+/* Cuerpo de la modal */
+div.modal-body {
+    padding: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Pie de la modal */
+div.modal-footer {
+    display: flex;
+    justify-content: flex-end; /* Botón alineado a la derecha */
+    padding-top: 10px;
+    border-top: 1px solid #ddd; /* Línea divisoria */
+}
+
+div.modal-footer button {
+    background-color: #368fee; /* Azul moderno */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+div.modal-footer button:hover {
+    background-color: #2d6aac; /* Azul más oscuro al pasar el mouse */
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

@@ -10,6 +10,7 @@ const directorioVistas = __dirname + "/views";
 const pug = require("pug");
 const fs = require("fs");
 const path = require("path");
+const PORT = 3000;
 
 //Middleware urlencoded para recuperar los datos del formulario.
 // Para que el body-parser pueda leer los datos del formulario.
@@ -29,7 +30,47 @@ app.set("view engine", "pug");
 //Configuramos el directorio de vistas
 app.set("views", directorioVistas);
 
+
+//Protocolos GET
+//GET INDEX
+//Testeo para cargar info externa con forEach y harcodeada
+app.get("/", function (req, res, next) {
+  fs.readFile('alaTest.json','utf8',(error, data)=>{
+    if(error){
+        res.status(500).send("Error interno del servidor. Archivo no encontrado")
+        return;
+
+    }
+    else{
+
+      const alaData = JSON.parse(data);
+      const alas = alaData.map(ala => ala.nombre);
+
+      //hardcodeamos un bojeto para la vista a modo de testeo
+      const habitaciones = [
+        { id: "01", cantidadCamas: 2 },
+        { id: "02", cantidadCamas: 1 },
+      ];
+      const camas = [
+        { id: "C1", libre: true, higienizada: true },
+        { id: "C2", libre: false, higienizada: true },
+      ];
+
+      var locals = {
+        title: "Home",
+        alas: alas,
+        habitaciones: habitaciones.map(habitacion => habitacion.id),
+        camas: camas.map(cama => cama.id)
+
+      };
+      res.render("index", locals);
+    }
+  });
+ 
+});
+
 //Las rutas a partir de aqui deberan ser protegidas por algun middleware de autenticacion
+//GET LOGIN
 app.get("/login", function (req, res, next) {
   // Your route code
   var locals = {
@@ -41,7 +82,10 @@ app.get("/login", function (req, res, next) {
   });
 });
 
-//Test Post login
+
+
+
+//Test POST LOGIN
 app.post("/ingreso", (req, res) => {
   const { usuario, contraseña } = req.body;
 
@@ -66,7 +110,8 @@ app.post("/ingreso", (req, res) => {
   });
 });
 
-//Test agregar paciente a un json
+//Test POST AGREGAR PACIENTE con json
+//POST TEMPORAL SERA REEMPLAZADO POR UN BOTON DENTRO DE UNA MODAL QUE ASOCIA CAMAS CON PACIENTES
 app.post("/paciente/agregar", (req, res) => {
   const {
     nombre,
@@ -78,6 +123,9 @@ app.post("/paciente/agregar", (req, res) => {
     sexo,
     correro,
     obraSocial,
+    ala,
+    habitacion,
+    cama
   } = req.body;
   //Buscamos ruta y el la informacion que quiero escribir construyendo un objeto json
   //apartir de un objeto java script
@@ -89,7 +137,7 @@ app.post("/paciente/agregar", (req, res) => {
         //Tomamos el arreglo dentro del json y lo parseamos a un objeto de java script
         //Y agregamos el nuevo abjeto generado con body al arreglo
         const pacientes = JSON.parse(data);
-        pacientes.push({nombre, apellido, dni, numeroEmergencia, natalicio, direccion, sexo, correro, obraSocial});
+        pacientes.push({nombre, apellido, dni, numeroEmergencia, natalicio, direccion, sexo, correro, obraSocial, ala, habitacion, cama});
          //Para que sea legible el json
           //El tercer parametro es un callback
         fs.writeFile("pacientesTest.json",JSON.stringify(pacientes,null,2),(error)=>{
@@ -104,17 +152,11 @@ app.post("/paciente/agregar", (req, res) => {
 
 });
 
-app.get("/", function (req, res, next) {
-  const estiloIndex = "/css/estiloIndex.css";
-  const estiloHeader = "/css/estiloHeader.css";
 
-  var locals = {
-    title: "Home",
-    estiloIndex: estiloIndex,
-    estiloHeader: estiloHeader,
-  };
-  res.render("index", locals);
-});
+
+
+
+
 
 //TEST EXPRESS POST GET
 app.post("/persona", (req, res) => {
@@ -156,11 +198,14 @@ app.get("/persona/:name", (req, res) => {
 });
 
 
+
+//REDIRECCIONAMIENTO DE RUTAS
 app.use((req, res, next) => {
   res.redirect("/"); 
 });
 ;
 
-app.listen(3000, () => {
+//ESCUCHANDO PUERTO DETERMINADO POR CONSTANTE "PORT"
+app.listen(PORT, () => {
   console.log("Servidor en puerto http://localhost:3000");
 });
