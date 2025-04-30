@@ -10,76 +10,104 @@ html
     section
       div.formularioPaciente
         h2 Formulario Paciente 
-        form.formularioData(action='/paciente/agregar', method='POST')
+        form.formularioData(onsubmit="return false;")
             div.contenedorUno
               div
                   label(for='nombre') Nombre:
-                  input(type='text', name='nombre', required=true)
+                  input.nombre(type='text', name='nombre', required=true)
+                  span.error-message(data-field="nombre") 
               div
                   label(for='apellido') Apellido:
-                  input(type='text', name='apellido', required=true)
+                  input.apellido(type='text', name='apellido', required=true)
+                  span.error-message(data-field="apellido") 
 
             div.contenedorDos
               div
                   label(for='dni') DNI:
-                  input(type='text', name='dni', required=true)
+                  input.dni(type='text', name='dni', required=true)
+                  span.error-message(data-field="dni") 
               div
-                  label(for='numeroEmergencia') Numero Emergencia:
-                  input(type='number', name='numeroEmergencia', required=true)
+                  label(for='telefono') Numero Emergencia:
+                  input.telefono(type='number', name='telefono', required=true)
+                  span.error-message(data-field="telefono") 
 
             div.contenedorTres
               div
                   label(for='natalicio') Fecha de Nacimiento:
                   input.calendar(type='date', name='natalicio', required=true)
+                  span.error-message(data-field="calendar") 
               div
                   label(for='direccion') Direccion:
-                  input(type='text', name='direccion', required=true)
+                  input.direccion(type='text', name='direccion', required=true)
+                  span.error-message(data-field="direccion") 
 
             div.contenedorCuatro
               div
                   label(for='sexo') Sexo:
-                  select(name='sexo', required=true)
+                  select.sexo(name='sexo', required=true)
                       option(value='') Seleccionar...
                       option(value='Masculino') Masculino
                       option(value='Femenino') Femenino
                       option(value='Otro') Otro
+                  span.error-message(data-field="sexo") 
               div
                   label(for='correro') Correo Electronico:
-                  input(type='email', name='correro', required=true)
+                  input.email(type='email', name='correro', required=true)
+                  span.error-message(data-field="email") 
 
             div.contenedorCinco
               div 
                   label(for='obraSocial') Obra Social:
-                  input(type='text', name='obraSocial', required=true)      
+                  input.obraSocial(type='text', name='obraSocial', required=true)
+                  span.error-message(data-field="obraSocial")
 
             div
-              button.openModal(type='button') Elegir cama -abre modal-
+              button.botonAbrirModalAsignacion(type='button') Abrir Modal Asignacion
 
 
       section.modalRegistro 
         div.modal-content
           div.modal-header
-            span.closeModal &times;
+            span.spanCerrrarModalAsignacion &times;
             h2 Asignar habitacion/cama segun ala
           div.modal-body
             form(action='/paciente/agregar', method='POST')
               div 
                 label(for="ala") Ala:
-                select(name='ala')
+                select.ala(name='ala')
                   each ala in alas 
                     option(value=ala)= ala
               div 
                 label(for="habitacion") Habitacion:
-                select(name='habitacion')
+                select.habitacion(name='habitacion')
                   each habitacion in habitaciones 
                     option(value=habitacion)= habitacion    
               div 
                 label(for="cama") Cama:
-                select(name='cama')
+                select.cama(name='cama')
                  each cama in camas 
                     option(value=cama)= cama
           div.modal-footer
-            button(type='button', onclick='enviarInformacion()') Ingresar POST a /paciente-agregar 
+            button.botonAbrirConfirmacion(type='button') ABRIR CONFIRMACION 
+
+      section.modalConfirmacion 
+        div.contenidoConfirmacion
+          div.cabeceraModal
+            h2 ¿Desea guardar los datos?
+          div.botonesModal
+            button.botonEnviarConfirmacion(type='button', onclick='enviarInformacion()') Si 
+            button.botonCerrarConfirmacion(type='button') No
+
+      section.modalExito
+        div.contenidoExito
+          div.cabeceraExito
+            h2 ¡Éxito!
+          div.cuerpoExito
+            p Los datos se enviaron correctamente.
+          div.botonesExito
+            button.botonCerrarExito(type='button') Cerrar      
+                
+
 
       script(src='/script/modalRegistro.js')
            
