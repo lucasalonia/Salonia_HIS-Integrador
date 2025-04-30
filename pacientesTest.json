@@ -270,5 +270,49 @@
     "sexo": "Femenino",
     "direccion": "Rivadavia 1080",
     "obraSocial": "312321"
+  },
+  {
+    "dni": "407225883232",
+    "nombre": "Luca",
+    "apellido": "Salonia",
+    "email": "salonialuca97@gmail.com",
+    "telefono": "02664688406",
+    "natalicio": "275760-02-23",
+    "sexo": "Femenino",
+    "direccion": "Rivadavia 1080",
+    "obraSocial": "3213123123214213"
+  },
+  {
+    "dni": "40722588",
+    "nombre": "Luca",
+    "apellido": "Salonia",
+    "email": "salonialuca97@gmail.com",
+    "telefono": "02664688406",
+    "natalicio": "1111-11-11",
+    "sexo": "Masculino",
+    "direccion": "Rivadavia 1080",
+    "obraSocial": "23421412"
+  },
+  {
+    "dni": "89547856587",
+    "nombre": "Luca",
+    "apellido": "Salonia",
+    "email": "salonialuca97@gmail.com",
+    "telefono": "02664688406",
+    "natalicio": "0221-03-31",
+    "sexo": "Masculino",
+    "direccion": "Rivadavia 1080",
+    "obraSocial": "3131"
+  },
+  {
+    "dni": "3123",
+    "nombre": "Hola",
+    "apellido": "Salonia",
+    "email": "salonialuca97@gmail.com",
+    "telefono": "02664688406",
+    "natalicio": "0012-03-12",
+    "sexo": "Masculino",
+    "direccion": "Rivadavia 1080",
+    "obraSocial": "213214321"
   }
 ]

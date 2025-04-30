@@ -125,11 +125,11 @@ function cerrarConfirmacion(){
 
 }
 
-function mostrarModalExito() {
+function mostrarModalExito(exito) {
     const modalExito = document.querySelector('.modalExito');
     const modalConfirmacion = document.querySelector(".modalConfirmacion");
 
-    if (modalExito) {
+    if (exito) {
       modalExito.style.display = 'flex';
       modalConfirmacion.style.display = "none";
     }
@@ -187,7 +187,9 @@ function enviarInformacion() {
   })
     .then((respuesta) => respuesta.json())
     .then((data) => {
-        console.log(data); // Imprime la respuesta en texto plano
+      
+      mostrarModalExito(data.success);
+
     })
     .catch((error) => {
         console.error("Error:", error);
@@ -236,10 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
     botonCerrarConfirmacion.addEventListener("click", cerrarConfirmacion);
   }
 
-  if(botonEnviarConfirmacion){
-    botonEnviarConfirmacion.addEventListener("click", mostrarModalExito);
-  }
-  
+ 
   if (botonCerrarExito) {
     botonCerrarExito.addEventListener('click', cerrarModalExito);
   }

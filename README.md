@@ -2,8 +2,11 @@
 PENDIENTES: 
 -VALIDAR FECHAS EN REGISTRO
 -LIMITAR NUMEROS DE INGRESO PARA OBRA SOCIAL
+-VALIDAR EXTENCION DNI
 
 
+DISEÑO:
+-REGISTRO-INDEX:  
 
 ESTILOS:
 -Codigo de estilos en su mayoria generado con chat gpt. Al menos en un principio para tener 

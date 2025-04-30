@@ -62,7 +62,7 @@ html
                   span.error-message(data-field="obraSocial")
 
             div
-              button.botonAbrirModalAsignacion(type='button') Abrir Modal Asignacion
+              button.botonAbrirModalAsignacion(type='button') Agregar paciente
 
 
       section.modalRegistro 
@@ -88,7 +88,7 @@ html
                  each cama in camas 
                     option(value=cama)= cama
           div.modal-footer
-            button.botonAbrirConfirmacion(type='button') ABRIR CONFIRMACION 
+            button.botonAbrirConfirmacion(type='button') Asignar cama 
 
       section.modalConfirmacion 
         div.contenidoConfirmacion
@@ -101,7 +101,7 @@ html
       section.modalExito
         div.contenidoExito
           div.cabeceraExito
-            h2 ¡Éxito!
+            h2 ¡Paciente Ingresado!
           div.cuerpoExito
             p Los datos se enviaron correctamente.
           div.botonesExito

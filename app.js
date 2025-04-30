@@ -107,39 +107,14 @@ app.post("/ingreso", (req, res) => {
   });
 });
 
-//TEST POST AGREGAR PACIENTE con json 
+
+
+//TEST POST AGREGAR PACIENTE con json USANDO MODULOS 
+const pacienteController = require("./controllers/pacienteController"); 
 app.post("/paciente/agregar", (req, res) => {
-  const { paciente, asignacion } = req.body;
 
+  pacienteController.addPaciente(req, res);
   
-
-
-   fs.readFile('pacientesTest.json', 'utf8', (err, data) => {
-        if (err) {
-            res.status(500).send('Error al leer el archivo JSON.');
-            return;
-        }
-        let pacientes = [];
-        try {
-            pacientes = JSON.parse(data);
-        } catch (parseError) {
-            res.status(500).send('Error al parsear el archivo JSON.');
-            return;
-        }
-
-        // Agregar el nuevo paciente al arreglo
-        pacientes.push(paciente);
-
-        // Escribir el arreglo actualizado en el archivo
-        fs.writeFile('pacientesTest.json', JSON.stringify(pacientes, null, 2), 'utf8', (writeErr) => {
-            if (writeErr) {
-                res.status(500).send('Error al guardar el paciente.');
-                return;
-            }
-            console.log('Paciente guardado correctamente.');
-        });
-    });
-    res.json({ success: true, message: "Paciente guardado correctamente" });
 });
 
 
