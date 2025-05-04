@@ -1,0 +1,2 @@
+Funcionara como un middleware
+obtine y devuelve url

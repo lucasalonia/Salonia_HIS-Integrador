@@ -1,0 +1,3 @@
+En los modelos sse hara una instancia de la base de datos
+QUERY que seleccione los datos 
+QUERY que inserte nuevos datos

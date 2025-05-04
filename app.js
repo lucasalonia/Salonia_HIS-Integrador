@@ -12,21 +12,20 @@ const fs = require("fs");
 const path = require("path");
 const PORT = 3000;
 
+const rutasPaciente = require("./router/rutasPaciente");
+
 //Middleware urlencoded para recuperar los datos del formulario.
 // Para que el body-parser pueda leer los datos del formulario.
 //Los datos qque vienen en el cuerpo del post los va a poblar en el objeto req.body
 app.use(express.urlencoded());
-
 //Middleware json para recuperar los datos del formulario. Para que el body-parser pueda leer los datos del formulario.
 app.use(express.json());
-
 //Esto lo usamos para que el navegador pueda acceder a los archivos estaticos como css, js, imagenes, etc
 app.use(express.static("public"));
 
 //TEST PUG
 //View engine
 app.set("view engine", "pug");
-
 //Configuramos el directorio de vistas
 app.set("views", directorioVistas);
 
@@ -108,14 +107,9 @@ app.post("/ingreso", (req, res) => {
 });
 
 
+//TEST ROUTING 
+app.use("/paciente", rutasPaciente);
 
-//TEST POST AGREGAR PACIENTE con json USANDO MODULOS 
-const pacienteController = require("./controllers/pacienteController"); 
-app.post("/paciente/agregar", (req, res) => {
-
-  pacienteController.addPaciente(req, res);
-  
-});
 
 
 //REDIRECCIONAMIENTO DE RUTAS
@@ -123,7 +117,6 @@ app.use((req, res, next) => {
   res.redirect("/"); 
 });
 ;
-
 //ESCUCHANDO PUERTO DETERMINADO POR CONSTANTE "PORT"
 app.listen(PORT, () => {
   console.log("Servidor en puerto http://localhost:3000");

@@ -314,5 +314,16 @@
     "sexo": "Masculino",
     "direccion": "Rivadavia 1080",
     "obraSocial": "213214321"
+  },
+  {
+    "dni": "41722588",
+    "nombre": "Luca",
+    "apellido": "Salonia",
+    "email": "salonialuca97@gmail.com",
+    "telefono": "02664688406",
+    "natalicio": "2321-03-22",
+    "sexo": "Femenino",
+    "direccion": "Rivadavia 1080",
+    "obraSocial": "21312312"
   }
 ]
