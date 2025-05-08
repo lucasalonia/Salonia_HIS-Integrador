@@ -1,9 +1,5 @@
-//Documento java que controla las llamadas a los endpoints de la API el cual podria devolver usuario
-//El index va a recuperar los datos  e interactura con el controlador
 
-//Importamos express
 const express = require("express");
-//Creamos variable de aplicacion que por convencion se denomina app
 const app = express();
 //Constante para el directorio de vistas pug
 const directorioVistas = __dirname + "/views";
@@ -12,7 +8,8 @@ const fs = require("fs");
 const path = require("path");
 const PORT = 3000;
 
-const rutasPaciente = require("./router/rutasPaciente");
+const rutasRegistro = require("./router/rutasRegistro");
+const rutasEnfermeria = require("./router/rutasEnfermeria");
 
 //Middleware urlencoded para recuperar los datos del formulario.
 // Para que el body-parser pueda leer los datos del formulario.
@@ -30,45 +27,14 @@ app.set("view engine", "pug");
 app.set("views", directorioVistas);
 
 
-//PROTOCOLOS GET
-//GET INDEX
-//Testeo para cargar info externa con forEach y harcodeada
-app.get("/", function (req, res, next) {
-  fs.readFile('alaTest.json','utf8',(error, data)=>{
-    if(error){
-        res.status(500).send("Error interno del servidor. Archivo no encontrado")
-        return;
 
-    }
-    else{
+//TEST ROUTING 
+//Registro / INDEX
+app.use("/", rutasRegistro);
+//ENFERMERIA ROUTING
+app.use("/enfermeria", rutasEnfermeria);
 
-      const alaData = JSON.parse(data);
-      const alas = alaData.map(ala => ala.nombre);
 
-      //hardcodeamos un bojeto para la vista a modo de testeo
-      const habitaciones = [
-        { id: "01", cantidadCamas: 2 },
-        { id: "02", cantidadCamas: 1 },
-      ];
-      const camas = [
-        { id: "C1", libre: true, higienizada: true },
-        { id: "C2", libre: false, higienizada: true },
-      ];
-
-      var locals = {
-        title: "Home",
-        alas: alas,
-        habitaciones: habitaciones.map(habitacion => habitacion.id),
-        camas: camas.map(cama => cama.id)
-
-      };
-      res.render("index", locals);
-    }
-  });
- 
-});
-
-//Las rutas a partir de aqui deberan ser protegidas por algun middleware de autenticacion
 
 //GET LOGIN
 app.get("/login", function (req, res, next) {
@@ -107,14 +73,11 @@ app.post("/ingreso", (req, res) => {
 });
 
 
-//TEST ROUTING 
-app.use("/paciente", rutasPaciente);
-
 
 
 //REDIRECCIONAMIENTO DE RUTAS
 app.use((req, res, next) => {
-  res.redirect("/"); 
+  res.status(404).render("notFound");
 });
 ;
 //ESCUCHANDO PUERTO DETERMINADO POR CONSTANTE "PORT"

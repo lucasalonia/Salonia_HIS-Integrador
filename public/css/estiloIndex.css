@@ -14,7 +14,6 @@ div.formularioPaciente {
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    padding: 20px;
     width: 60%; /* Ajusta el ancho según tus necesidades */
     background-color: #ffffff; /* Fondo blanco */
     border-radius: 12px; /* Bordes redondeados */
@@ -58,18 +57,20 @@ div.contenedorUno, div.contenedorDos, div.contenedorTres, div.contenedorCuatro {
 }
 
 /* Centrar el campo "Obra Social" */
-div.contenedorCinco {
+div.contenedorUno, div.contenedorDos, div.contenedorTres, div.contenedorCuatro, div.contenedorCinco, div.contenedorSeis {
     display: flex;
-    flex-direction: column; /* Organizar en columna */
-    align-items: center; /* Centrar horizontalmente el contenido */
-    gap: 10px; /* Espaciado entre los elementos */
+    flex-direction: row; /* Organizar en filas */
+    justify-content: space-between; /* Espaciado entre los elementos */
+    gap: 20px; /* Espaciado entre los divs internos */
 }
 
-/* Ajustar los divs internos dentro de cada contenedor */
-div.contenedorUno div, div.contenedorDos div, div.contenedorTres div, div.contenedorCuatro div, div.contenedorCinco div {
+div.contenedorUno div, div.contenedorDos div, div.contenedorTres div, div.contenedorCuatro div {
     flex: 1; /* Hacer que cada div ocupe el mismo espacio */
 }
-
+div.contenedorCinco{
+   align-self: center;
+   text-align: center;
+}
 /* Ajustar los inputs y selects */
 input, select {
     width: 100%; /* Ocupa todo el ancho del contenedor */
@@ -80,8 +81,6 @@ input, select {
     color: #333; /* Texto gris oscuro */
     box-sizing: border-box;
 }
-
-
 
 /* Posicionar el botón en la esquina inferior derecha del formulario */
 form > div:last-child button {
@@ -111,6 +110,12 @@ form > div:last-child button:hover {
     font-size: 14px; /* Tamaño del texto */
     box-sizing: border-box;
 }
+
+.campoMedicoDerivador{
+    color: #a09f9f;
+}
+
+
 
 /* Estilo general para la sección de la modal */
 section.modalRegistro {

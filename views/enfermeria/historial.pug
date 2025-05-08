@@ -1,0 +1,50 @@
+html
+  head
+    title
+    link(rel="stylesheet", href="/css/estiloEnfermeriaHistorial.css")
+  body
+
+    include ../includes/navBar.pug
+
+    section.info 
+
+      div.seleccionPaciente
+        select.alas(name="alas")
+          option(value="") Alas
+          option(value="ala1") Ala 1
+          option(value="ala2") Ala 2
+
+        select.habitaciones(name="habitaciones")
+          option(value="") Habitaciones
+          option(value="habitacion1") Habitación 1
+          option(value="habitacion2") Habitación 2
+
+        select.pacientes(name="pacientes")
+          option(value="") Pacientes
+          option(value="paciente1") Nombre - DNI - ID
+          option(value="paciente2") Nombre - DNI - ID
+
+
+      div.historial
+        h2 Historial Medico 
+        h2 Paciente:
+        h2.paciente
+        form.historialMedico(onsubmit="return false;")
+          label(for="enfermedadesPrevias") Enfermedades Previa
+          input.enfermedadesPrevias(type='text', name='enfermedadesPrevias', required=true) 
+
+          label(for="cirugias") Cirugias
+          input.cirugias(type='text', name='cirugias', required=true) 
+
+          label(for="alergias") Alergias
+          input.alergias(type='text', name='alergias', required=true) 
+
+          label(for="medicamentosActuales") Medicamentos actuales
+          input.medicamentosActuales(type='text', name='medicamentosActuales', required=true)  
+
+          label(for="antecedentes") Antecedentes
+          input.antecedentes(type='text', name='antecedentes', required=true)
+
+          button(type="submit") Guardar
+
+    script(src='/script/modificacionHistorial.js')     

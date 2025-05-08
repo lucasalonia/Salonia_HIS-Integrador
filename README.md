@@ -1,12 +1,27 @@
 # Salonia_HIS-Integrador
+PARAMETRO DE CONEXION:
+
+
+
+
+
+
+
+ACLARACIONES SOBRE EL DESARROLLO
+
 PENDIENTES: 
+-CONECTAR BASE DE DATOS Y PROBAR MODELOS
 -VALIDAR FECHAS EN REGISTRO
 -LIMITAR NUMEROS DE INGRESO PARA OBRA SOCIAL
 -VALIDAR EXTENCION DNI
+-MOSTAR HISTORIAL MEDICO EN CASO QUE EL PACIENTE YA CARGO LA INFORMACION EN ALGUN OTRO MOMENTO
+-Controlador para traer camas disponibles segun estados
+-Controlador para verificar datos de las subtables asociadas a historial medico. Si ya existen por ejemplo cirugias , no se crea una fila nueva, se mantiene la misma. Esto puede suceder en el caso que vuelva el pacinete. 
 
 
 DISEÑO:
--REGISTRO-INDEX:  
+-REGISTRO-INDEX: 
+ 
 
 ESTILOS:
 -Codigo de estilos en su mayoria generado con chat gpt. Al menos en un principio para tener 
@@ -25,7 +40,7 @@ una estetica inical. En cuanto se tenga una formato general del diseño, se refi
  -Validacion en modales: Para la validacion en la seccion de registro de un paciente se hizo en la primera entrada de infromacion con una validacion visual que evita que se abra la modal de alas. Esto ocurre de esta manera debido a que el POST recien ser ejecutará al confirmar TODOS los datos en la segunda ventana emergente, por lo que no se da una entrada de datos al servidor al hacer click al primer boton. Luego, una vez confirmado los datos se controloran (especificacion en seccion CONTROLADORES) estos datos.
 
  CONTROLADORES:
- -Controlador para traer camas disponibles segun estados
+ 
  
  -POST /agregar/paciente. Para controlar los datos previamente validados de paciente, habitacion y cama. Con el primer objeto se verificara su existencia, si es asi se actuializaran los datos, si no, se creeara uno nuevo. Camas modificara sus estados al igual que habitaciones. 
 

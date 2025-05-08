@@ -21,27 +21,20 @@ html
                   input.apellido(type='text', name='apellido', required=true)
                   span.error-message(data-field="apellido") 
 
-            div.contenedorDos
               div
                   label(for='dni') DNI:
                   input.dni(type='text', name='dni', required=true)
-                  span.error-message(data-field="dni") 
+                  span.error-message(data-field="dni")     
+
+            div.contenedorDos
               div
                   label(for='telefono') Numero Emergencia:
                   input.telefono(type='number', name='telefono', required=true)
                   span.error-message(data-field="telefono") 
-
-            div.contenedorTres
               div
                   label(for='natalicio') Fecha de Nacimiento:
                   input.calendar(type='date', name='natalicio', required=true)
                   span.error-message(data-field="calendar") 
-              div
-                  label(for='direccion') Direccion:
-                  input.direccion(type='text', name='direccion', required=true)
-                  span.error-message(data-field="direccion") 
-
-            div.contenedorCuatro
               div
                   label(for='sexo') Sexo:
                   select.sexo(name='sexo', required=true)
@@ -49,18 +42,53 @@ html
                       option(value='Masculino') Masculino
                       option(value='Femenino') Femenino
                       option(value='Otro') Otro
-                  span.error-message(data-field="sexo") 
+                  span.error-message(data-field="sexo" )   
+                 
+
+            div.contenedorTres 
+              div
+                  label(for='direccion') Direccion:
+                  input.direccion(type='text', name='direccion', required=true)
+                  span.error-message(data-field="direccion") 
               div
                   label(for='correro') Correo Electronico:
                   input.email(type='email', name='correro', required=true)
-                  span.error-message(data-field="email") 
+                  span.error-message(data-field="email")
+              div
+                  label(for='ciudad') Ciudad:
+                  input.ciudad(type='text', name='ciudad', required=true)
+                  span.error-message(data-field="ciudad")    
 
-            div.contenedorCinco
+           
+
+            div.contenedorCuatro
+              div 
+                  label(for='vias') Por que medios ingresa el paciente:
+                  select.vias(name='vias', required=true)
+                      option(value='') Seleccionar...
+                      option(value='Cita Programada') Cita Programada
+                      option(value='Derivacion Medica') Derivacion Medica
+                      option(value='Emergencia') Emergencia
+                  span.error-message(data-field="vias")  
+              div.campoMedicoDerivador
+                  label(for='medico') Medico Derivador:
+                  input.medico(type='text', name='medico', required=true disabled=true)
+                  span.error-message(data-field="medico")     
               div 
                   label(for='obraSocial') Obra Social:
-                  input.obraSocial(type='text', name='obraSocial', required=true)
-                  span.error-message(data-field="obraSocial")
+                  select.obraSocial(type='text', name='obraSocial', required=true)
+                      option(value='') Seleccionar...
+                      option(value='Obra Social 1') SwindlerMedical
+                      option(value='Obra Social 2') Osde
+                      option(value='Obra Social 3') Medife
 
+                  span.error-message(data-field="obraSocial")
+                  
+            div.contenedorCinco
+              div
+                  label(for='numeroObraSocial') Numero Obra Social:
+                  input.numeroObraSocial(type='text', name='numeroObraSocial', required=true) 
+                  span.error-message(data-field="numeroObraSocial")
             div
               button.botonAbrirModalAsignacion(type='button') Agregar paciente
 

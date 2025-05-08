@@ -16,6 +16,9 @@ function validarFormulario() {
         { selector: ".sexo", mensaje: "El sexo es obligatorio." },
         { selector: ".email", mensaje: "El correo electrónico es obligatorio." },
         { selector: ".obraSocial", mensaje: "La obra social es obligatoria." },
+        { selector: ".vias", mensaje: "Se debe seleccionar una opcion." },
+        { selector: ".ciudad", mensaje: "Se debe ingresar una ciudad." },
+        { selector: ".numeroObraSocial", mensaje: "Numero de obra social necesario." },
     ];
 
     campos.forEach((campo) => {
@@ -156,6 +159,11 @@ function enviarInformacion() {
   const ala = document.querySelector(".ala").value;
   const habitacion = document.querySelector(".habitacion").value;
   const cama = document.querySelector(".cama").value;
+  const vias = document.querySelector(".vias").value;
+  const ciudad = document.querySelector(".ciudad").value;
+  const medico = document.querySelector(".medico").value;
+  const numeroObraSocial = document.querySelector(".numeroObraSocial").value;
+
 
   const datosCombinados = {
     paciente: {
@@ -168,6 +176,10 @@ function enviarInformacion() {
       sexo,
       direccion,
       obraSocial,
+      vias,
+      ciudad,
+      numeroObraSocial,
+      medico,
     },
     asignacion: {
       ala,
@@ -196,7 +208,22 @@ function enviarInformacion() {
     });
 }
 
+function elegirMedico(selectVias, inputMedico, campoMedico){
 
+  selectVias.addEventListener("change", () => {
+    if (selectVias.value === "Derivacion Medica") {
+        inputMedico.disabled = false; 
+        inputMedico.classList.remove("disabled"); 
+        campoMedico.style.color = "black";
+
+    } else {
+        inputMedico.disabled = true; 
+        inputMedico.value = ""; 
+        inputMedico.classList.add("disabled"); 
+        campoMedico.style.color = "#a09f9f";
+    }
+});
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const spanCerrrarModalAsignacion = document.querySelector(".spanCerrrarModalAsignacion");
@@ -213,6 +240,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const campos = document.querySelectorAll(".formularioData input, .formularioData select");
 
+  const selectVias = document.querySelector(".vias");
+
+  const inputMedico = document.querySelector(".medico");
+
+  const campoMedicoDerivador = document.querySelector(".campoMedicoDerivador");
+  
+  elegirMedico(selectVias, inputMedico, campoMedicoDerivador);
 
   eliminarSpan(campos);
 

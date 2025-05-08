@@ -1,3 +1,11 @@
+body {
+    font-family: 'Arial', sans-serif; /* Fuente moderna y limpia */
+    font-size: 16px; /* Tamaño base de la fuente */
+    color: #333; /* Color del texto */
+    line-height: 1.5; /* Espaciado entre líneas */
+    margin: 0;
+    padding: 0;
+}
 header {
     position: fixed; /* Fija la barra en la parte superior */
     top: 0;
@@ -52,3 +60,43 @@ nav ul li a {
 nav ul li a:hover {
     background-color: #2d6aac; /* Color más oscuro al pasar el mouse */
 }
+.cerrar {
+    position: absolute;
+    right: 150px;
+    top: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .cerrar:hover {
+    background-color: rgba(163, 161, 161, 0.37); /* o un color suave de fondo */
+  }
+  
+  .cerrar-logo {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease;
+  }
+  
+  .cerrar:hover .cerrar-logo {
+    transform: scale(1.2);
+  }
+  
+  .cerrar p {
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    white-space: nowrap;
+    transition: max-width 0.9s ease, opacity 0.9s ease;
+  }
+  
+  .cerrar:hover p {
+    color: black;
+    max-width: 200px; /* o lo que necesites */
+    opacity: 1;
+  }

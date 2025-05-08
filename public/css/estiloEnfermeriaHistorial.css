@@ -1,0 +1,88 @@
+section.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 80px;
+    gap: 40px;
+    min-height: calc(100vh - 80px);
+    background-color: #f9f9f9;
+}
+
+div.seleccionPaciente {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+div.seleccionPaciente select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+}
+
+div.historial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+div.historial h2 {
+    font-size: 20px;
+    color: #333;
+    margin: 0px;
+}
+
+form.historialMedico {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+form.historialMedico label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #333;
+}
+
+form.historialMedico input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form.historialMedico button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    margin-top: 15px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 50%;
+    align-self: center;
+}
+
+form.historialMedico button:hover {
+    background-color: #0056b3;
+}
