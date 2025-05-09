@@ -49,3 +49,7 @@ div.info:active, div.historial:active, div.motivo:active, div.evaluacion:active,
     transform: scale(0.95);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+div.info:hover, div.historial:hover, div.motivo:hover, div.evaluacion:hover, div.cuidados:hover {
+    box-shadow:  0px 0px 10px 0.5px rgba(9, 81, 158, 0.692);
+}

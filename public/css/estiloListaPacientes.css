@@ -1,0 +1,72 @@
+section.tablaPacientes {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 20px auto;
+    margin-top: 100px;
+}
+
+section.tablaPacientes h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+section.tablaPacientes table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+section.tablaPacientes table thead {
+    background-color:  #368fee;
+    color: #fff;
+}
+
+section.tablaPacientes table thead th {
+    border-left:solid 1px #2d6aac ;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+   
+}
+section.tablaPacientes table thead th:first-child {
+    border: none;
+}
+
+section.tablaPacientes table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+section.tablaPacientes table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+section.tablaPacientes table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+section.tablaPacientes table td {
+    font-size: 14px;
+    padding: 5px;
+    color: #333;
+    border-bottom: 1px solid #b6b2b2;
+    border-left: 1px solid #b6b2b2;
+}
+
+
+
+section.tablaPacientes table tbody tr td[colspan="12"] {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #999;
+    padding: 20px;
+}

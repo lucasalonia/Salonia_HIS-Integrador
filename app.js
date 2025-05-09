@@ -1,15 +1,18 @@
 
 const express = require("express");
 const app = express();
-//Constante para el directorio de vistas pug
 const directorioVistas = __dirname + "/views";
 const pug = require("pug");
 const fs = require("fs");
 const path = require("path");
+
+
+
 const PORT = 3000;
 
 const rutasRegistro = require("./router/rutasRegistro");
 const rutasEnfermeria = require("./router/rutasEnfermeria");
+const rutasPacientes = require("./router/rutasPacientes");
 
 //Middleware urlencoded para recuperar los datos del formulario.
 // Para que el body-parser pueda leer los datos del formulario.
@@ -31,8 +34,14 @@ app.set("views", directorioVistas);
 //TEST ROUTING 
 //Registro / INDEX
 app.use("/", rutasRegistro);
+
 //ENFERMERIA ROUTING
 app.use("/enfermeria", rutasEnfermeria);
+
+//PACIENTES ROUTING
+app.use("/pacientes", rutasPacientes);
+
+
 
 
 

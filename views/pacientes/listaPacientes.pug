@@ -1,0 +1,49 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href= '/css/estiloListaPacientes.css')
+    
+  body
+
+    include ../includes/navBar.pug
+    section.tablaPacientes
+        h2 Lista de Pacientes
+        table
+            thead
+                tr
+                    th ID
+                    th Nombre
+                    th Apellido
+                    th DNI
+                    th Numero Emergencia
+                    th Fecha de Nacimiento
+                    th Sexo
+                    th Direccion
+                    th(colspan="2") Correo Electronico
+                    th Ciudad
+                    th Medio de Ingreso
+                    th Medico Derivador
+                    th Obra Social
+                    th Numero Obra Social
+            tbody
+                if typeof pacientes !== 'undefined' && pacientes.length > 0
+                    each paciente in pacientes
+                        tr
+                            td= paciente.id
+                            td= paciente.nombre
+                            td= paciente.apellido
+                            td= paciente.dni
+                            td= paciente.telefono
+                            td= paciente.natalicio
+                            td= paciente.sexo
+                            td= paciente.direccion
+                            td(colspan="2")= paciente.correo
+                            td= paciente.ciudad
+                            td= paciente.vias
+                            td= paciente.medico
+                            td= paciente.obraSocial
+                            td= paciente.numeroObraSocial
+                else
+                    tr
+                        td(colspan="14") No hay pacientes registrados.
