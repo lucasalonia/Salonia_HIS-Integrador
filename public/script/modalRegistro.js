@@ -1,88 +1,124 @@
 function validarFormulario() {
-
-    document.querySelectorAll(".error-message").forEach((span) => {
-        span.textContent = "";
-    });
-
-    let esValido = true;
-
-    const campos = [
-        { selector: ".nombre", mensaje: "El nombre es obligatorio." },
-        { selector: ".apellido", mensaje: "El apellido es obligatorio." },
-        { selector: ".dni", mensaje: "El DNI es obligatorio." },
-        { selector: ".telefono", mensaje: "El número de emergencia es obligatorio." },
-        { selector: ".calendar", mensaje: "La fecha de nacimiento es obligatoria." },
-        { selector: ".direccion", mensaje: "La dirección es obligatoria." },
-        { selector: ".sexo", mensaje: "El sexo es obligatorio." },
-        { selector: ".email", mensaje: "El correo electrónico es obligatorio." },
-        { selector: ".obraSocial", mensaje: "La obra social es obligatoria." },
-        { selector: ".vias", mensaje: "Se debe seleccionar una opcion." },
-        { selector: ".ciudad", mensaje: "Se debe ingresar una ciudad." },
-        { selector: ".numeroObraSocial", mensaje: "Numero de obra social necesario." },
-    ];
-
-    campos.forEach((campo) => {
-
-      const input = document.querySelector(campo.selector);
-      
-  
-      const errorSpan = document.querySelector(`.error-message[data-field="${campo.selector.replace('.', '')}"]`);
-  
-      if (!input) {
-          esValido = false;
-          return;
-      }
-  
-      if (!input.value.trim()) { 
-        if (errorSpan) {
-          errorSpan.textContent = campo.mensaje;
-          errorSpan.classList.add("active"); 
-      }
-          esValido = false;
-      }
+  document.querySelectorAll(".error-message").forEach((span) => {
+    span.textContent = "";
   });
 
-    
-    const dni = document.querySelector(".dni");
-    const dniError = document.querySelector('.error-message[data-field="dni"]');
+  let esValido = true;
 
-    if (dni && !/^\d+$/.test(dni.value.trim())) {
-        if (dniError) {
-            dniError.textContent = "El DNI debe contener solo números.";
-        }
-        esValido = false;
+  const campos = [
+    { selector: ".nombre", mensaje: "El nombre es obligatorio." },
+    { selector: ".apellido", mensaje: "El apellido es obligatorio." },
+    { selector: ".dni", mensaje: "El DNI es obligatorio." },
+    {selector: ".telefono",mensaje: "El número de emergencia es obligatorio.",},
+    {selector: ".calendar",mensaje: "La fecha de nacimiento es obligatoria.",},
+    { selector: ".direccion", mensaje: "La dirección es obligatoria." },
+    { selector: ".sexo", mensaje: "El sexo es obligatorio." },
+    { selector: ".email", mensaje: "El correo electrónico es obligatorio." },
+    { selector: ".obraSocial", mensaje: "La obra social es obligatoria." },
+    { selector: ".vias", mensaje: "Se debe seleccionar una opcion." },
+    { selector: ".ciudad", mensaje: "Se debe ingresar una ciudad." },
+    {selector: ".numeroObraSocial",mensaje: "Numero de obra social necesario.",},
+  ];
+
+  campos.forEach((campo) => {
+    const input = document.querySelector(campo.selector);
+
+    const errorSpan = document.querySelector(
+      `.error-message[data-field="${campo.selector.replace(".", "")}"]`
+    );
+
+    if (!input) {
+      esValido = false;
+      return;
     }
 
-  
-    const email = document.querySelector(".email");
-    const emailError = document.querySelector('.error-message[data-field="email"]');
-    
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
-        if (emailError) {
-            emailError.textContent = "Por favor, ingrese un correo electrónico válido.";
-        }
-        esValido = false;
+    if (!input.value.trim()) {
+      if (errorSpan) {
+        errorSpan.textContent = campo.mensaje;
+        errorSpan.classList.add("active");
+      }
+      esValido = false;
     }
+  });
 
-    return esValido;
+  const dni = document.querySelector(".dni");
+  const dniError = document.querySelector('.error-message[data-field="dni"]');
+
+  if (dni && !/^\d{8}$/.test(dni.value.trim())) {
+    if (dniError) {
+      dniError.textContent = "El DNI debe tener exactamente 7 números.";
+      dniError.classList.add("active");
+    }
+    esValido = false;
+  }
+
+  const email = document.querySelector(".email");
+  const emailError = document.querySelector(
+    '.error-message[data-field="email"]'
+  );
+
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+    if (emailError) {
+      emailError.textContent =
+        "Por favor, ingrese un correo electrónico válido.";
+    }
+    esValido = false;
+  }
+
+  const fecha = document.querySelector(".calendar");
+  const fechaError = document.querySelector(
+    '.error-message[data-field="calendar"]'
+  );
+
+if (fecha) {
+  const valor = fecha.value.trim(); // yyyy-mm-dd
+
+  if (!valor) {
+    if (fechaError) {
+      fechaError.textContent = "La fecha de nacimiento es obligatoria.";
+      fechaError.classList.add("active");
+    }
+    esValido = false;
+  } else {
+    const fechaIngresada = new Date(valor);
+    const hoy = new Date();
+    const fechaMinima = new Date("1900-01-01");
+
+    // Borramos la parte de la hora para evitar conflictos
+    hoy.setHours(0, 0, 0, 0);
+
+    if (fechaIngresada < fechaMinima) {
+      fechaError.textContent = "La fecha es demasiado antigua.";
+      fechaError.classList.add("active");
+      esValido = false;
+    } else if (fechaIngresada > hoy) {
+      fechaError.textContent = "La fecha no es valida, aun no ocurre .";
+      fechaError.classList.add("active");
+      esValido = false;
+    }
+  }
 }
 
-function eliminarSpan(campos){
+  return esValido;
+}
+
+function eliminarSpan(campos) {
   campos.forEach((campo) => {
     campo.addEventListener("focus", () => {
-        // Encuentra el span de error correspondiente
-        const errorSpan = document.querySelector(`.error-message[data-field="${campo.className}"]`);
-        if (errorSpan) {
-            errorSpan.textContent = ""; // Limpia el mensaje de error
-        }
+      // Encuentra el span de error correspondiente
+      const errorSpan = document.querySelector(
+        `.error-message[data-field="${campo.className}"]`
+      );
+      if (errorSpan) {
+        errorSpan.textContent = ""; // Limpia el mensaje de error
+      }
     });
-});
+  });
 }
 
 function abrirModalAsignacion() {
-
   const valido = validarFormulario();
-  if(valido){
+  if (valido) {
     const modalAsignacion = document.querySelector(".modalRegistro");
     if (modalAsignacion) {
       modalAsignacion.style.display = "flex";
@@ -90,7 +126,6 @@ function abrirModalAsignacion() {
       console.error("No se encontró el elemento .modalRegistro");
     }
   }
-
 }
 
 function cerrrarModalAsignacion() {
@@ -102,51 +137,48 @@ function cerrrarModalAsignacion() {
   }
 }
 
-function abrirConfirmacion(){
-    const modalAsignacion = document.querySelector(".modalRegistro");
-    const modalConfirmacion = document.querySelector(".modalConfirmacion");
+function abrirConfirmacion() {
+  const modalAsignacion = document.querySelector(".modalRegistro");
+  const modalConfirmacion = document.querySelector(".modalConfirmacion");
 
-    if (modalAsignacion) {
-        modalAsignacion.style.display = "none";
-        modalConfirmacion.style.display = "flex";
-      } else {
-        console.error("No se encontró el elemento .modalRegistro");
-      }
-
+  if (modalAsignacion) {
+    modalAsignacion.style.display = "none";
+    modalConfirmacion.style.display = "flex";
+  } else {
+    console.error("No se encontró el elemento .modalRegistro");
+  }
 }
 
-function cerrarConfirmacion(){
-    const modalAsignacion = document.querySelector(".modalRegistro");
-    const modalConfirmacion = document.querySelector(".modalConfirmacion");
+function cerrarConfirmacion() {
+  const modalAsignacion = document.querySelector(".modalRegistro");
+  const modalConfirmacion = document.querySelector(".modalConfirmacion");
 
-    if (modalAsignacion) {
-        modalAsignacion.style.display = "flex";
-        modalConfirmacion.style.display = "none";
-      } else {
-        console.error("No se encontró el elemento .modalRegistro");
-      }
-
+  if (modalAsignacion) {
+    modalAsignacion.style.display = "flex";
+    modalConfirmacion.style.display = "none";
+  } else {
+    console.error("No se encontró el elemento .modalRegistro");
+  }
 }
 
 function mostrarModalExito(exito) {
-    const modalExito = document.querySelector('.modalExito');
-    const modalConfirmacion = document.querySelector(".modalConfirmacion");
+  const modalExito = document.querySelector(".modalExito");
+  const modalConfirmacion = document.querySelector(".modalConfirmacion");
 
-    if (exito) {
-      modalExito.style.display = 'flex';
-      modalConfirmacion.style.display = "none";
-    }
+  if (exito) {
+    modalExito.style.display = "flex";
+    modalConfirmacion.style.display = "none";
   }
+}
 
 function cerrarModalExito() {
-    const modalExito = document.querySelector('.modalExito');
-    if (modalExito) {
-      modalExito.style.display = 'none'; // Oculta la modal
-    }
+  const modalExito = document.querySelector(".modalExito");
+  if (modalExito) {
+    modalExito.style.display = "none"; // Oculta la modal
   }
+}
 
 function enviarInformacion() {
-
   const dni = document.querySelector(".dni").value;
   const nombre = document.querySelector(".nombre").value;
   const apellido = document.querySelector(".apellido").value;
@@ -163,8 +195,8 @@ function enviarInformacion() {
   const ciudad = document.querySelector(".ciudad").value;
   const medico = document.querySelector(".medico").value;
   const numeroObraSocial = document.querySelector(".numeroObraSocial").value;
-
-
+  console.log(email);
+  
   const datosCombinados = {
     paciente: {
       dni,
@@ -199,53 +231,63 @@ function enviarInformacion() {
   })
     .then((respuesta) => respuesta.json())
     .then((data) => {
+      console.log(data);
       
       mostrarModalExito(data.success);
-
     })
     .catch((error) => {
-        console.error("Error:", error);
+      console.error("Error:", error);
     });
 }
 
-function elegirMedico(selectVias, inputMedico, campoMedico){
-
+function elegirMedico(selectVias, inputMedico, campoMedico) {
   selectVias.addEventListener("change", () => {
     if (selectVias.value === "Derivacion Medica") {
-        inputMedico.disabled = false; 
-        inputMedico.classList.remove("disabled"); 
-        campoMedico.style.color = "black";
-
+      inputMedico.disabled = false;
+      inputMedico.classList.remove("disabled");
+      campoMedico.style.color = "black";
     } else {
-        inputMedico.disabled = true; 
-        inputMedico.value = ""; 
-        inputMedico.classList.add("disabled"); 
-        campoMedico.style.color = "#a09f9f";
+      inputMedico.disabled = true;
+      inputMedico.value = "";
+      inputMedico.classList.add("disabled");
+      campoMedico.style.color = "#a09f9f";
     }
-});
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const spanCerrrarModalAsignacion = document.querySelector(".spanCerrrarModalAsignacion");
+  const spanCerrrarModalAsignacion = document.querySelector(
+    ".spanCerrrarModalAsignacion"
+  );
 
-  const botonAbrirModalAsignacion = document.querySelector(".botonAbrirModalAsignacion");
+  const botonAbrirModalAsignacion = document.querySelector(
+    ".botonAbrirModalAsignacion"
+  );
 
-  const botonAbrirConfirmacion = document.querySelector(".botonAbrirConfirmacion");
+  const botonAbrirConfirmacion = document.querySelector(
+    ".botonAbrirConfirmacion"
+  );
 
-  const botonCerrarConfirmacion = document.querySelector(".botonCerrarConfirmacion");
+  const botonCerrarConfirmacion = document.querySelector(
+    ".botonCerrarConfirmacion"
+  );
 
-  const botonEnviarConfirmacion = document.querySelector(".botonEnviarConfirmacion");
+  const botonEnviarConfirmacion = document.querySelector(
+    ".botonEnviarConfirmacion"
+  );
 
-  const botonCerrarExito = document.querySelector('.botonCerrarExito');
+  const botonCerrarExito = document.querySelector(".botonCerrarExito");
 
-  const campos = document.querySelectorAll(".formularioData input, .formularioData select");
+  const campos = document.querySelectorAll(
+    ".formularioData input, .formularioData select"
+  );
 
   const selectVias = document.querySelector(".vias");
 
   const inputMedico = document.querySelector(".medico");
 
   const campoMedicoDerivador = document.querySelector(".campoMedicoDerivador");
-  
+
   elegirMedico(selectVias, inputMedico, campoMedicoDerivador);
 
   eliminarSpan(campos);
@@ -257,25 +299,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (spanCerrrarModalAsignacion) {
-    spanCerrrarModalAsignacion.addEventListener("click", cerrrarModalAsignacion);
+    spanCerrrarModalAsignacion.addEventListener(
+      "click",
+      cerrrarModalAsignacion
+    );
   } else {
     console.error("No se encontró el elemento .closeModal");
   }
 
-  if(botonAbrirConfirmacion){
+  if (botonAbrirConfirmacion) {
     botonAbrirConfirmacion.addEventListener("click", abrirConfirmacion);
-  }else{
+  } else {
     console.error("Soy un esptupido");
   }
 
-  if(botonCerrarConfirmacion){
+  if (botonCerrarConfirmacion) {
     botonCerrarConfirmacion.addEventListener("click", cerrarConfirmacion);
   }
 
- 
   if (botonCerrarExito) {
-    botonCerrarExito.addEventListener('click', cerrarModalExito);
+    botonCerrarExito.addEventListener("click", cerrarModalExito);
   }
-
-
 });

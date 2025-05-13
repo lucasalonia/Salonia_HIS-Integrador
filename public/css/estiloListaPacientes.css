@@ -1,18 +1,52 @@
 section.tablaPacientes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
+    max-width: 1700px;
     margin: 20px auto;
     margin-top: 100px;
+    text-align: center;
 }
+
 
 section.tablaPacientes h2 {
     text-align: center;
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
+}
+
+section.tablaPacientes div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%; 
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+}
+section.tablaPacientes div input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box; 
+}
+
+section.tablaPacientes div label {
+    display: block;
+    font-size: 20px; 
+    color: #555; 
+    margin-bottom: 5px; 
 }
 
 section.tablaPacientes table {
@@ -23,6 +57,7 @@ section.tablaPacientes table {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    table-layout: fixed;
 }
 
 section.tablaPacientes table thead {
@@ -35,6 +70,8 @@ section.tablaPacientes table thead th {
     text-align: center;
     font-size: 14px;
     font-weight: bold;
+    padding: 5px;
+    width: 10%;
    
 }
 section.tablaPacientes table thead th:first-child {
@@ -55,10 +92,15 @@ section.tablaPacientes table tbody tr:hover {
 
 section.tablaPacientes table td {
     font-size: 14px;
-    padding: 5px;
+    height: auto;
+    padding: 8px;
     color: #333;
     border-bottom: 1px solid #b6b2b2;
     border-left: 1px solid #b6b2b2;
+    overflow: visible; 
+    text-overflow: clip;
+    white-space: normal;
+    word-wrap: break-word; 
 }
 
 
@@ -70,3 +112,37 @@ section.tablaPacientes table tbody tr td[colspan="12"] {
     color: #999;
     padding: 20px;
 }
+section.tablaPacientes table td input {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 14px;
+    box-sizing: border-box; 
+    width: 100%; 
+    height: 100%; 
+    background-color: transparent;
+}
+section.tablaPacientes table td:has(input) {
+    padding: 5px; 
+}
+.boton-eliminar {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.1s ease, transform 0.1s ease;
+}
+
+.boton-eliminar:hover {
+    background-color: #e60000;
+    transform: scale(1.04);
+}
+
+.boton-eliminar:active {
+    background-color: #cc0000;
+    transform: scale(0.95);
+}
+

@@ -3,12 +3,14 @@ html
   head
     title= title
     link(rel='stylesheet', href= '/css/estiloListaPacientes.css')
-    
   body
 
     include ../includes/navBar.pug
     section.tablaPacientes
         h2 Lista de Pacientes
+        div
+            input(type="text", name="")
+            label(for="buscar") Busqueda
         table
             thead
                 tr
@@ -19,31 +21,45 @@ html
                     th Numero Emergencia
                     th Fecha de Nacimiento
                     th Sexo
-                    th Direccion
-                    th(colspan="2") Correo Electronico
+                    th.direccionHead Direccion
+                    th.correoHead Correo Electronico
                     th Ciudad
                     th Medio de Ingreso
                     th Medico Derivador
                     th Obra Social
                     th Numero Obra Social
+                    th Fecha de Ingreso
+                    th Internado
+                    th Acciones
             tbody
                 if typeof pacientes !== 'undefined' && pacientes.length > 0
                     each paciente in pacientes
                         tr
-                            td= paciente.id
-                            td= paciente.nombre
-                            td= paciente.apellido
-                            td= paciente.dni
-                            td= paciente.telefono
-                            td= paciente.natalicio
-                            td= paciente.sexo
-                            td= paciente.direccion
-                            td(colspan="2")= paciente.correo
-                            td= paciente.ciudad
-                            td= paciente.vias
-                            td= paciente.medico
-                            td= paciente.obraSocial
-                            td= paciente.numeroObraSocial
+                            td(data-field="id")= paciente.id
+                            td(data-field="nombre")= paciente.nombre
+                            td(data-field="apellido")= paciente.apellido
+                            td(data-field="dni")= paciente.dni
+                            td(data-field="telefono")= paciente.telefono
+                            td(data-field="natalicio")= paciente.natalicio
+                            td(data-field="sexo")= paciente.sexo
+                            td(data-field="direccion" class="direccion")= paciente.direccion
+                            td(data-field="correo" class="correo")= paciente.correo
+                            td(data-field="ciudad")= paciente.ciudad
+                            td(data-field="vias")= paciente.vias
+                            td(data-field="medico")= paciente.medico
+                            td(data-field="obraSocial")= paciente.obraSocial
+                            td(data-field="numeroObraSocial")= paciente.numeroObraSocial
+                            td(data-field="fechaIngreso")= paciente.fecha_ingreso
+                            td(data-field="internado")= paciente.internado
+                            td
+                                button.boton-eliminar(data-id=paciente.id type="button") Eliminar
+                            
+
                 else
                     tr
-                        td(colspan="14") No hay pacientes registrados.
+                        td(colspan="14") No hay pacientes registrados.               
+
+
+        script(src='/script/actualizarInfoPaciente.js')            
+
+    

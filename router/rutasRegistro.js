@@ -7,7 +7,7 @@ const pacienteController = require("../controllers/pacienteController");
 //PROTOCOLOS POST
 router.post("/paciente/agregar", (req, res) => {
 
-  pacienteController.addPaciente(req, res);
+  pacienteController.agregarPaciente(req, res);
   
 });
 

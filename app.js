@@ -8,6 +8,7 @@ const path = require("path");
 
 
 
+
 const PORT = 3000;
 
 const rutasRegistro = require("./router/rutasRegistro");
