@@ -5,34 +5,19 @@ const directorioVistas = __dirname + "/views";
 const pug = require("pug");
 const fs = require("fs");
 const path = require("path");
-
-
-
-
 const PORT = 3000;
 
 const rutasRegistro = require("./router/rutasRegistro");
 const rutasEnfermeria = require("./router/rutasEnfermeria");
 const rutasPacientes = require("./router/rutasPacientes");
 
-//Middleware urlencoded para recuperar los datos del formulario.
-// Para que el body-parser pueda leer los datos del formulario.
-//Los datos qque vienen en el cuerpo del post los va a poblar en el objeto req.body
 app.use(express.urlencoded());
-//Middleware json para recuperar los datos del formulario. Para que el body-parser pueda leer los datos del formulario.
 app.use(express.json());
-//Esto lo usamos para que el navegador pueda acceder a los archivos estaticos como css, js, imagenes, etc
 app.use(express.static("public"));
 
-//TEST PUG
-//View engine
 app.set("view engine", "pug");
-//Configuramos el directorio de vistas
 app.set("views", directorioVistas);
 
-
-
-//TEST ROUTING 
 //Registro / INDEX
 app.use("/", rutasRegistro);
 
@@ -43,9 +28,6 @@ app.use("/enfermeria", rutasEnfermeria);
 app.use("/pacientes", rutasPacientes);
 
 
-
-
-
 //GET LOGIN
 app.get("/login", function (req, res, next) {
   // Your route code
@@ -53,10 +35,6 @@ app.get("/login", function (req, res, next) {
     error: "Usuario o contraseña incorrectos",
   });
 });
-
-
-
-//PROTOCOLOS POST
 //Test POST LOGIN
 app.post("/ingreso", (req, res) => {
   const { usuario, contraseña } = req.body;
@@ -81,9 +59,6 @@ app.post("/ingreso", (req, res) => {
     }
   });
 });
-
-
-
 
 //REDIRECCIONAMIENTO DE RUTAS
 app.use((req, res, next) => {

@@ -178,6 +178,23 @@ function cerrarModalExito() {
   }
 }
 
+function vaciarInputs(exito) {
+
+  if(exito){
+  const inputs = document.querySelectorAll(
+    ".dni, .nombre, .apellido, .email, .telefono, .calendar, .sexo, .direccion, .obraSocial, .ciudad, .medico, .numeroObraSocial"
+  );
+
+  inputs.forEach((input) => {
+    if (input.type === "checkbox" || input.type === "radio") {
+      input.checked = false; 
+    } else {
+      input.value = "";
+    }
+  });
+}
+}
+
 function enviarInformacion() {
   const dni = document.querySelector(".dni").value;
   const nombre = document.querySelector(".nombre").value;
@@ -193,9 +210,12 @@ function enviarInformacion() {
   const cama = document.querySelector(".cama").value;
   const medios_ingreso = document.querySelector(".vias").value;
   const ciudad = document.querySelector(".ciudad").value;
-  const medico_derivador = document.querySelector(".medico").value;
+  let medico_derivador = document.querySelector(".medico").value;
   const numero_obra_social = document.querySelector(".numeroObraSocial").value;
-  console.log(email);
+
+  if(medico_derivador.trim()==''){
+    medico_derivador="No especifica";
+  }
   
   const datosCombinados = {
     paciente: {
@@ -234,6 +254,7 @@ function enviarInformacion() {
       console.log(data);
       
       mostrarModalExito(data.success);
+      vaciarInputs(data.success);
     })
     .catch((error) => {
       console.error("Error:", error);

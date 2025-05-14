@@ -1,7 +1,4 @@
-//PRIMER CONTROLADOR 
-//NO SE EJECUTA EN EL SERVIDOR SINO DENTRO DE UN SCRIPT PUBLIC
 
-//Aca implementamos agrePaciente de la carpeta model
 const Paciente = require("../models/Paciente.js");
 
 
@@ -39,7 +36,7 @@ const listarPacientes = async(req, res) => {
                 correo: paciente.email,
                 obraSocial: paciente.obra_social,
                 numeroObraSocial: paciente.numero_obra_social,
-                medico: paciente.medico_derivador ? paciente.medico_derivador : "No especifica" ,
+                medico: paciente.medico_derivador,
                 vias: paciente.medios_ingreso,
                 
                 fecha_ingreso: new Date (paciente.fecha_ingreso).toLocaleDateString("es-AR", {

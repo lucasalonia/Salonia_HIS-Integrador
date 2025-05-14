@@ -1,2 +1,0 @@
-En este modulo se controlaran los datos que fluctuan
- entre el usuario y el servidor evitando asi subir datos equivocados

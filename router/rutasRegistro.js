@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require("fs");
-const pacienteController = require("../controllers/pacienteController"); 
+const pacienteController = require("../controllers/controllerPaciente"); 
 
 
 //PROTOCOLOS POST
@@ -11,6 +11,8 @@ router.post("/paciente/agregar", (req, res) => {
   
 });
 
+
+//PROTOCOLOS GET
 router.get("/", function (req, res, next) {
   fs.readFile('alaTest.json','utf8',(error, data)=>{
     if(error){
