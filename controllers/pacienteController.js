@@ -2,11 +2,13 @@
 //NO SE EJECUTA EN EL SERVIDOR SINO DENTRO DE UN SCRIPT PUBLIC
 
 //Aca implementamos agrePaciente de la carpeta model
-const  pacienteModel  = require("../model/Paciente.js");
+const Paciente = require("../models/Paciente.js");
 
-const agregarPaciente = async (req, res) => {
+
+const crearPaciente = async (req, res) => {
+  const pacienteNuevo = req.body.paciente;
   try {
-    const resultado = await pacienteModel.agregarPacienteModel(req.body.paciente);
+    const resultado = await Paciente.crearPaciente(pacienteNuevo);
     res.status(201).json({success:true, mensaje: "Paciente agregado con éxito", resultado });
   } catch (error) {
     console.error("Error en el controlador:", error);
@@ -14,12 +16,8 @@ const agregarPaciente = async (req, res) => {
   }
 };
 
-const modificarPaciente = (req, res) => {
-
-}
-
-const obtenerPacientes = async(req, res) => {
-    let pacientes = await pacienteModel.listarPacientes();
+const listarPacientes = async(req, res) => {
+    let pacientes = await Paciente.listarPacientes();
 
      pacientes = pacientes.map((paciente) => {
             return {
@@ -41,7 +39,7 @@ const obtenerPacientes = async(req, res) => {
                 correo: paciente.email,
                 obraSocial: paciente.obra_social,
                 numeroObraSocial: paciente.numero_obra_social,
-                medico: paciente.medico_derivador,
+                medico: paciente.medico_derivador ? paciente.medico_derivador : "No especifica" ,
                 vias: paciente.medios_ingreso,
                 
                 fecha_ingreso: new Date (paciente.fecha_ingreso).toLocaleDateString("es-AR", {
@@ -60,6 +58,5 @@ const obtenerPacientes = async(req, res) => {
 }
 
 
-
-module.exports = {obtenerPacientes,modificarPaciente,agregarPaciente};
+module.exports = {crearPaciente, listarPacientes};
 

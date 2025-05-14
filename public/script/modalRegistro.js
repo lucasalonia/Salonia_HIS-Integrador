@@ -183,18 +183,18 @@ function enviarInformacion() {
   const nombre = document.querySelector(".nombre").value;
   const apellido = document.querySelector(".apellido").value;
   const email = document.querySelector(".email").value;
-  const telefono = document.querySelector(".telefono").value;
-  const natalicio = document.querySelector(".calendar").value;
+  const numero_emergencia = document.querySelector(".telefono").value;
+  const fecha_nacimiento = document.querySelector(".calendar").value;
   const sexo = document.querySelector(".sexo").value;
   const direccion = document.querySelector(".direccion").value;
-  const obraSocial = document.querySelector(".obraSocial").value;
+  const obra_social = document.querySelector(".obraSocial").value;
   const ala = document.querySelector(".ala").value;
   const habitacion = document.querySelector(".habitacion").value;
   const cama = document.querySelector(".cama").value;
-  const vias = document.querySelector(".vias").value;
+  const medios_ingreso = document.querySelector(".vias").value;
   const ciudad = document.querySelector(".ciudad").value;
-  const medico = document.querySelector(".medico").value;
-  const numeroObraSocial = document.querySelector(".numeroObraSocial").value;
+  const medico_derivador = document.querySelector(".medico").value;
+  const numero_obra_social = document.querySelector(".numeroObraSocial").value;
   console.log(email);
   
   const datosCombinados = {
@@ -203,15 +203,15 @@ function enviarInformacion() {
       nombre,
       apellido,
       email,
-      telefono,
-      natalicio,
+      numero_emergencia,
+      fecha_nacimiento,
       sexo,
       direccion,
-      obraSocial,
-      vias,
+      obra_social,
+      medios_ingreso,
       ciudad,
-      numeroObraSocial,
-      medico,
+      numero_obra_social,
+      medico_derivador,
     },
     asignacion: {
       ala,

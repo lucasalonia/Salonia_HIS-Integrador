@@ -4,14 +4,12 @@ const mysql = require("mysql2");
 const pacienteController = require("../controllers/pacienteController"); 
 
 router.get("/listaPacientes", function (req, res, next) {
-   pacienteController.obtenerPacientes(req, res);    
+   pacienteController.listarPacientes(req, res);    
 });
 
 router.post('/actualizar', (req, res) => {
     // pacienteController.modificarPaciente(req, res);
 });
-
-
 
 
 module.exports = router;
