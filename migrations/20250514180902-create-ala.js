@@ -6,7 +6,7 @@ module.exports = {
     const { DataTypes } = Sequelize;  // Import DataTypes from Sequelize
 
     await queryInterface.createTable('alas', {
-      id: {
+      id_ala: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,

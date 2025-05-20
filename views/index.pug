@@ -103,18 +103,17 @@ html
               div 
                 label(for="ala") Ala:
                 select.ala(name='ala')
+                  option(value='') Seleccionar ala
                   each ala in alas 
-                    option(value=ala)= ala
+                    option(value=ala.id_ala)= "Codigo ala: "+ala.id_ala+" - "+ ala.nombre
               div 
                 label(for="habitacion") Habitacion:
-                select.habitacion(name='habitacion')
-                  each habitacion in habitaciones 
-                    option(value=habitacion)= habitacion    
+                select#selectHabitacion.habitacion(name='habitacion')
+                  option(value='') Se debe seleccionar un ala
               div 
                 label(for="cama") Cama:
-                select.cama(name='cama')
-                 each cama in camas 
-                    option(value=cama)= cama
+                select#selectCama.cama(name='cama')
+                  option(value='') Se debe seleccionar un ala
           div.modal-footer
             button.botonAbrirConfirmacion(type='button') Asignar cama 
 
@@ -133,7 +132,7 @@ html
           div.cuerpoExito
             p Los datos se enviaron correctamente.
           div.botonesExito
-            button.botonCerrarExito(type='button') Cerrar      
+            button.botonCerrarExito(type='button', onclick='actualizarDniCama()') Delegar Cama  
                 
 
 

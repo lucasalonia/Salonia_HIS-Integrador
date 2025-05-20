@@ -3,12 +3,25 @@ const { sequelize } = require("../config/db.js");
 const Ala = require("./Ala.js");
 
 class Habitacion extends Model {
-    
+
+  static associate(models) {
+      Habitacion.belongsTo(models.Ala, { foreignKey: 'id_ala' });
+      Habitacion.hasMany(models.Cama, { foreignKey: 'id_habitacion' });
+    }
+
+   static async listarHabitacionesPorAla(id_ala) {
+  const habitaciones = await Habitacion.findAll({
+    where: {
+      id_ala: id_ala 
+    }
+  });
+  return habitaciones;
+}
 }
 
 Habitacion.init(
   {
-    id: {
+    id_habitacion: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -26,13 +39,15 @@ Habitacion.init(
         max: 2, 
       },
     },
-    idAla: { 
+    id_ala: { 
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: Ala, 
-        key: "id", 
+        key: "id_ala", 
       },
+       onUpdate: "CASCADE",
+        onDelete: "CASCADE",
     },
   },
   {
@@ -44,7 +59,5 @@ Habitacion.init(
 );
 
 
-//RELACIONES
-Habitacion.belongsTo(Ala, { foreignKey: 'idAla' });
 
 module.exports = Habitacion;

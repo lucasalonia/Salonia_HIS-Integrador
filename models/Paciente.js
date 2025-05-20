@@ -104,8 +104,6 @@ Paciente.init(
   }
 );
 
-//RELACIONES
-Paciente.hasOne(require('./Cama'), { foreignKey: 'idPaciente' });
 
 module.exports = Paciente;
 

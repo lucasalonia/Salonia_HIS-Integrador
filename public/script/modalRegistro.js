@@ -9,15 +9,24 @@ function validarFormulario() {
     { selector: ".nombre", mensaje: "El nombre es obligatorio." },
     { selector: ".apellido", mensaje: "El apellido es obligatorio." },
     { selector: ".dni", mensaje: "El DNI es obligatorio." },
-    {selector: ".telefono",mensaje: "El número de emergencia es obligatorio.",},
-    {selector: ".calendar",mensaje: "La fecha de nacimiento es obligatoria.",},
+    {
+      selector: ".telefono",
+      mensaje: "El número de emergencia es obligatorio.",
+    },
+    {
+      selector: ".calendar",
+      mensaje: "La fecha de nacimiento es obligatoria.",
+    },
     { selector: ".direccion", mensaje: "La dirección es obligatoria." },
     { selector: ".sexo", mensaje: "El sexo es obligatorio." },
     { selector: ".email", mensaje: "El correo electrónico es obligatorio." },
     { selector: ".obraSocial", mensaje: "La obra social es obligatoria." },
     { selector: ".vias", mensaje: "Se debe seleccionar una opcion." },
     { selector: ".ciudad", mensaje: "Se debe ingresar una ciudad." },
-    {selector: ".numeroObraSocial",mensaje: "Numero de obra social necesario.",},
+    {
+      selector: ".numeroObraSocial",
+      mensaje: "Numero de obra social necesario.",
+    },
   ];
 
   campos.forEach((campo) => {
@@ -70,34 +79,34 @@ function validarFormulario() {
     '.error-message[data-field="calendar"]'
   );
 
-if (fecha) {
-  const valor = fecha.value.trim(); // yyyy-mm-dd
+  if (fecha) {
+    const valor = fecha.value.trim(); // yyyy-mm-dd
 
-  if (!valor) {
-    if (fechaError) {
-      fechaError.textContent = "La fecha de nacimiento es obligatoria.";
-      fechaError.classList.add("active");
-    }
-    esValido = false;
-  } else {
-    const fechaIngresada = new Date(valor);
-    const hoy = new Date();
-    const fechaMinima = new Date("1900-01-01");
-
-    // Borramos la parte de la hora para evitar conflictos
-    hoy.setHours(0, 0, 0, 0);
-
-    if (fechaIngresada < fechaMinima) {
-      fechaError.textContent = "La fecha es demasiado antigua.";
-      fechaError.classList.add("active");
+    if (!valor) {
+      if (fechaError) {
+        fechaError.textContent = "La fecha de nacimiento es obligatoria.";
+        fechaError.classList.add("active");
+      }
       esValido = false;
-    } else if (fechaIngresada > hoy) {
-      fechaError.textContent = "La fecha no es valida, aun no ocurre .";
-      fechaError.classList.add("active");
-      esValido = false;
+    } else {
+      const fechaIngresada = new Date(valor);
+      const hoy = new Date();
+      const fechaMinima = new Date("1900-01-01");
+
+      // Borramos la parte de la hora para evitar conflictos
+      hoy.setHours(0, 0, 0, 0);
+
+      if (fechaIngresada < fechaMinima) {
+        fechaError.textContent = "La fecha es demasiado antigua.";
+        fechaError.classList.add("active");
+        esValido = false;
+      } else if (fechaIngresada > hoy) {
+        fechaError.textContent = "La fecha no es valida, aun no ocurre .";
+        fechaError.classList.add("active");
+        esValido = false;
+      }
     }
   }
-}
 
   return esValido;
 }
@@ -179,20 +188,19 @@ function cerrarModalExito() {
 }
 
 function vaciarInputs(exito) {
+  if (exito) {
+    const inputs = document.querySelectorAll(
+      ".dni, .nombre, .apellido, .email, .telefono, .calendar, .sexo, .direccion, .obraSocial, .ciudad, .medico, .numeroObraSocial"
+    );
 
-  if(exito){
-  const inputs = document.querySelectorAll(
-    ".dni, .nombre, .apellido, .email, .telefono, .calendar, .sexo, .direccion, .obraSocial, .ciudad, .medico, .numeroObraSocial"
-  );
-
-  inputs.forEach((input) => {
-    if (input.type === "checkbox" || input.type === "radio") {
-      input.checked = false; 
-    } else {
-      input.value = "";
-    }
-  });
-}
+    inputs.forEach((input) => {
+      if (input.type === "checkbox" || input.type === "radio") {
+        input.checked = false;
+      } else {
+        input.value = "";
+      }
+    });
+  }
 }
 
 function enviarInformacion() {
@@ -213,10 +221,10 @@ function enviarInformacion() {
   let medico_derivador = document.querySelector(".medico").value;
   const numero_obra_social = document.querySelector(".numeroObraSocial").value;
 
-  if(medico_derivador.trim()==''){
-    medico_derivador="No especifica";
+  if (medico_derivador.trim() == "") {
+    medico_derivador = "No especifica";
   }
-  
+
   const datosCombinados = {
     paciente: {
       dni,
@@ -252,9 +260,7 @@ function enviarInformacion() {
     .then((respuesta) => respuesta.json())
     .then((data) => {
       console.log(data);
-      
       mostrarModalExito(data.success);
-      vaciarInputs(data.success);
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -276,7 +282,167 @@ function elegirMedico(selectVias, inputMedico, campoMedico) {
   });
 }
 
+function enviarAla(id_ala) {
+  const url = "/paciente/agregar-habitacion";
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ala: id_ala }),
+  })
+    .then((respuesta) => respuesta.json())
+    .then(habitaciones => {
+        selectHabitacion.innerHTML = '';
+        
+        if (!habitaciones || habitaciones.length === 0) {
+          const option = document.createElement('option');
+          option.value = '';
+          option.textContent = 'No hay habitaciones disponibles';
+          selectHabitacion.appendChild(option);
+          return;
+        }
+        habitaciones.forEach(habitacion => {
+          const option = document.createElement('option');
+          option.value = habitacion.id_habitacion;
+          
+          option.textContent ="ID Hab: " + habitacion.id_habitacion+"- Numero Hab: " + habitacion.numero_habitacion;
+          selectHabitacion.appendChild(option);
+        });
+      })
+      .catch(error => {
+        console.error('Error cargando habitaciones:', error);
+      });
+}
+
+function enviarHabitacion(id_habitacion) {
+  const url = "/paciente/agregar-cama";
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ habitacion: id_habitacion }),
+  })
+    .then((respuesta) => respuesta.json())
+    .then(camas => {
+      selectCama.innerHTML = '';
+      console.log("Respuesta recibida:", camas);
+      if (!camas || camas.length === 0) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No hay camas disponibles';
+        selectCama.appendChild(option);
+        return;
+      }
+
+      camas.forEach(cama => {
+        const option = document.createElement('option');
+        option.value = cama.id_cama;
+        option.textContent ="ID Cama: "+ cama.id_cama +"- Numero Cama: "+ cama.numero_cama;
+        selectCama.appendChild(option);
+      });
+    })
+    .catch(error => {
+      console.error('Error cargando camas:', error);
+    });
+}
+
+
+function actualizarDniCama(){
+  const dni = document.querySelector(".dni").value;
+  const valor = selectCama = document.querySelector(".cama").value;
+  const id_cama = valor.split("-")[0].trim();
+  const url = "/paciente/asignar-dni";
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({id_cama:id_cama,dni:dni}),
+  })
+    .then((respuesta) => respuesta.json())
+    .then((data) => {
+      console.log(data);
+      vaciarInputs(data.success)
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  
+
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+const selectAla = document.querySelector(".ala");
+const selectHabitacion = document.querySelector(".habitacion");
+const selectCama = document.querySelector(".cama");
+
+let ultimaAlaSeleccionada = null;
+let ultimaHabitacionSeleccionada = null;
+
+
+selectAla.addEventListener("mousedown", () => {
+  ultimaAlaSeleccionada = selectAla.value;
+});
+
+selectAla.addEventListener("change", (event) => {
+  const valorSeleccionado = event.target.value;
+  selectHabitacion.innerHTML = '';
+  selectCama.innerHTML = ''; 
+
+  if (valorSeleccionado === "") {
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = 'Se debe seleccionar un ala';
+    selectHabitacion.appendChild(option);
+  } else {
+    enviarAla(valorSeleccionado);
+    ultimaAlaSeleccionada = valorSeleccionado;
+  }
+});
+
+selectAla.addEventListener("click", () => {
+  if (selectAla.value === ultimaAlaSeleccionada && selectAla.value !== "") {
+    selectHabitacion.innerHTML = '';
+    selectCama.innerHTML = '';
+    enviarAla(selectAla.value);
+  }
+});
+
+selectHabitacion.addEventListener("mousedown", () => {
+  ultimaHabitacionSeleccionada = selectHabitacion.value;
+});
+
+selectHabitacion.addEventListener("change", (event) => {
+  const valorSeleccionado = event.target.value;
+  selectCama.innerHTML = '';
+
+  if (valorSeleccionado === "") {
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = 'Se debe seleccionar una habitacion';
+    selectCama.appendChild(option);
+  } else {
+    enviarHabitacion(valorSeleccionado);
+    ultimaHabitacionSeleccionada = valorSeleccionado;
+  }
+});
+
+selectHabitacion.addEventListener("click", () => {
+  if (
+    selectHabitacion.value === ultimaHabitacionSeleccionada &&
+    selectHabitacion.value !== ""
+  ) {
+    selectCama.innerHTML = '';
+    enviarHabitacion(selectHabitacion.value);
+  }
+});
+
+
+
   const spanCerrrarModalAsignacion = document.querySelector(
     ".spanCerrrarModalAsignacion"
   );
@@ -293,9 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ".botonCerrarConfirmacion"
   );
 
-  const botonEnviarConfirmacion = document.querySelector(
-    ".botonEnviarConfirmacion"
-  );
+
 
   const botonCerrarExito = document.querySelector(".botonCerrarExito");
 

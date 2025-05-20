@@ -117,10 +117,9 @@ form > div:last-child button:hover {
 
 
 
-/* Estilo general para la sección de la modal */
 section.modalRegistro {
-    display: none; /* Oculta la modal por defecto */
-    position: fixed; /* Fija la modal en la pantalla */
+    display: none; 
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
