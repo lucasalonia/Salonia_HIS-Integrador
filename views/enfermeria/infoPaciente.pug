@@ -1,12 +1,65 @@
 html
   head
-    title
+    title Informacion Paciente
     link(rel="stylesheet", href="/css/estiloEnfermeriaInfo.css")
   body
 
     include ../includes/navBar.pug
 
-   
+    section.informacionPaciente
+      h1.titulo Informacion Pacientes
+      div.infoBusqueda
+        form.infoBusqueda(action="/buscar" method="get")
+          input(type="text" name="query" placeholder="Buscar paciente...")
+          button(type="submit") Buscar
+      div.infoContainer 
+        div.datosPaciente.bloqueUno 
+          h3.nombre Nombre:  
+            span.valorNombre Luca 
+          h3.apellido Apellido: 
+            span.valorApellido  Salonia
+
+          h3.dni DNI:  
+            span.valorDni 40722588  
+
+          h3.numeroEmergencia Numero Emergencia: 
+            span.valorNumeroEmergencia  2664688406
+
+          h3.fechaNacimiento Fecha Nacimiento:  
+            span.valorfechaNacimiento 16/10/1997  
+
+          h3.sexo Sexo: 
+            span.valorSexo Otro
+
+          h3.direccion Direccion:  
+            span.valorDireccion Rivadaiva 1080  
+
+          h3.ciudad Ciudad:  
+            span.valorCiudad San Luis
+
+          h3.correro Correro Electronico: 
+            span.valorCorreo  salonialuca97@gmail.com
+  
+          h3.obraSocial Obra Social: 
+            span.valorObraSocial  Medife
+
+          h3.numeroObraSocila Numero Obra Social:  
+            span.valorNumeroObraSocial 487855484845645 
+          
+          h3.alaAlojado Ala:
+            span.valorAlaAlojado Cirugia
+
+          h3.habitacionAlojado Habitacion:
+            span.valorHabitacionAlojado 1
+
+          h3.camaAlojado Cama Ocupada:
+            span.valorCamaAlojado  1
+
+          h3.fechaIngreso Fecha de Ingreso: 
+            span.valorFechaIngreso 25/05/2025
+
+          button.imprimirBtn(type="button" onclick="window.print()") Imprimir  
+
 
              
 

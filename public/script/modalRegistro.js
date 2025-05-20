@@ -327,6 +327,7 @@ function enviarHabitacion(id_habitacion) {
   })
     .then((respuesta) => respuesta.json())
     .then(camas => {
+      const selectCama = document.querySelector('#selectCama');
       selectCama.innerHTML = '';
       console.log("Respuesta recibida:", camas);
       if (!camas || camas.length === 0) {

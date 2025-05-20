@@ -1,0 +1,133 @@
+section.motivoInternacion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 80px;
+  gap: 20px;
+  min-height: calc(100vh - 80px);
+  background-color: #f9f9f9;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.busquedaManual {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.busquedaManual input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+}
+
+.busquedaManual button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.busquedaManual button:hover {
+  background-color: #0056b3;
+}
+
+.seleccionPaciente {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.seleccionPaciente select {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+}
+
+.motivoIternacionConteiner {
+  width: 100%;
+  max-width: 700px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.motivoInternacionFormulario {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formSeccionUno,
+.formSeccionDos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.motivoInternacionFormulario label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.motivoInternacionFormulario input[type="text"],
+.motivoInternacionFormulario textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.motivoInternacionFormulario textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.motivoInternacionFormulario button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  margin-top: 15px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 50%;
+  align-self: center;
+}
+
+.motivoInternacionFormulario button:hover {
+  background-color: #0056b3;
+}

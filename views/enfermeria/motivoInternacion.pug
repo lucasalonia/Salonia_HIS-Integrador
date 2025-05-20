@@ -1,6 +1,46 @@
 html
   head
-    title
+    title Motivos de Internacion 
+    link(rel="stylesheet", href="/css/estiloEnfermeriaMotivos.css")
   body
 
     include ../includes/navBar.pug
+
+    section.motivoInternacion
+      h1 Motivos de Internacion
+      div.busquedaManual
+        input(type="text")
+        button(type="submit") Buscar
+      div.seleccionPaciente
+        select.alas(name="alas")
+          option(value="") Alas
+          option(value="ala1") Ala 1
+          option(value="ala2") Ala 2
+
+        select.habitaciones(name="habitaciones")
+          option(value="") Habitaciones
+          option(value="habitacion1") Habitación 1
+          option(value="habitacion2") Habitación 2
+
+        select.pacientes(name="pacientes")
+          option(value="") Pacientes
+          option(value="paciente1") Nombre - DNI - ID
+          option(value="paciente2") Nombre - DNI - ID
+
+      div.motivoIternacionConteiner 
+        form.motivoInternacionFormulario(action="")
+          div.formSeccionUno
+            label(for="motivo") Motivo Internacion
+            input(type="text", name="motivo")
+
+            label(for="prioridad") Prioridad
+            input(type="text", name="prioridad")
+
+            label(for="necesidades") Necesidades Inmediatas
+            input(type="text", name="necesidades")
+
+          div.formSeccionDos
+            label(for="sintomas") Sintomas
+            textarea#sintomas(name="sintomas")
+
+          button(type="onsubmit") Guardar Informacion    
