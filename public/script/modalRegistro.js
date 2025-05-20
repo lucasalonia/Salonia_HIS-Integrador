@@ -260,6 +260,7 @@ function enviarInformacion() {
     .then((respuesta) => respuesta.json())
     .then((data) => {
       console.log(data);
+      actualizarDniCama(data.success);
       mostrarModalExito(data.success);
     })
     .catch((error) => {
@@ -292,27 +293,31 @@ function enviarAla(id_ala) {
     body: JSON.stringify({ ala: id_ala }),
   })
     .then((respuesta) => respuesta.json())
-    .then(habitaciones => {
-        selectHabitacion.innerHTML = '';
-        
-        if (!habitaciones || habitaciones.length === 0) {
-          const option = document.createElement('option');
-          option.value = '';
-          option.textContent = 'No hay habitaciones disponibles';
-          selectHabitacion.appendChild(option);
-          return;
-        }
-        habitaciones.forEach(habitacion => {
-          const option = document.createElement('option');
-          option.value = habitacion.id_habitacion;
-          
-          option.textContent ="ID Hab: " + habitacion.id_habitacion+"- Numero Hab: " + habitacion.numero_habitacion;
-          selectHabitacion.appendChild(option);
-        });
-      })
-      .catch(error => {
-        console.error('Error cargando habitaciones:', error);
+    .then((habitaciones) => {
+      selectHabitacion.innerHTML = "";
+
+      if (!habitaciones || habitaciones.length === 0) {
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = "No hay habitaciones disponibles";
+        selectHabitacion.appendChild(option);
+        return;
+      }
+      habitaciones.forEach((habitacion) => {
+        const option = document.createElement("option");
+        option.value = habitacion.id_habitacion;
+
+        option.textContent =
+          "ID Hab: " +
+          habitacion.id_habitacion +
+          "- Numero Hab: " +
+          habitacion.numero_habitacion;
+        selectHabitacion.appendChild(option);
       });
+    })
+    .catch((error) => {
+      console.error("Error cargando habitaciones:", error);
+    });
 }
 
 function enviarHabitacion(id_habitacion) {
@@ -326,123 +331,122 @@ function enviarHabitacion(id_habitacion) {
     body: JSON.stringify({ habitacion: id_habitacion }),
   })
     .then((respuesta) => respuesta.json())
-    .then(camas => {
-      const selectCama = document.querySelector('#selectCama');
-      selectCama.innerHTML = '';
+    .then((camas) => {
+      const selectCama = document.querySelector("#selectCama");
+      selectCama.innerHTML = "";
       console.log("Respuesta recibida:", camas);
       if (!camas || camas.length === 0) {
-        const option = document.createElement('option');
-        option.value = '';
-        option.textContent = 'No hay camas disponibles';
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = "No hay camas disponibles";
         selectCama.appendChild(option);
         return;
       }
 
-      camas.forEach(cama => {
-        const option = document.createElement('option');
+      camas.forEach((cama) => {
+        const option = document.createElement("option");
         option.value = cama.id_cama;
-        option.textContent ="ID Cama: "+ cama.id_cama +"- Numero Cama: "+ cama.numero_cama;
+        option.textContent =
+          "ID Cama: " + cama.id_cama + "- Numero Cama: " + cama.numero_cama;
         selectCama.appendChild(option);
       });
     })
-    .catch(error => {
-      console.error('Error cargando camas:', error);
+    .catch((error) => {
+      console.error("Error cargando camas:", error);
     });
 }
 
+function actualizarDniCama(validar) {
+  if (validar) {
+    const dni = document.querySelector(".dni").value;
+    const valor = (selectCama = document.querySelector(".cama").value);
+    const id_cama = valor.split("-")[0].trim();
+    const url = "/paciente/asignar-dni";
 
-function actualizarDniCama(){
-  const dni = document.querySelector(".dni").value;
-  const valor = selectCama = document.querySelector(".cama").value;
-  const id_cama = valor.split("-")[0].trim();
-  const url = "/paciente/asignar-dni";
-
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({id_cama:id_cama,dni:dni}),
-  })
-    .then((respuesta) => respuesta.json())
-    .then((data) => {
-      console.log(data);
-      vaciarInputs(data.success)
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id_cama: id_cama, dni: dni }),
     })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-  
-
+      .then((respuesta) => respuesta.json())
+      .then((data) => {
+        console.log(data);
+        vaciarInputs(data.success);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  } else {
+    console.log("Error en actualizacion dni");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-const selectAla = document.querySelector(".ala");
-const selectHabitacion = document.querySelector(".habitacion");
-const selectCama = document.querySelector(".cama");
+  const selectAla = document.querySelector(".ala");
+  const selectHabitacion = document.querySelector(".habitacion");
+  const selectCama = document.querySelector(".cama");
 
-let ultimaAlaSeleccionada = null;
-let ultimaHabitacionSeleccionada = null;
+  let ultimaAlaSeleccionada = null;
+  let ultimaHabitacionSeleccionada = null;
 
+  selectAla.addEventListener("mousedown", () => {
+    ultimaAlaSeleccionada = selectAla.value;
+  });
 
-selectAla.addEventListener("mousedown", () => {
-  ultimaAlaSeleccionada = selectAla.value;
-});
+  selectAla.addEventListener("change", (event) => {
+    const valorSeleccionado = event.target.value;
+    selectHabitacion.innerHTML = "";
+    selectCama.innerHTML = "";
 
-selectAla.addEventListener("change", (event) => {
-  const valorSeleccionado = event.target.value;
-  selectHabitacion.innerHTML = '';
-  selectCama.innerHTML = ''; 
+    if (valorSeleccionado === "") {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "Se debe seleccionar un ala";
+      selectHabitacion.appendChild(option);
+    } else {
+      enviarAla(valorSeleccionado);
+      ultimaAlaSeleccionada = valorSeleccionado;
+    }
+  });
 
-  if (valorSeleccionado === "") {
-    const option = document.createElement('option');
-    option.value = '';
-    option.textContent = 'Se debe seleccionar un ala';
-    selectHabitacion.appendChild(option);
-  } else {
-    enviarAla(valorSeleccionado);
-    ultimaAlaSeleccionada = valorSeleccionado;
-  }
-});
+  selectAla.addEventListener("click", () => {
+    if (selectAla.value === ultimaAlaSeleccionada && selectAla.value !== "") {
+      selectHabitacion.innerHTML = "";
+      selectCama.innerHTML = "";
+      enviarAla(selectAla.value);
+    }
+  });
 
-selectAla.addEventListener("click", () => {
-  if (selectAla.value === ultimaAlaSeleccionada && selectAla.value !== "") {
-    selectHabitacion.innerHTML = '';
-    selectCama.innerHTML = '';
-    enviarAla(selectAla.value);
-  }
-});
+  selectHabitacion.addEventListener("mousedown", () => {
+    ultimaHabitacionSeleccionada = selectHabitacion.value;
+  });
 
-selectHabitacion.addEventListener("mousedown", () => {
-  ultimaHabitacionSeleccionada = selectHabitacion.value;
-});
+  selectHabitacion.addEventListener("change", (event) => {
+    const valorSeleccionado = event.target.value;
+    selectCama.innerHTML = "";
 
-selectHabitacion.addEventListener("change", (event) => {
-  const valorSeleccionado = event.target.value;
-  selectCama.innerHTML = '';
+    if (valorSeleccionado === "") {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "Se debe seleccionar una habitacion";
+      selectCama.appendChild(option);
+    } else {
+      enviarHabitacion(valorSeleccionado);
+      ultimaHabitacionSeleccionada = valorSeleccionado;
+    }
+  });
 
-  if (valorSeleccionado === "") {
-    const option = document.createElement('option');
-    option.value = '';
-    option.textContent = 'Se debe seleccionar una habitacion';
-    selectCama.appendChild(option);
-  } else {
-    enviarHabitacion(valorSeleccionado);
-    ultimaHabitacionSeleccionada = valorSeleccionado;
-  }
-});
-
-selectHabitacion.addEventListener("click", () => {
-  if (
-    selectHabitacion.value === ultimaHabitacionSeleccionada &&
-    selectHabitacion.value !== ""
-  ) {
-    selectCama.innerHTML = '';
-    enviarHabitacion(selectHabitacion.value);
-  }
-});
-
-
+  selectHabitacion.addEventListener("click", () => {
+    if (
+      selectHabitacion.value === ultimaHabitacionSeleccionada &&
+      selectHabitacion.value !== ""
+    ) {
+      selectCama.innerHTML = "";
+      enviarHabitacion(selectHabitacion.value);
+    }
+  });
 
   const spanCerrrarModalAsignacion = document.querySelector(
     ".spanCerrrarModalAsignacion"
@@ -459,8 +463,6 @@ selectHabitacion.addEventListener("click", () => {
   const botonCerrarConfirmacion = document.querySelector(
     ".botonCerrarConfirmacion"
   );
-
-
 
   const botonCerrarExito = document.querySelector(".botonCerrarExito");
 
