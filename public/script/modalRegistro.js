@@ -222,7 +222,7 @@ function enviarInformacion() {
   const numero_obra_social = document.querySelector(".numeroObraSocial").value;
 
   if (medico_derivador.trim() == "") {
-    medico_derivador = "No especifica";
+    medico_derivador = null;
   }
 
   const datosCombinados = {
@@ -235,10 +235,14 @@ function enviarInformacion() {
       fecha_nacimiento,
       sexo,
       direccion,
-      obra_social,
       medios_ingreso,
       ciudad,
+    },
+    mutual: {
+      obra_social,
       numero_obra_social,
+    },
+    medico: {
       medico_derivador,
     },
     asignacion: {
@@ -260,7 +264,8 @@ function enviarInformacion() {
     .then((respuesta) => respuesta.json())
     .then((data) => {
       console.log(data);
-      actualizarDniCama(data.success);
+
+      enviarInformacionMultiple(data.success);
       mostrarModalExito(data.success);
     })
     .catch((error) => {
@@ -268,16 +273,26 @@ function enviarInformacion() {
     });
 }
 
-function elegirMedico(selectVias, inputMedico, campoMedico) {
+function elegirMedico(selectVias, selectMedico, campoMedico) {
+  if (selectVias.value === "Derivacion Medica") {
+    selectMedico.disabled = false;
+    selectMedico.classList.remove("disabled");
+    campoMedico.style.color = "black";
+  } else {
+    selectMedico.disabled = true;
+    selectMedico.selectedIndex = 0; // opción "Seleccionar Medico"
+    selectMedico.classList.add("disabled");
+    campoMedico.style.color = "#a09f9f";
+  }
   selectVias.addEventListener("change", () => {
     if (selectVias.value === "Derivacion Medica") {
-      inputMedico.disabled = false;
-      inputMedico.classList.remove("disabled");
+      selectMedico.disabled = false;
+      selectMedico.classList.remove("disabled");
       campoMedico.style.color = "black";
     } else {
-      inputMedico.disabled = true;
-      inputMedico.value = "";
-      inputMedico.classList.add("disabled");
+      selectMedico.disabled = true;
+      selectMedico.selectedIndex = 0; // resetear selección
+      selectMedico.classList.add("disabled");
       campoMedico.style.color = "#a09f9f";
     }
   });
@@ -356,19 +371,31 @@ function enviarHabitacion(id_habitacion) {
     });
 }
 
-function actualizarDniCama(validar) {
+function enviarInformacionMultiple(validar) {
   if (validar) {
     const dni = document.querySelector(".dni").value;
     const valor = (selectCama = document.querySelector(".cama").value);
     const id_cama = valor.split("-")[0].trim();
-    const url = "/paciente/asignar-dni";
+    const selectMedico = document.querySelector(".medico");
+    const id_medico = selectMedico.value;
+    const numero_obra_social =
+      document.querySelector(".numeroObraSocial").value;
+    const obra_social = document.querySelector(".obraSocial").value;
+
+    const url = "/paciente/asignar-datos";
 
     fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id_cama: id_cama, dni: dni }),
+      body: JSON.stringify({
+        id_cama: id_cama,
+        dni: dni,
+        id_medico: id_medico,
+        numero_obra_social: numero_obra_social,
+        obra_social: obra_social,
+      }),
     })
       .then((respuesta) => respuesta.json())
       .then((data) => {
@@ -379,9 +406,36 @@ function actualizarDniCama(validar) {
         console.error("Error:", error);
       });
   } else {
-    console.log("Error en actualizacion dni");
+    console.log("Error en actualizacion en enviarInformacionMultiple");
   }
 }
+
+// function actualizarDniCama(validar) {
+//   if (validar) {
+//     const dni = document.querySelector(".dni").value;
+//     const valor = (selectCama = document.querySelector(".cama").value);
+//     const id_cama = valor.split("-")[0].trim();
+//     const url = "/paciente/asignar-dni";
+
+//     fetch(url, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ id_cama: id_cama, dni: dni }),
+//     })
+//       .then((respuesta) => respuesta.json())
+//       .then((data) => {
+//         console.log(data);
+//         vaciarInputs(data.success);
+//       })
+//       .catch((error) => {
+//         console.error("Error:", error);
+//       });
+//   } else {
+//     console.log("Error en actualizacion dni");
+//   }
+// }
 
 document.addEventListener("DOMContentLoaded", () => {
   const selectAla = document.querySelector(".ala");
@@ -471,12 +525,10 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   const selectVias = document.querySelector(".vias");
-
-  const inputMedico = document.querySelector(".medico");
-
+  const selectMedico = document.querySelector(".medico");
   const campoMedicoDerivador = document.querySelector(".campoMedicoDerivador");
 
-  elegirMedico(selectVias, inputMedico, campoMedicoDerivador);
+  elegirMedico(selectVias, selectMedico, campoMedicoDerivador);
 
   eliminarSpan(campos);
 

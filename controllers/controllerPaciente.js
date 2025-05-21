@@ -3,7 +3,10 @@ const Paciente = require("../models/Paciente.js");
 
 
 const crearPaciente = async (req, res) => {
+
   const pacienteNuevo = req.body.paciente;
+
+    
   try {
     const resultado = await Paciente.crearPaciente(pacienteNuevo);
     res.status(201).json({success:true, mensaje: "Paciente agregado con éxito", resultado });
@@ -55,5 +58,15 @@ const listarPacientes = async(req, res) => {
 }
 
 
-module.exports = {crearPaciente, listarPacientes};
+const buscarPacientePorDni = async (dni) => {
+  try {
+    const paciente = await Paciente.findOne({ where: { dni } });
+    return paciente; // Devuelve el paciente o null si no existe
+  } catch (error) {
+    throw error; // Deja que el controlador maneje el error
+  }
+};
+
+
+module.exports = {crearPaciente, listarPacientes, buscarPacientePorDni};
 

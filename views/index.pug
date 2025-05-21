@@ -70,10 +70,14 @@ html
                       option(value='Derivacion Medica') Derivacion Medica
                       option(value='Emergencia') Emergencia
                   span.error-message(data-field="vias")  
+
               div.campoMedicoDerivador
                   label(for='medico') Medico Derivador:
-                  input.medico(type='text', name='medico', required=true disabled=true)
-                  span.error-message(data-field="medico")     
+                  select.medico(name='medico')
+                    option(value='') Seleccionar Medico
+                    each medico in medicos 
+                      option(value=medico.id_medico)= medico.id_medico + " - "+medico.nombre + " - "+ medico.especialidad  
+                    span.error-message(data-field="medico")   
               div 
                   label(for='obraSocial') Obra Social:
                   select.obraSocial(type='text', name='obraSocial', required=true)
@@ -90,7 +94,7 @@ html
                   input.numeroObraSocial(type='text', name='numeroObraSocial', required=true) 
                   span.error-message(data-field="numeroObraSocial")
             div
-              button.botonAbrirModalAsignacion(type='button') Agregar paciente
+              button.botonAbrirModalAsignacion(type='button') Ingresar paciente
 
 
       section.modalRegistro 

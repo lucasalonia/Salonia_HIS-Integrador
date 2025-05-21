@@ -1,17 +1,12 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../config/db.js");
 const Habitacion = require("./Habitacion.js");
-const Paciente = require("./Paciente.js");
+
 
 class Cama extends Model {
   static associate(models) {
     Cama.belongsTo(models.Habitacion, { foreignKey: "id_habitacion" });
-    Cama.belongsTo(models.Paciente, {
-      foreignKey: "dni",
-      allowNull: true,
-      onDelete: "SET NULL",
-      onUpdate: "CASCADE",
-    });
+    Cama.hasMany(models.Internacion, { foreignKey: 'id_cama' });
   }
 
   static async listarCamasPorHabitacion(id_habitacion) {
@@ -50,16 +45,6 @@ Cama.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    liberada: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
-    higienizada: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
     id_habitacion: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -70,15 +55,15 @@ Cama.init(
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     },
-    dni: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: Paciente,
-        key: "dni",
-      },
-      onUpdate: "CASCADE",
-      onDelete: "SET NULL",
+      liberada: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
+    higienizada: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
     },
   },
   {
