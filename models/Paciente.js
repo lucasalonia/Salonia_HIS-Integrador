@@ -7,7 +7,7 @@ class Paciente extends Model {
   static associate(models) {
     Paciente.hasMany(models.Internacion, { foreignKey: 'id_paciente' });
     Paciente.hasOne(ObraSocial, { foreignKey: 'id_paciente' });
-    Paciente.hasMany(models.MedicoDerivador, { foreignKey: 'id_paciente' });
+    Paciente.hasMany(models.Derivacion, { foreignKey: 'id_paciente' });
 
   }
 

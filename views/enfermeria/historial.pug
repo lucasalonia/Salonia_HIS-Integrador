@@ -7,7 +7,11 @@ html
     include ../includes/navBar.pug
 
     section.info 
-
+      h1.titulo Buscar un paciente
+      div.infoBusqueda
+        form.infoBusqueda(action="/buscar" method="get")
+          input(type="text" name="query" placeholder="Buscar paciente...")
+          button(type="submit") Buscar
       div.seleccionPaciente
         select.alas(name="alas")
           option(value="") Alas

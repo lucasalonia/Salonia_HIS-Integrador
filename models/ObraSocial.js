@@ -7,9 +7,9 @@ class ObraSocial extends Model {
     ObraSocial.belongsTo(models.Paciente, { foreignKey: 'id_paciente' });
   }
 
-  static async crearObraSocial(obraSocialData) {
+  static async crearObraSocial(obraSocialData,options = {}) {
     try {
-      const nuevaObra = await this.create(obraSocialData);
+      const nuevaObra = await this.create(obraSocialData, options  );
       return nuevaObra;
     } catch (error) {
       console.error("Error al crear la obra social:", error);

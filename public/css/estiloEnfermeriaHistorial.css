@@ -2,20 +2,65 @@ section.info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
     padding-top: 80px;
-    gap: 40px;
+    gap: 20px;
     min-height: calc(100vh - 80px);
     background-color: #f9f9f9;
+    width: 100%;
+}
+h1{
+    height: 50px;
+    margin: 0px;
+    margin-top: 20px;
+
+}
+.infoBusqueda {
+    margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  gap: 20px;
+  width: 60%;
+
+  margin: 0 auto;
+}
+
+.infoBusqueda input[type="text"] {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+}
+
+.infoBusqueda input[type="text"]:focus {
+  outline: none;
+  border-color: #000000;
+
+}
+
+.infoBusqueda button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.infoBusqueda button[type="submit"]:hover {
+  background-color: #0056b3;
 }
 
 div.seleccionPaciente {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    width: 100%;
+    width: 150%;
     max-width: 700px;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 div.seleccionPaciente select {
@@ -31,7 +76,7 @@ div.historial {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 150%;
     max-width: 600px;
     padding: 20px;
     border: 1px solid #ccc;
@@ -86,3 +131,4 @@ form.historialMedico button {
 form.historialMedico button:hover {
     background-color: #0056b3;
 }
+

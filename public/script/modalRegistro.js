@@ -203,7 +203,7 @@ function vaciarInputs(exito) {
   }
 }
 
-function enviarInformacion() {
+async function enviarInformacion() {
   const dni = document.querySelector(".dni").value;
   const nombre = document.querySelector(".nombre").value;
   const apellido = document.querySelector(".apellido").value;
@@ -221,7 +221,7 @@ function enviarInformacion() {
   let medico_derivador = document.querySelector(".medico").value;
   const numero_obra_social = document.querySelector(".numeroObraSocial").value;
 
-  if (medico_derivador.trim() == "") {
+  if (medico_derivador.trim() === "") {
     medico_derivador = null;
   }
 
@@ -252,26 +252,30 @@ function enviarInformacion() {
     },
   };
 
-  const url = "/paciente/agregar";
-
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(datosCombinados),
-  })
-    .then((respuesta) => respuesta.json())
-    .then((data) => {
-      console.log(data);
-
-      enviarInformacionMultiple(data.success);
-      mostrarModalExito(data.success);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
+  try {
+    const respuesta = await fetch("/paciente/agregar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datosCombinados),
     });
+
+    const data = await respuesta.json();
+    console.log(data);
+
+    if (data.success) {
+
+     
+      mostrarModalExito(true);
+      vaciarInputs(data.success);
+
+    } else {
+      console.log("Error en agregar paciente");
+    }
+  } catch (error) {
+    console.error("Error en enviarInformacion:", error);
+  }
 }
+
 
 function elegirMedico(selectVias, selectMedico, campoMedico) {
   if (selectVias.value === "Derivacion Medica") {
@@ -370,72 +374,6 @@ function enviarHabitacion(id_habitacion) {
       console.error("Error cargando camas:", error);
     });
 }
-
-function enviarInformacionMultiple(validar) {
-  if (validar) {
-    const dni = document.querySelector(".dni").value;
-    const valor = (selectCama = document.querySelector(".cama").value);
-    const id_cama = valor.split("-")[0].trim();
-    const selectMedico = document.querySelector(".medico");
-    const id_medico = selectMedico.value;
-    const numero_obra_social =
-      document.querySelector(".numeroObraSocial").value;
-    const obra_social = document.querySelector(".obraSocial").value;
-
-    const url = "/paciente/asignar-datos";
-
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id_cama: id_cama,
-        dni: dni,
-        id_medico: id_medico,
-        numero_obra_social: numero_obra_social,
-        obra_social: obra_social,
-      }),
-    })
-      .then((respuesta) => respuesta.json())
-      .then((data) => {
-        console.log(data);
-        vaciarInputs(data.success);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  } else {
-    console.log("Error en actualizacion en enviarInformacionMultiple");
-  }
-}
-
-// function actualizarDniCama(validar) {
-//   if (validar) {
-//     const dni = document.querySelector(".dni").value;
-//     const valor = (selectCama = document.querySelector(".cama").value);
-//     const id_cama = valor.split("-")[0].trim();
-//     const url = "/paciente/asignar-dni";
-
-//     fetch(url, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ id_cama: id_cama, dni: dni }),
-//     })
-//       .then((respuesta) => respuesta.json())
-//       .then((data) => {
-//         console.log(data);
-//         vaciarInputs(data.success);
-//       })
-//       .catch((error) => {
-//         console.error("Error:", error);
-//       });
-//   } else {
-//     console.log("Error en actualizacion dni");
-//   }
-// }
 
 document.addEventListener("DOMContentLoaded", () => {
   const selectAla = document.querySelector(".ala");
@@ -561,3 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
     botonCerrarExito.addEventListener("click", cerrarModalExito);
   }
 });
+
+
+
+

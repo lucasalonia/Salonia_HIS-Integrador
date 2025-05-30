@@ -21,7 +21,10 @@ div.formularioPaciente {
     position: relative;
     top: 100px; /* Baja el formulario un poco para evitar el header */
 }
-
+h1{
+    font-size: 30px;
+    margin-bottom: 50px;
+}
 /* Centrar div.formularioPaciente en el centro de la pantalla */
 div.formularioPaciente {
     display: flex;

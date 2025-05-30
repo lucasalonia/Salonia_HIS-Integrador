@@ -3,15 +3,15 @@ const { sequelize } = require("../config/db.js");
 const Paciente = require("./Paciente.js");
 const Medico = require("./Medico.js");
 
-class MedicoDerivador extends Model {
+class Derivacion extends Model {
   static associate(models) {
-    MedicoDerivador.belongsTo(models.Paciente, { foreignKey: 'id_paciente' });
-    MedicoDerivador.belongsTo(models.Medico, { foreignKey: 'id_medico' });
+    Derivacion.belongsTo(models.Paciente, { foreignKey: 'id_paciente' });
+    Derivacion.belongsTo(models.Medico, { foreignKey: 'id_medico' });
   }
 
-  static async crearDerivacion(data) {
+  static async crearDerivacion(data, options = {}) {
     try {
-      const derivacion = await this.create(data);
+      const derivacion = await this.create(data, options);
       return derivacion;
     } catch (error) {
       console.error("Error al crear la derivación:", error);
@@ -20,13 +20,13 @@ class MedicoDerivador extends Model {
   }
 
   static async listarDerivaciones() {
-    return await MedicoDerivador.findAll({
+    return await Derivacion.findAll({
       include: [Paciente, Medico]
     });
   }
 }
 
-MedicoDerivador.init(
+Derivacion.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -57,10 +57,10 @@ MedicoDerivador.init(
   },
   {
     sequelize,
-    modelName: "MedicoDerivador",
-    tableName: "medicos_derivadores",
+    modelName: "Derivacion",
+    tableName: "derivaciones",
     timestamps: false
   }
 );
 
-module.exports = MedicoDerivador;
+module.exports = Derivacion;

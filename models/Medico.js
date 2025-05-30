@@ -4,7 +4,7 @@ const { sequelize } = require("../config/db.js");
 class Medico extends Model {
   static associate(models) {
     
-    Medico.hasMany(models.MedicoDerivador, { foreignKey: 'id_medico' });
+    Medico.hasMany(models.Derivacion, { foreignKey: 'id_medico' });
   }
 
   static async crearMedico(medicoData) {

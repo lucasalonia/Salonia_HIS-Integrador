@@ -1,8 +1,7 @@
 const ObraSocial = require("../models/ObraSocial.js");
 
-const asignarObraSocial = async (req, id_paciente) => {
-  const nombre = req.body.obra_social;
-  const numero = req.body.numero_obra_social;
+const asignarObraSocial = async (nombre,numero, id_paciente) => {
+ 
   const obraSocialData = { id_paciente, nombre, numero };
   try {
     const resultado = await ObraSocial.crearObraSocial(obraSocialData);

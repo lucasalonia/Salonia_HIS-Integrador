@@ -9,7 +9,7 @@ html
 
     section
       div.formularioPaciente
-        h2 Formulario Paciente 
+        h1 Ingrese los datos del paciente a internar 
         form.formularioData(onsubmit="return false;")
             div.contenedorUno
               div
@@ -124,7 +124,9 @@ html
       section.modalConfirmacion 
         div.contenidoConfirmacion
           div.cabeceraModal
-            h2 ¿Desea guardar los datos?
+            h2 ¿Desea guardar los datos? 
+            p.datosConfirmar
+            p Al presionar "si", el paciente sera internado y la cama ocupada.
           div.botonesModal
             button.botonEnviarConfirmacion(type='button', onclick='enviarInformacion()') Si 
             button.botonCerrarConfirmacion(type='button') No
