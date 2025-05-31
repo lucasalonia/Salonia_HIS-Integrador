@@ -24,6 +24,9 @@ class Derivacion extends Model {
       include: [Paciente, Medico]
     });
   }
+  static async buscarDerivacionPorIdPaciente(id_paciente) {
+    return await Derivacion.findOne({ where: { id_paciente } });
+  }
 }
 
 Derivacion.init(

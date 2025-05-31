@@ -20,6 +20,14 @@ class ObraSocial extends Model {
   static async listarObrasSociales() {
     return await ObraSocial.findAll();
   }
+  static async buscarObraSocialPorIdPaciente(id_paciente) {
+    return await ObraSocial.findOne({ where: { id_paciente } });
+  }
+
+
+static async buscarObraSocialPorIdPaciente(id_paciente,options = {}) {
+  return await this.findOne({ where: { id_paciente },...options });
+}
 }
 
 ObraSocial.init(

@@ -55,7 +55,7 @@ function validarFormulario() {
 
   if (dni && !/^\d{8}$/.test(dni.value.trim())) {
     if (dniError) {
-      dniError.textContent = "El DNI debe tener exactamente 7 números.";
+      dniError.textContent = "El DNI debe tener exactamente 8 números.";
       dniError.classList.add("active");
     }
     esValido = false;
@@ -202,6 +202,21 @@ function vaciarInputs(exito) {
     });
   }
 }
+function vaciarInputsSinDni(exito) {
+  if (exito) {
+    const inputs = document.querySelectorAll(
+      ".nombre, .apellido, .email, .telefono, .calendar, .sexo, .direccion, .obraSocial, .ciudad, .medico, .numeroObraSocial"
+    );
+
+    inputs.forEach((input) => {
+      if (input.type === "checkbox" || input.type === "radio") {
+        input.checked = false;
+      } else {
+        input.value = "";
+      }
+    });
+  }
+}
 
 async function enviarInformacion() {
   const dni = document.querySelector(".dni").value;
@@ -263,11 +278,9 @@ async function enviarInformacion() {
     console.log(data);
 
     if (data.success) {
-
-     
       mostrarModalExito(true);
       vaciarInputs(data.success);
-
+       bloquearCampos(false)
     } else {
       console.log("Error en agregar paciente");
     }
@@ -275,7 +288,6 @@ async function enviarInformacion() {
     console.error("Error en enviarInformacion:", error);
   }
 }
-
 
 function elegirMedico(selectVias, selectMedico, campoMedico) {
   if (selectVias.value === "Derivacion Medica") {
@@ -375,7 +387,154 @@ function enviarHabitacion(id_habitacion) {
     });
 }
 
+function bloquearCampos(desbloquear) {
+  const campos = document.querySelectorAll(
+    ".formularioData input, .formularioData select, .formularioData label"
+  );
+  const labels = document.querySelectorAll(".formularioData label");
+  campos.forEach((campo) => {
+    campo.disabled = true;
+    campo.style.color = "#a09f9f";
+    if (
+      campo.classList.contains("dni") ||
+      campo.classList.contains("etiquetaDni")
+    ) {
+      campo.disabled = false;
+      campo.style.color = "black";
+    }
+  });
+  if (desbloquear) {
+    const campos = document.querySelectorAll(
+      ".formularioData input, .formularioData select, .formularioData label"
+    );
+    campos.forEach((campo) => {
+      campo.disabled = false;
+      campo.style.color = "#2d6aac";
+    });
+    labels.forEach((label) => {
+      label.style.color = "black";
+    });
+  }
+}
+
+function buscarPacientePorDni() {
+  const dniInput = document.querySelector(".dni");
+  console.log(dniInput);
+  let flag = true;
+
+  if (dniInput && dniInput.value.trim() === "") {
+    const dniError = document.querySelector('.error-message[data-field="dni"]');
+    if (dniError) {
+      dniError.textContent =
+        "Ingrese un numero valido para realizar la busqueda del paciente";
+      dniError.classList.add("active");
+    }
+    flag = false;
+    return;
+  }
+  if (dniInput && !/^\d{8}$/.test(dniInput.value.trim())) {
+    const dniError = document.querySelector('.error-message[data-field="dni"]');
+    if (dniError) {
+      dniError.textContent = "El DNI debe tener exactamente 8 números.";
+      dniError.classList.add("active");
+    }
+    flag = false;
+    return;
+  }
+
+  if (flag) {
+    const dni = dniInput.value.trim();
+    const url = `/paciente/buscar/${dni}`;
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al buscar el paciente");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.paciente !== null) {
+          const paciente = data.paciente;
+          const obraSocial = data.obraSocial;
+          const medico = data.medico;
+          console.log(data);
+
+          console.log("Paciente encontrado:", paciente);
+
+          document.querySelector(".nombre").value = paciente.nombre || "";
+          document.querySelector(".apellido").value = paciente.apellido || "";
+          document.querySelector(".dni").value = paciente.dni || "";
+          document.querySelector(".email").value = paciente.email || "";
+          document.querySelector(".telefono").value =
+            paciente.numero_emergencia || "";
+          document.querySelector(".calendar").value =
+            paciente.fecha_nacimiento || "";
+          document.querySelector(".sexo").value = paciente.sexo || "";
+          document.querySelector(".direccion").value = paciente.direccion || "";
+          document.querySelector(".ciudad").value = paciente.ciudad || "";
+
+          document.querySelector(".numeroObraSocial").value =
+            obraSocial.numero || "";
+          document.querySelector(".obraSocial").value = obraSocial.nombre || "";
+
+          document.querySelector(".vias").value = paciente.medios_ingreso || "";
+
+          document.querySelector(".medico").value =
+            medico?.id_medico?.toString() || "";
+
+          bloquearCampos(true);
+        } else {
+          console.log("No se encontró el paciente con DNI:", dni);
+          vaciarInputsSinDni(true);
+          mostrarModalDni(true, dni);
+          bloquearCampos(true);
+        }
+      })
+      .catch((error) => {
+        console.error("Error al buscar el paciente:", error);
+      });
+  }
+}
+
+function mostrarModalDni(dniNoEncontrado, dni) {
+  const modalDni = document.querySelector(".modalDni");
+  const dniSpan = document.querySelector('span.dni-message[data-field="dni"]');
+
+  if (dniNoEncontrado) {
+    modalDni.style.display = "flex";
+    if (dniSpan) {
+      dniSpan.textContent = dni;
+      dniSpan.style.fontWeight = "bold";
+      dniSpan.style.color = "red";
+      dniSpan.style.fontSize = "20px";
+    }
+  }
+}
+
+function cerrarModalDni() {
+  const modalDni = document.querySelector(".modalDni");
+
+  modalDni.style.display = "none";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  //Busqueda de paciente por DNI. Bloqueo y desbloqueo de campos
+  bloquearCampos();
+  const botonBuscarDni = document.querySelector(".buscarDni");
+  if (botonBuscarDni) {
+    botonBuscarDni.addEventListener("click", buscarPacientePorDni);
+  } else {
+    console.error("No se encontró el elemento .openModal");
+  }
+
+  const botonModalDni = document.querySelector(".botonCerrarModalDni");
+  if (botonModalDni) {
+    botonModalDni.addEventListener("click", cerrarModalDni);
+  } else {
+    console.error("No se encontró el elemento .openModal");
+  }
+
+  //Agregar alas habitaciones y camas
   const selectAla = document.querySelector(".ala");
   const selectHabitacion = document.querySelector(".habitacion");
   const selectCama = document.querySelector(".cama");
@@ -499,7 +658,3 @@ document.addEventListener("DOMContentLoaded", () => {
     botonCerrarExito.addEventListener("click", cerrarModalExito);
   }
 });
-
-
-
-

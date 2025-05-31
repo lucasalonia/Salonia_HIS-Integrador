@@ -31,6 +31,20 @@ class Cama extends Model {
 
     return cama;
   }
+
+  static async actualizarEstadoCama(id_cama, nuevoEstado,options = {}) {
+  const cama = await Cama.findByPk(id_cama);
+  if (!cama) {
+    throw new Error("Cama no encontrada");
+  }
+
+  if (nuevoEstado.hasOwnProperty('liberada')) {
+    cama.liberada = nuevoEstado.liberada;
+  }
+
+  await cama.save(options);
+  return cama;
+}
 }
 
 Cama.init(

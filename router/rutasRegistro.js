@@ -24,6 +24,14 @@ router.post("/paciente/agregar-cama", async (req, res) => {
 });
 
 //PROTOCOLOS GET
+
+//Buscar paciente por DNI
+router.get('/paciente/buscar/:dni', async (req, res) => {
+  pacienteController.buscarPacientePorDni(req, res);
+});
+
+
+
 router.get("/", async function (req, res, next) {
   try {
     const alas = await alasController.listarAlas();

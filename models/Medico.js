@@ -20,6 +20,10 @@ class Medico extends Model {
   static async listarMedicos() {
     return await Medico.findAll();
   }
+  static async buscarMedicoPorId(id_medico) {
+    return await Medico.findOne({ where: { id_medico } });
+  }
+  
 }
 
 Medico.init(

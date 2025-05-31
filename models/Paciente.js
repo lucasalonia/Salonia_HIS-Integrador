@@ -1,27 +1,36 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../config/db.js");
 
-
 class Paciente extends Model {
-
   static associate(models) {
-    Paciente.hasMany(models.Internacion, { foreignKey: 'id_paciente' });
-    Paciente.hasOne(ObraSocial, { foreignKey: 'id_paciente' });
-    Paciente.hasMany(models.Derivacion, { foreignKey: 'id_paciente' });
-
+    Paciente.hasMany(models.Internacion, { foreignKey: "id_paciente" });
+    Paciente.hasOne(ObraSocial, { foreignKey: "id_paciente" });
+    Paciente.hasMany(models.Derivacion, { foreignKey: "id_paciente" });
   }
 
-  static async crearPaciente(pacienteData) {
-
+  static async crearPaciente(pacienteData, options = {}) {
     try {
-      const nuevoPaciente = await this.create(pacienteData);
+      const nuevoPaciente = await this.create(pacienteData, options);
       return nuevoPaciente;
-
     } catch (error) {
       console.error("Error al crear el paciente:", error);
       throw error;
     }
-
+  }
+  static async actualizarPacientePorDni(dni, nuevosDatos, options = {}) {
+    try {
+      const [actualizados] = await this.update(nuevosDatos, {
+        where: { dni },
+        ...options,
+      });
+      if (actualizados === 0) {
+        throw new Error("No se encontró el paciente para actualizar.");
+      }
+      return await this.findOne({ where: { dni } });
+    } catch (error) {
+      console.error("Error al actualizar el paciente:", error);
+      throw error;
+    }
   }
 
   static async listarPacientes() {
@@ -29,13 +38,12 @@ class Paciente extends Model {
     return pacientes;
   }
 
-  static async buscarPacientePorDni(dni) {
+  static async buscarPacientePorDni(dni, options = {}) {
     try {
       const paciente = await Paciente.findOne({
-        where: { dni }
+        where: { dni }, ...options
       });
       return paciente;
-      
     } catch (error) {
       console.error("Error al buscar el paciente por DNI:", error);
       throw error;
@@ -54,10 +62,9 @@ Paciente.init(
       allowNull: false,
     },
     dni: {
-      type: DataTypes.INTEGER, 
+      type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
-      
     },
     numero_emergencia: {
       type: DataTypes.INTEGER,
@@ -98,13 +105,10 @@ Paciente.init(
   },
   {
     sequelize,
-    modelName: "Paciente", 
+    modelName: "Paciente",
     tableName: "pacientes",
-    timestamps: false, 
+    timestamps: false,
   }
 );
 
-
 module.exports = Paciente;
-
-

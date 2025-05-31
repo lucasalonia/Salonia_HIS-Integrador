@@ -11,6 +11,13 @@ html
       div.formularioPaciente
         h1 Ingrese los datos del paciente a internar 
         form.formularioData(onsubmit="return false;")
+            div.contenedorDni
+                  label.etiquetaDni(for='dni') DNI:
+                  div.dni-buscar
+                    input.dni(type='text', name='dni', required=true)
+                    button.buscarDni(type='button') Buscar
+                  span.error-message(data-field="dni")
+
             div.contenedorUno
               div
                   label(for='nombre') Nombre:
@@ -21,10 +28,7 @@ html
                   input.apellido(type='text', name='apellido', required=true)
                   span.error-message(data-field="apellido") 
 
-              div
-                  label(for='dni') DNI:
-                  input.dni(type='text', name='dni', required=true)
-                  span.error-message(data-field="dni")     
+                   
 
             div.contenedorDos
               div
@@ -138,7 +142,17 @@ html
           div.cuerpoExito
             p Los datos se enviaron correctamente.
           div.botonesExito
-            button.botonCerrarExito(type='button') Cerrar  
+            button.botonCerrarExito(type='button') Cerrar
+
+      section.modalDni
+        div.contenidoModalDni
+          div.cabeceraModalDni
+            h2 No se encontro el DNI:
+            span.dni-message(data-field="dni")
+          div.cuerpoModalDni
+            p Deberá ingresar los datos del paciente de forma manual.
+          div.botonesModalDni
+            button.botonCerrarModalDni(type='button') Cerrar        
                 
 
 

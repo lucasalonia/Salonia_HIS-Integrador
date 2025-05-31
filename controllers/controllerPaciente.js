@@ -3,57 +3,85 @@ const Internacion = require("../models/Internacion.js");
 const ObraSocial = require("../models/ObraSocial.js");
 const Derivacion = require("../models/Derivacion.js");
 const Cama = require("../models/Cama.js");
+const Medico = require("../models/Medico.js");
 
 const { sequelize } = require("../config/db");
 
 const crearPaciente = async (req, res) => {
-
   const { paciente, mutual, medico, asignacion } = req.body;
-  
-  const transaction = await sequelize.transaction();
 
+  const transaction = await sequelize.transaction();
+  const dni = paciente.dni;
   try {
-    const nuevoPaciente = await Paciente.crearPaciente(paciente, {
+    let pacienteCargado = await Paciente.buscarPacientePorDni(dni, {
       transaction,
     });
+    if (pacienteCargado) {
+       await pacienteCargado.update(paciente, { transaction });
+    } else {
+       pacienteCargado = await Paciente.crearPaciente(paciente, {
+        transaction,
+      });
+    }
 
     await Internacion.crearInternacion(
       {
         id_cama: asignacion.cama,
-        id_paciente: nuevoPaciente.id,
+        id_paciente: pacienteCargado.id,
       },
       { transaction }
     );
 
-    await ObraSocial.crearObraSocial(
-      {
-        nombre: mutual.obra_social,
-        numero: mutual.numero_obra_social,
-        id_paciente: nuevoPaciente.id,
-      },
+    const obraSocialExistente = await ObraSocial.buscarObraSocialPorIdPaciente(
+      pacienteCargado.id,
       { transaction }
     );
-
-    if (medico.medico_derivador) {
-      await Derivacion.crearDerivacion(
+    if (obraSocialExistente) {
+      await obraSocialExistente.update(
         {
-          id_medico: medico.medico_derivador,
-          id_paciente: nuevoPaciente.id,
+          nombre: mutual.obra_social,
+          numero: mutual.numero_obra_social,
+          id_paciente: pacienteCargado.id,
+        },
+        { transaction }
+      );
+    } else {
+      await ObraSocial.crearObraSocial(
+        {
+          nombre: mutual.obra_social,
+          numero: mutual.numero_obra_social,
+          id_paciente: pacienteCargado.id,
         },
         { transaction }
       );
     }
 
-    await transaction.commit();
+    if (medico.medico_derivador) {
+      await Derivacion.crearDerivacion(
+        {
+          id_medico: medico.medico_derivador,
+          id_paciente: pacienteCargado.id,
+        },
+        { transaction }
+      );
+    }
 
+    await Cama.actualizarEstadoCama(
+      asignacion.cama,
+      { liberada: false },
+      { transaction }
+    );
+
+    await transaction.commit();
 
     res.status(201).json({
       success: true,
       mensaje: "Paciente agregado con éxito",
-      nuevoPaciente,
+      pacienteCargado,
     });
   } catch (error) {
     console.error("Error en el controlador:", error);
+    await transaction.rollback();
     res
       .status(500)
       .json({ mensaje: "Error al agregar paciente", error: error.message });
@@ -105,13 +133,29 @@ const listarPacientes = async (req, res) => {
   res.render("pacientes/listaPacientes", { pacientes });
 };
 
-const buscarPacientePorDni = async (dni) => {
-  try {
-    const paciente = await Paciente.findOne({ where: { dni } });
-    return paciente; 
-  } catch (error) {
-    throw error; 
+const buscarPacientePorDni = async (req, res) => {
+  const dni = req.params.dni;
+
+  const paciente = await Paciente.buscarPacientePorDni(dni);
+
+  if (!paciente) {
+    return res.json({ paciente: null, obraSocial: null, medico: null });
   }
+
+  const id_paciente = paciente.id;
+  const obraSocial = await ObraSocial.buscarObraSocialPorIdPaciente(
+    id_paciente
+  );
+
+  const derivacion = await Derivacion.buscarDerivacionPorIdPaciente(
+    id_paciente
+  );
+  let medico = null;
+  if (derivacion && derivacion.id_medico) {
+    medico = await Medico.buscarMedicoPorId(derivacion.id_medico);
+  }
+
+  res.json({ paciente, obraSocial, medico });
 };
 
 module.exports = { crearPaciente, listarPacientes, buscarPacientePorDni };
