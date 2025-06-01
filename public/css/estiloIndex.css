@@ -2,7 +2,6 @@
 body {
     font-family: 'Arial', sans-serif; /* Fuente moderna y limpia */
     font-size: 16px; /* Tamaño base de la fuente */
-    color: #333; /* Color del texto */
     line-height: 1.5; /* Espaciado entre líneas */
     margin: 0;
     padding: 0;
@@ -92,7 +91,6 @@ input, select {
     border: 1px solid #dcdcdc; /* Borde gris claro */
     border-radius: 4px;
     background-color: #f5f5f5; /* Fondo gris claro */
-    color: #333; /* Texto gris oscuro */
     box-sizing: border-box;
     font-size: 18px;
     color: #368fee;
@@ -128,7 +126,6 @@ form > div:last-child button:hover {
     border: 1px solid #dcdcdc; /* Borde gris claro */
     border-radius: 4px; /* Bordes redondeados */
     background-color: #f5f5f5; /* Fondo gris claro */
-    color: #333; /* Color del texto */
     font-family: 'Arial', sans-serif; /* Fuente del texto */
     font-size: 14px; /* Tamaño del texto */
     box-sizing: border-box;
@@ -413,7 +410,7 @@ input.error, select.error {
 }
 
 
-/* Modal de éxito */
+/* Modal de DNI */
 .modalDni {
     display: none; /* Oculta la modal por defecto */
     position: fixed;
@@ -466,4 +463,61 @@ input.error, select.error {
   .botonCerrarModalDni:hover {
     background-color:#2d6aac;
   }
+
+
+
+/*Modal Camas */
+  .modalCamasAdvertencia {
+    display: flex; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .contenidoModalCamasAdvertencia {
+    background-color: #fff; /* Fondo blanco */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    width: 400px;
+    text-align: center;
+  }
+  
+  .cabeceraModalCamasAdvertencia h2 {
+    margin: 0;
+    font-size: 24px;
+    color:  #ec1717; /* Verde para indicar éxito */
+  }
+  
+  .cuerpoModalCamasAdvertencia p {
+    margin: 15px 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .botonesModalCamasAdvertencia {
+    margin-top: 20px;
+  }
+  
+  .botonCerrarModalCamasAdvertencia {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ee3636;/* Verde */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .botonCerrarModalCamasAdvertencia:hover {
+    background-color:#ac2d2d;
+  }
+  
   

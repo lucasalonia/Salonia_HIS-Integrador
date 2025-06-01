@@ -17,6 +17,14 @@ const cargarCamaPorHabitacion = async (req, res) => {
   }
 };
 
+const listaCompletaCamasLiberadas = async (req, res) => {
+  try {
+    const camasLiberadas = await Cama.listarCamasLiberadas();
+    return camasLiberadas.map(cama => cama.toJSON());
+  } catch (error) {
+    console.error("Error al listar camas liberadas:", error);
+    res.status(500).json({ error: "Error al listar camas liberadas" });
+  }
+}
 
-
-module.exports = {cargarCamaPorHabitacion};
+module.exports = {cargarCamaPorHabitacion,listaCompletaCamasLiberadas};

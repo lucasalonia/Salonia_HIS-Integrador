@@ -17,9 +17,9 @@ const crearPaciente = async (req, res) => {
       transaction,
     });
     if (pacienteCargado) {
-       await pacienteCargado.update(paciente, { transaction });
+      await pacienteCargado.update(paciente, { transaction });
     } else {
-       pacienteCargado = await Paciente.crearPaciente(paciente, {
+      pacienteCargado = await Paciente.crearPaciente(paciente, {
         transaction,
       });
     }

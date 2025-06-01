@@ -81,10 +81,10 @@ html
                     option(value='') Seleccionar Medico
                     each medico in medicos 
                       option(value=medico.id_medico)= medico.id_medico + " - "+medico.nombre + " - "+ medico.especialidad  
-                    span.error-message(data-field="medico")   
+                  span.error-message(data-field="medico")   
               div 
                   label(for='obraSocial') Obra Social:
-                  select.obraSocial(type='text', name='obraSocial', required=true)
+                  select.obraSocial( name='obraSocial', required=true)
                       option(value='') Seleccionar...
                       option(value='SwindlerMedical') SwindlerMedical
                       option(value='Osde') Osde
@@ -152,10 +152,22 @@ html
           div.cuerpoModalDni
             p Deberá ingresar los datos del paciente de forma manual.
           div.botonesModalDni
-            button.botonCerrarModalDni(type='button') Cerrar        
-                
+            button.botonCerrarModalDni(type='button') Cerrar
 
 
-      script(src='/script/modalRegistro.js')
+    if activarModal
+      section.modalCamasAdvertencia
+        div.contenidoModalCamasAdvertencia
+          div.cabeceraModalCamasAdvertencia
+            h2 No hay camas disponibles
+            span.cama-message(data-field="cama")
+          div.cuerpoModalCamasAdvertencia
+            p Consultar con el administrador.
+          div.botonesModalCamasAdvertencia
+            button.botonCerrarModalCamasAdvertencia(type='button' onclick="irEnfermeria()") Volver a enfermeria         
+     
+
+
+    script(src='/script/modalRegistro.js')
            
              

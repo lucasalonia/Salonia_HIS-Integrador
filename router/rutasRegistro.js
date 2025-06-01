@@ -36,11 +36,18 @@ router.get("/", async function (req, res, next) {
   try {
     const alas = await alasController.listarAlas();
     const medicos = await medicosController.listaMedicos();
+    const camas = await camasController.listaCompletaCamasLiberadas();
+    let activarModal = false;
+
+    if(camas.length === 0) {
+       activarModal = true;
+    }
 
     var locals = {
       title: "Home",
       alas: alas,
       medicos: medicos,
+      activarModal: activarModal,
     };
 
     res.render("index", locals);

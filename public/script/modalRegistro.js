@@ -202,6 +202,7 @@ function vaciarInputs(exito) {
     });
   }
 }
+
 function vaciarInputsSinDni(exito) {
   if (exito) {
     const inputs = document.querySelectorAll(
@@ -280,7 +281,7 @@ async function enviarInformacion() {
     if (data.success) {
       mostrarModalExito(true);
       vaciarInputs(data.success);
-       bloquearCampos(false)
+      bloquearCampos(false);
     } else {
       console.log("Error en agregar paciente");
     }
@@ -517,7 +518,12 @@ function cerrarModalDni() {
   modalDni.style.display = "none";
 }
 
+function irEnfermeria() {
+ window.location.href = "/enfermeria/principal";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+
   //Busqueda de paciente por DNI. Bloqueo y desbloqueo de campos
   bloquearCampos();
   const botonBuscarDni = document.querySelector(".buscarDni");

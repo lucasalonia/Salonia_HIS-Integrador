@@ -32,6 +32,17 @@ class Cama extends Model {
     return cama;
   }
 
+  static async listarCamasLiberadas(){
+    const camas = await this.findAll({
+      where: {
+        liberada: true,
+        higienizada: true,
+      },
+      order: [['numero_cama', 'ASC']],
+    });
+    return camas;
+  }
+
   static async actualizarEstadoCama(id_cama, nuevoEstado,options = {}) {
   const cama = await Cama.findByPk(id_cama);
   if (!cama) {
