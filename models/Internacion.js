@@ -17,6 +17,38 @@ class Internacion extends Model {
       throw error;
     }
   }
+  static async listarInternaciones() {
+    return await Internacion.findAll();
+  }
+  static async buscarInternacionPorIdPaciente(id_paciente ) {
+    try {
+      const internacion = await Internacion.findOne({
+        where: { id_paciente },
+      });
+      return internacion;
+    } catch (error) {
+      console.error("Error al buscar la internación por ID:", error);
+      throw error;
+    }
+  }
+
+static async darAlta(id_paciente, options = {}) {
+  try {
+    const internacion = await Internacion.findOne({ where: { id_paciente } });
+
+    if (!internacion) {
+      throw new Error("Internación no encontrada");
+    }
+
+    await internacion.update({ internado: false, fecha_egreso: new Date() }, options);
+
+    return { mensaje: "Internación actualizada correctamente" };
+  } catch (error) {
+    console.error("Error al actualizar la internación:", error);
+    throw error;
+  }
+}
+ 
 }
 
 Internacion.init(

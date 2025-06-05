@@ -1,4 +1,5 @@
 section.tablaPacientes {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,6 +11,48 @@ section.tablaPacientes {
     margin: 20px auto;
     margin-top: 100px;
     text-align: center;
+    
+}
+h3{
+    margin: 0px;
+}
+h4{
+    
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: red;
+}
+a.linkId {
+  display: inline-block;      
+  background-color:  #368fee;  
+  color: white;              
+  text-decoration: none;      
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 12px;       
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+a.linkId:hover {
+  background-color: #254a91;   
+}
+
+a.linkId:active {
+  background-color: #388e3c;  
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+a.linkId:visited {
+  color: white;              
+}
+a.linkId:active {
+  background-color: #388e3c;      
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2); 
+  transform: translateY(2px);       
 }
 
 
@@ -86,9 +129,7 @@ section.tablaPacientes table tbody tr:nth-child(even) {
     background-color: #f8f9fa;
 }
 
-section.tablaPacientes table tbody tr:hover {
-    background-color: #e9ecef;
-}
+
 
 section.tablaPacientes table td {
     font-size: 14px;
@@ -150,3 +191,116 @@ section.tablaPacientes table th.correoHead {
    width: 25%;
 }
 
+
+section.tablaPacientes table tbody tr.fila-roja {
+  background-color: #f4433680; 
+
+}
+section.tablaPacientes table tbody tr.fila-roja:hover {
+  background-color: #fd110080 !important; 
+}
+
+
+section.tablaPacientes table tbody tr:hover:not(.fila-roja) {
+  background-color: #e9ecef;
+}
+
+
+
+.modalConfirmacion {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1000;
+    animation: fadeIn 0.4s ease-in-out; 
+}
+.contenidoConfirmacion {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px; 
+    max-width: 90%; 
+    text-align: center;
+    transform: scale(1); 
+    animation: scaleUp 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9); 
+    }
+    to {
+        transform: scale(1); 
+    }
+}
+  
+  .cabeceraModal h2 {
+    margin: 0;
+    font-size: 22px;
+        color: red;
+  }
+  
+  .botonesModal {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around; 
+}
+
+.botonesModal button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+     color: white;
+}
+
+.botonesModal button:first-child {
+    background-color: #4caf50; 
+}
+
+.botonesModal button:first-child:hover {
+    background-color: #2e8532;
+}
+
+.botonesModal button:last-child {
+    background-color: #f44336; 
+    color: white;
+}
+
+.botonesModal button:last-child:hover {
+    background-color: #b32826;
+}
+ div.contenidoConfirmacion div.cabeceraModal p{
+    font-weight: bolder;
+ }
+ div.contenidoConfirmacion div.cabeceraModal p span {
+    font-weight: lighter;
+ }
+  div.contenidoConfirmacion div.cabeceraModal p.descripcion {
+        color: #444;
+
+ }
+   div.contenidoConfirmacion div.cabeceraModal p span{
+        color: #0077ff;
+        font-weight: bolder;
+
+ }

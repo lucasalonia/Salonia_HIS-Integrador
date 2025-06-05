@@ -29,6 +29,9 @@ router.post("/paciente/agregar-cama", async (req, res) => {
 router.get('/paciente/buscar/:dni', async (req, res) => {
   pacienteController.buscarPacientePorDni(req, res);
 });
+router.get("/paciente/ultimo-paciente-nn", async (req, res) => {
+  pacienteController.buscarUltimoPacienteNN(req, res);
+});
 
 
 

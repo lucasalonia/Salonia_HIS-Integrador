@@ -8,6 +8,8 @@ html
     include includes/navBar.pug
 
     section
+      button.botonEmergencia(type='button' ) Emergencia
+      span#tooltip(class="tooltip") Doble Click
       div.formularioPaciente
         h1 Ingrese los datos del paciente a internar 
         form.formularioData(onsubmit="return false;")
@@ -72,7 +74,7 @@ html
                       option(value='') Seleccionar...
                       option(value='Cita Programada') Cita Programada
                       option(value='Derivacion Medica') Derivacion Medica
-                      option(value='Emergencia') Emergencia
+                      option(value='Emergencia' disabled=true) Emergencia
                   span.error-message(data-field="vias")  
 
               div.campoMedicoDerivador
@@ -89,6 +91,7 @@ html
                       option(value='SwindlerMedical') SwindlerMedical
                       option(value='Osde') Osde
                       option(value='Medife') Medife
+                      option(value='No Especifica') No Especifica
 
                   span.error-message(data-field="obraSocial")
                   
@@ -129,8 +132,23 @@ html
         div.contenidoConfirmacion
           div.cabeceraModal
             h2 ¿Desea guardar los datos? 
-            p.datosConfirmar
-            p Al presionar "si", el paciente sera internado y la cama ocupada.
+            p Nombre: 
+              span#confirmNombre
+            p Apellido: 
+              span#confirmApellido
+            p DNI: 
+              span#confirmDni
+            p Obra Social: 
+              span#confirmObraSocial
+            p Numero de Obra Social: 
+              span#confirmNumeroObraSocial
+            p Numero de Emergencia:
+              span#confirmTelefono
+            p Ciudad: 
+              span#confirmCiudad
+            p Calle: 
+              span#confirmCalle
+            p.descripcion Al presionar "si", el paciente será internado y la cama ocupada.
           div.botonesModal
             button.botonEnviarConfirmacion(type='button', onclick='enviarInformacion()') Si 
             button.botonCerrarConfirmacion(type='button') No
@@ -164,7 +182,7 @@ html
           div.cuerpoModalCamasAdvertencia
             p Consultar con el administrador.
           div.botonesModalCamasAdvertencia
-            button.botonCerrarModalCamasAdvertencia(type='button' onclick="irEnfermeria()") Volver a enfermeria         
+            button.botonCerrarModalCamasAdvertencia(type='button' onclick="irAPacientes()") Ir a lista de pacientes         
      
 
 

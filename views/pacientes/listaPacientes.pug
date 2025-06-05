@@ -1,16 +1,20 @@
 doctype html
 html
   head
-    title= title
+    title= "Pacientes"
     link(rel='stylesheet', href= '/css/estiloListaPacientes.css')
   body
 
     include ../includes/navBar.pug
     section.tablaPacientes
-        h2 Lista de Pacientes
+        h2 Lista de Pacientes Internados
+        h3 Total de Pacientes: #{pacientes ? pacientes.length : 0}
+        h3 Pacientes Desconocidos: #{pacientes ? pacientes.filter(p => p.es_nn===true).length : 0}
         div
             input(type="text", name="")
             label(for="buscar") Busqueda
+       
+        h4 Precione el ID del paciente para ver sus datos completos.    
         table
             thead
                 tr
@@ -25,17 +29,18 @@ html
                     th.correoHead Correo Electronico
                     th Ciudad
                     th Medio de Ingreso
-                    th Medico Derivador
+                    th Medico
                     th Obra Social
                     th Numero Obra Social
                     th Fecha de Ingreso
-                    th Internado
+                    th Cama
                     th Acciones
             tbody
-                if typeof pacientes !== 'undefined' && pacientes.length > 0
+                if pacientes && pacientes.length > 0
                     each paciente in pacientes
-                        tr
-                            td(data-field="id")= paciente.id
+                        tr(class= paciente.es_nn==true ? "fila-roja" : "")
+                            td(data-field="id")
+                                a.linkId(href=`ficha-paciente/${paciente.id}`)= paciente.id
                             td(data-field="nombre")= paciente.nombre
                             td(data-field="apellido")= paciente.apellido
                             td(data-field="dni")= paciente.dni
@@ -50,14 +55,25 @@ html
                             td(data-field="obraSocial")= paciente.obraSocial
                             td(data-field="numeroObraSocial")= paciente.numeroObraSocial
                             td(data-field="fechaIngreso")= paciente.fecha_ingreso
-                            td(data-field="internado")= paciente.internado
-                            td
-                                button.boton-eliminar(data-id=paciente.id type="button") Eliminar
+                            td(data-field="cama")= paciente.cama
+                            td(data-field="acciones")
+                                button.boton-eliminar(type="button", onclick="abrirConfirmacion(this)", data-id=paciente.id) Eliminar
                             
 
                 else
                     tr
-                        td(colspan="14") No hay pacientes registrados.               
+                        td(colspan="14") No hay pacientes registrados.
+
+    section.modalConfirmacion 
+        div.contenidoConfirmacion
+          div.cabeceraModal
+            h2 ¿Desea eliminar al paciente internado?
+            p ID Paciente: 
+                span#idPaciente 
+            p.descripcion Al presionar "si", se concidera que el paciente ha sido dado de alta y se eliminará de la lista de pacientes internados.
+          div.botonesModal
+            button.botonEnviarConfirmacion(type='button', onclick='eliminarPaciente()') Si 
+            button.botonCerrarConfirmacion(type='button' onclick='cerrarConfirmacion()') No               
 
 
         script(src='/script/actualizarInfoPaciente.js')            

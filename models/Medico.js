@@ -38,6 +38,10 @@ Medico.init(
       type: DataTypes.STRING,
       allowNull: false
     },
+    apellido: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     especialidad: {
       type: DataTypes.STRING,
       allowNull: false

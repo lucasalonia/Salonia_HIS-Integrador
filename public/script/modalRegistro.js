@@ -150,6 +150,46 @@ function abrirConfirmacion() {
   const modalAsignacion = document.querySelector(".modalRegistro");
   const modalConfirmacion = document.querySelector(".modalConfirmacion");
 
+  const confirmNombre = document.getElementById("confirmNombre");
+  const confirmApellido = document.getElementById("confirmApellido");
+  const confirmDni = document.getElementById("confirmDni");
+  const confirmObraSocial = document.getElementById("confirmObraSocial");
+  const confirmNumeroObraSocial = document.getElementById(
+    "confirmNumeroObraSocial"
+  );
+  const confirmTelefono = document.getElementById("confirmTelefono");
+  const confirmCiudad = document.getElementById("confirmCiudad");
+  const confirmCalle = document.getElementById("confirmCalle");
+
+  const dni = document.querySelector(".dni").value;
+  const apellido = document.querySelector(".apellido").value;
+  const nombre = document.querySelector(".nombre").value;
+  const obraSocial = document.querySelector(".obraSocial").value;
+  const numeroObraSocial = document.querySelector(".numeroObraSocial").value;
+  const telefono = document.querySelector(".telefono").value;
+  const ciudad = document.querySelector(".ciudad").value;
+  const direccion = document.querySelector(".direccion").value;
+
+  const parrafos = document.querySelectorAll(
+    ".contenidoConfirmacion p:not(.descripcion)"
+  );
+  const parrafoDescripcion = document.querySelector("p.descripcion");
+
+  if (dni.startsWith("00")) {
+    parrafos.forEach((p) => p.remove());
+    parrafoDescripcion.textContent =
+      "El paciente que ingresará al sistema es DESCONOCIDO ";
+  } else {
+    confirmNombre.textContent = nombre;
+    confirmApellido.textContent = apellido;
+    confirmDni.textContent = dni;
+    confirmObraSocial.textContent = obraSocial;
+    confirmNumeroObraSocial.textContent = numeroObraSocial;
+    confirmTelefono.textContent = telefono;
+    confirmCiudad.textContent = ciudad;
+    confirmCalle.textContent = direccion;
+  }
+
   if (modalAsignacion) {
     modalAsignacion.style.display = "none";
     modalConfirmacion.style.display = "flex";
@@ -282,6 +322,7 @@ async function enviarInformacion() {
       mostrarModalExito(true);
       vaciarInputs(data.success);
       bloquearCampos(false);
+      location.reload();
     } else {
       console.log("Error en agregar paciente");
     }
@@ -433,10 +474,22 @@ function buscarPacientePorDni() {
     flag = false;
     return;
   }
-  if (dniInput && !/^\d{8}$/.test(dniInput.value.trim())) {
+  if (
+    (dniInput && !/^\d{8}$/.test(dniInput.value.trim())) ||
+    dniInput.value.trim().length !== 8
+  ) {
     const dniError = document.querySelector('.error-message[data-field="dni"]');
     if (dniError) {
       dniError.textContent = "El DNI debe tener exactamente 8 números.";
+      dniError.classList.add("active");
+    }
+    flag = false;
+    return;
+  }
+  if (dniInput.value.startsWith("0")) {
+    const dniError = document.querySelector('.error-message[data-field="dni"]');
+    if (dniError) {
+      dniError.textContent = "El DNI no puede comenzar con 0.";
       dniError.classList.add("active");
     }
     flag = false;
@@ -518,14 +571,116 @@ function cerrarModalDni() {
   modalDni.style.display = "none";
 }
 
-function irEnfermeria() {
- window.location.href = "/enfermeria/principal";
+function irAPacientes() {
+  window.location.href = "/pacientes/listaPacientes";
+}
+
+function bloquearBusquedaDni() {
+  const buscarDni = document.querySelector(".buscarDni");
+  const dniInput = document.querySelector(".dni");
+  buscarDni.disabled = true;
+
+  buscarDni.style.backgroundColor = "#ccc";
+  buscarDni.style.color = "#666";
+  buscarDni.style.cursor = "not-allowed";
+
+  dniInput.readOnly = true;
+
+  dniInput.style.backgroundColor = "#eee";
+  dniInput.style.color = "#666";
+  dniInput.style.cursor = "not-allowed";
+}
+
+function traerUltimoPacienteNN() {
+  let dniInput = document.querySelector(".dni");
+  const nombreInput = document.querySelector(".nombre");
+  const apellidoInput = document.querySelector(".apellido");
+  const emailInput = document.querySelector(".email");
+  const telefonoInput = document.querySelector(".telefono");
+  const fechaNacimientoInput = document.querySelector(".calendar");
+  const sexoInput = document.querySelector(".sexo");
+  const direccionInput = document.querySelector(".direccion");
+  const ciudadInput = document.querySelector(".ciudad");
+  const numeroObraSocialInput = document.querySelector(".numeroObraSocial");
+  const obraSocialInput = document.querySelector(".obraSocial");
+  const viasInput = document.querySelector(".vias");
+  const url = "/paciente/ultimo-paciente-nn";
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Error al buscar el paciente");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.paciente !== null) {
+          const paciente = data.paciente;
+        nombreInput.value = "Sin Asignar";
+        apellidoInput.value = "Sin Asignar";
+        emailInput.value = "xxxxx@xxxx.xxx";
+        telefonoInput.value = "0";
+        fechaNacimientoInput.value = "2000-01-01";
+        sexoInput.value = "Otro";
+        direccionInput.value = "Sin Asignar";
+        ciudadInput.value = "Sin Asignar";
+        numeroObraSocialInput.value = "0";
+        obraSocialInput.value = "No Especifica";
+        viasInput.value = "Emergencia";
+
+        dniInput.value = paciente.dni;
+        console.log(paciente.dni);
+        bloquearBusquedaDni();
+        console.log("Ultimo Paciente NN encontrado:", paciente);
+      } else {
+        nombreInput.value = "Sin Asignar";
+        apellidoInput.value = "Sin Asignar";
+        emailInput.value = "xxxxx@xxxx.xxx";
+        telefonoInput.value = "0";
+        fechaNacimientoInput.value ="2000-01-01";
+        sexoInput.value = "Otro";
+        direccionInput.value = "Sin Asignar";
+        ciudadInput.value = "Sin Asignar";
+        numeroObraSocialInput.value = "0";
+        obraSocialInput.value = "No Especifica";
+        viasInput.value = "Emergencia";
+
+        dniInput.value = "00000000";
+        bloquearBusquedaDni();
+      }
+    })
+    .catch((error) => {
+      console.error("Error al buscar el ultimo paciente NN:", error);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  //Campos bloqueados por defecto
+  bloquearCampos();
+
+  const boton = document.querySelector(".botonEmergencia");
+  const tooltip = document.getElementById("tooltip");
+
+  boton.addEventListener("mouseenter", (e) => {
+    const rect = boton.getBoundingClientRect();
+
+    tooltip.style.left = `${rect.left + window.scrollX + 32}px`;
+    tooltip.style.top = `${rect.top + window.scrollY - 38}px`;
+    tooltip.style.display = "block";
+  });
+
+  boton.addEventListener("mouseleave", () => {
+    tooltip.style.display = "none";
+  });
+
+  //Boton para ejecutar paciente de EMERGENCIA
+  const botonEmergencia = document.querySelector(".botonEmergencia");
+  if (botonEmergencia) {
+    botonEmergencia.addEventListener("dblclick", traerUltimoPacienteNN);
+  } else {
+    console.error("No se encontró el elemento .openModal");
+  }
 
   //Busqueda de paciente por DNI. Bloqueo y desbloqueo de campos
-  bloquearCampos();
   const botonBuscarDni = document.querySelector(".buscarDni");
   if (botonBuscarDni) {
     botonBuscarDni.addEventListener("click", buscarPacientePorDni);

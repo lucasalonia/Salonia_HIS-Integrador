@@ -1,0 +1,93 @@
+doctype html
+html
+    head
+        title= "Ficha Paciente"
+        link(rel='stylesheet', href= '/css/estiloFichaPaciente.css')
+       
+    body
+        include ../includes/navBar.pug
+        section.fichaPaciente 
+            h2 Ficha del Paciente
+            div.fichaPaciente__datos
+                p#nombreActual Nombre: #{paciente.nombre}
+                p#apellidoActual Apellido: #{paciente.apellido}
+                p#dniActual DNI: #{paciente.dni}
+                p#numeroEmergenciaActual Numero Emergencia: #{paciente.numero_emergencia}
+                p#fechaNacimientoActual Fecha de Nacimiento: #{paciente.fecha_nacimiento}
+                p#sexoActual Sexo: #{paciente.sexo}
+                p#direccionActual Direccion: #{paciente.direccion}
+                p#emailActual Correo Electronico: #{paciente.email}
+                p#ciudadActual Ciudad: #{paciente.ciudad}
+                p#medioIngresoActual Medio de Ingreso: #{paciente.medios_ingreso}
+                p#medicoActual Medico: #{medico.nombre}
+                p#obraSocialActual Obra Social: #{obraSocial.nombre}
+                p#numeroObraSocialActual Numero Obra Social: #{obraSocial.numero}
+                p#fechaIngresoActual Fecha de Ingreso: #{internacion.fecha_ingreso}
+                p#camaActual Cama: #{cama.numero_cama}
+            div.fichaPaciente__acciones
+                button.boton-editar(type="button", onclick="abrirModal()") Editar Datos
+
+        div#modalEditar.modal
+            div.modal-content
+                span#cerrarModal.close ×
+                h3 Editar Datos del Paciente ID: #{paciente.id}
+                if paciente.dni.startsWith('0') 
+                    h3 PACIENTE DESCONOCIDO
+                form#formEditarPaciente(method="POST" action=`/modificar-datos/${paciente.id}`)
+                    div.form-group
+                        label(for="nombre") Nombre:
+                        input#nombre(type="text", name="nombre", value=paciente.nombre required)
+                    div.form-group
+                        label(for="apellido") Apellido:
+                        input#apellido(type="text", name="apellido", value=paciente.apellido required)
+
+                    div.form-group
+                        label(for="dni") DNI:
+                        input#dni(type="text", name="dni", value=paciente.dni required)
+
+                    div.form-group
+                        label(for="numero_emergencia") Número de Emergencia:
+                        input#numero_emergencia(type="text", name="numero_emergencia", value=paciente.numero_emergencia required)
+
+                    div.form-group
+                        label(for="fecha_nacimiento") Fecha de Nacimiento:
+                        input#fecha_nacimiento(type="date", name="fecha_nacimiento", value=paciente.fecha_nacimiento required )
+
+                    div.form-group
+                        label(for="sexo") Sexo:
+                        select#sexo(name="sexo" required)
+                            option(value="Masculino", selected=paciente.sexo === 'Masculino') Masculino
+                            option(value="Femenino", selected=paciente.sexo === 'Femenino') Femenino
+                            option(value="Otro", selected=paciente.sexo === 'Otro') Otro
+
+                    div.form-group
+                        label(for="direccion") Dirección:
+                        input#direccion(type="text", name="direccion", value=paciente.direccion required)
+
+                    div.form-group
+                        label(for="email") Correo Electrónico:
+                        input#email(type="email", name="email", value=paciente.email required)
+
+                    div.form-group
+                        label(for="ciudad") Ciudad:
+                        input#ciudad(type="text", name="ciudad", value=paciente.ciudad required)
+
+
+                    div.form-group
+                        label(for="obraSocial") Obra Social:
+                        select#obraSocial(name="obraSocial", required)
+                            option(value="", disabled, selected) Seleccionar...
+                            option(value="SwindlerMedical", selected=obraSocial.nombre === 'SwindlerMedical') SwindlerMedical
+                            option(value="Osde", selected=obraSocial.nombre === 'Osde') Osde
+                            option(value="Medife", selected=obraSocial.nombre === 'Medife') Medife
+
+
+                    div.form-group
+                        label(for="numeroObraSocial") Número Obra Social:
+                        input#numeroObraSocial(type="text", name="numeroObraSocial", value=obraSocial.numero required)
+
+                    button.enviarDatos(type="button" onclick=`enviarEdicionPaciente(${paciente.id})`) Guardar Cambios   
+
+
+        script(src='/script/fichaPacienteModal.js')
+    

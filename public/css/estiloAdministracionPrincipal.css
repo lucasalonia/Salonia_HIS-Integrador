@@ -2,7 +2,7 @@
 body {
     margin: 0;
     padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 a {
@@ -15,7 +15,7 @@ section a:visited {
     text-decoration: none;
 }
 
-section.enfermeria {
+section.administracion {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,7 +32,7 @@ div.contenedorUno, div.contenedorDos {
     gap: 50px;
 }
 
-div.info, div.historial, div.motivo, div.evaluacion, div.cuidados {
+div.camas, div.enfermeros, div.medicos {
     flex: 1;
     text-align: center;
     background-color: #ffffff;
@@ -46,11 +46,11 @@ div.info, div.historial, div.motivo, div.evaluacion, div.cuidados {
     height: 320px;
 }
 
-div.info:active, div.historial:active, div.motivo:active, div.evaluacion:active, div.cuidados:active {
+div.camas:active, div.enfermeros:active, div.medicos:active {
     transform: scale(0.95);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-div.info:hover, div.historial:hover, div.motivo:hover, div.evaluacion:hover, div.cuidados:hover {
+div.camas:hover, div.enfermeros:hover, div.medicos:hover {
     box-shadow:  0px 0px 10px 0.5px rgba(9, 81, 158, 0.692);
 }

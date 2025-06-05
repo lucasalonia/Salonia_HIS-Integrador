@@ -1,0 +1,31 @@
+html
+  head
+    title Enfermeria
+    link(rel="stylesheet", href="/css/estiloAdministracionPrincipal.css")
+  body
+
+    include ../includes/navBar.pug
+
+    section.administracion 
+      div.contenedorUno
+        a(href='/administracion/medicos')
+          div.medicos
+            img(src='/images/doctor.png')
+            h1 Gestion Medicos
+
+        a(href='/administracion/camas')
+          div.camas
+            img(src='/images/hospital-bed.png')
+            h1 Gestion Camas
+
+        a(href='/administracion/enfermeros')
+          div.enfermeros
+            img(src='/images/nurse.png') 
+            h1 Gestion Enfermeros
+
+     
+
+
+      
+      
+    

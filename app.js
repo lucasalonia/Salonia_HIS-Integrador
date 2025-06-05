@@ -10,6 +10,7 @@ const PORT = 3000;
 const rutasRegistro = require("./router/rutasRegistro");
 const rutasEnfermeria = require("./router/rutasEnfermeria");
 const rutasPacientes = require("./router/rutasPacientes");
+const rutasAdministracion = require("./router/rutasAdministracion");
 
 app.use(express.urlencoded());
 app.use(express.json());
@@ -27,6 +28,9 @@ app.use("/enfermeria", rutasEnfermeria);
 //PACIENTES ROUTING
 app.use("/pacientes", rutasPacientes);
 
+
+//ADMINISTRACION ROUTING
+app.use("/administracion", rutasAdministracion);
 
 //GET LOGIN
 app.get("/login", function (req, res, next) {

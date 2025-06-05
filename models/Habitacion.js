@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../config/db.js");
-const Ala = require("./Ala.js");
+
 
 class Habitacion extends Model {
 
@@ -43,7 +43,7 @@ Habitacion.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Ala, 
+        model: "alas", 
         key: "id_ala", 
       },
        onUpdate: "CASCADE",

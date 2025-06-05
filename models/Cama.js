@@ -1,6 +1,5 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../config/db.js");
-const Habitacion = require("./Habitacion.js");
 
 
 class Cama extends Model {
@@ -32,6 +31,21 @@ class Cama extends Model {
     return cama;
   }
 
+   static async actualizarEstadoCamaPorId(id_cama, options = {}) {
+     try {
+      const cama = await Cama.findByPk(id_cama);
+      if (!cama) {
+        throw new Error("cama no encontrada");
+      }
+      await cama.update({ liberada: true },options);
+      return { mensaje: "Cama eliminad correctamente" };
+    } catch (error) {
+      console.error("Error al eliminar la cama:", error);
+      throw error;
+    }
+  }
+  
+
   static async listarCamasLiberadas(){
     const camas = await this.findAll({
       where: {
@@ -41,6 +55,14 @@ class Cama extends Model {
       order: [['numero_cama', 'ASC']],
     });
     return camas;
+  }
+
+  static async buscarCamaPorId(id_cama) {
+    const cama = await Cama.findByPk(id_cama);
+    if (!cama) {
+      throw new Error("Cama no encontrada");
+    }
+    return cama;
   }
 
   static async actualizarEstadoCama(id_cama, nuevoEstado,options = {}) {
@@ -55,6 +77,9 @@ class Cama extends Model {
 
   await cama.save(options);
   return cama;
+}
+static async listarCamasOcupadas(){
+  return await Cama.findAll();
 }
 }
 
@@ -74,7 +99,7 @@ Cama.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Habitacion,
+        model: "habitaciones",
         key: "id_habitacion",
       },
       onUpdate: "CASCADE",

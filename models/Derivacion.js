@@ -20,9 +20,7 @@ class Derivacion extends Model {
   }
 
   static async listarDerivaciones() {
-    return await Derivacion.findAll({
-      include: [Paciente, Medico]
-    });
+    return await Derivacion.findAll();
   }
   static async buscarDerivacionPorIdPaciente(id_paciente) {
     return await Derivacion.findOne({ where: { id_paciente } });

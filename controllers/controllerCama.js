@@ -27,4 +27,4 @@ const listaCompletaCamasLiberadas = async (req, res) => {
   }
 }
 
-module.exports = {cargarCamaPorHabitacion,listaCompletaCamasLiberadas};
+module.exports = {cargarCamaPorHabitacion, listaCompletaCamasLiberadas};

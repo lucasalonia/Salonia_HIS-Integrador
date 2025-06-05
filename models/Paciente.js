@@ -4,7 +4,7 @@ const { sequelize } = require("../config/db.js");
 class Paciente extends Model {
   static associate(models) {
     Paciente.hasMany(models.Internacion, { foreignKey: "id_paciente" });
-    Paciente.hasOne(ObraSocial, { foreignKey: "id_paciente" });
+    Paciente.hasOne(models.ObraSocial, { foreignKey: "id_paciente" });
     Paciente.hasMany(models.Derivacion, { foreignKey: "id_paciente" });
   }
 
@@ -38,16 +38,111 @@ class Paciente extends Model {
     return pacientes;
   }
 
-  static async buscarPacientePorDni(dni, options = {}) {
+  static async buscarPacientePorDni(dni) {
     try {
       const paciente = await Paciente.findOne({
-        where: { dni }, ...options
+        where: { dni },
       });
       return paciente;
     } catch (error) {
       console.error("Error al buscar el paciente por DNI:", error);
       throw error;
     }
+  }
+
+  static async buscarUltimoPacienteNN() {
+    try {
+      const ultimoNN = await this.findOne({
+        where: { es_nn: true },
+        order: [['id', 'DESC']],
+      });
+
+      return ultimoNN;
+    } catch (error) {
+      console.error("Error al buscar el último paciente NN:", error);
+      throw error;
+    }
+  }
+  static async borrarLogicoPaciente(id, options = {} ) {
+    try {
+      const paciente = await Paciente.findByPk(id);
+      if (!paciente) {
+        throw new Error("Paciente no encontrado");
+      }
+      await paciente.update({ borradoLogico: false },options);
+      return { mensaje: "Paciente eliminado correctamente" };
+    } catch (error) {
+      console.error("Error al eliminar el paciente:", error);
+      throw error;
+    }
+  }
+
+  static async eliminacionCompletaPacienteNN(id, options = {} ) {
+    try {
+      const paciente = await Paciente.findByPk(id);
+      if (!paciente) {
+        throw new Error("Paciente no encontrado");
+      }
+      await paciente.destroy(options);
+      return { mensaje: "Paciente eliminado correctamente" };
+    } catch (error) {
+      console.error("Error al eliminar el paciente:", error);
+      throw error;
+    }
+  }
+
+    static async altaLogicoPaciente(id, options = {} ) {
+    try {
+      const paciente = await Paciente.findByPk(id);
+      if (!paciente) {
+        throw new Error("Paciente no encontrado");
+      }
+      await paciente.update({ borradoLogico: true },options);
+      return { mensaje: "Paciente eliminado correctamente" };
+    } catch (error) {
+      console.error("Error al eliminar el paciente:", error);
+      throw error;
+    }
+  }
+static async modificarDatosPaciente(id, nuevosDatos, options = {}) {
+    try {
+      const paciente = await Paciente.findByPk(id);
+      if (!paciente) {
+        throw new Error("Paciente no encontrado");
+      }
+      await paciente.update(nuevosDatos, options);
+      return paciente;
+    } catch (error) {
+      console.error("Error al modificar los datos del paciente:", error);
+      throw error;
+    }
+  }
+  static async buscarPacientePorId(id) {
+    try {
+      const paciente = await Paciente.findByPk(id);
+      if (!paciente) {
+        throw new Error("Paciente no encontrado");
+      }
+      return paciente;
+    } catch (error) {
+      console.error("Error al buscar el paciente por ID:", error);
+      throw error;
+    }
+  }
+
+  static async anularEstadoNN(id, options = {}) {
+    try {
+      const paciente = await Paciente.findByPk(id);
+      if (!paciente) {
+        throw new Error("Paciente no encontrado");
+      }
+      await paciente.update({ es_nn: false }, options);
+      return { mensaje: "Estado NN actualizado correctamente" };
+    } catch (error) {
+      console.error("Error al cambiar el estado NN del paciente:", error);
+      throw error;
+    }
+
   }
 }
 
@@ -62,9 +157,15 @@ Paciente.init(
       allowNull: false,
     },
     dni: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(8),
       allowNull: false,
       unique: true,
+      validate: {
+        is: {
+          args: /^\d{8}$/, 
+          msg: "El DNI debe tener exactamente 8 números",
+        },
+      },
     },
     numero_emergencia: {
       type: DataTypes.INTEGER,
@@ -101,6 +202,11 @@ Paciente.init(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
+    },
+    es_nn: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
   },
   {
