@@ -97,6 +97,8 @@ const crearPaciente = async (req, res) => {
 
 const listarPacientes = async (req, res) => {
   try {
+    const fotoPerfil = req.user.foto_perfil;
+  const nombreUsuario = req.user.usuario;
     const pacientes = await Paciente.findAll({
       where: {
         borradoLogico: true,
@@ -177,7 +179,7 @@ const listarPacientes = async (req, res) => {
       };
     });
 
-    res.render("pacientes/listaPacientes", { pacientes: datos });
+    res.render("pacientes/listaPacientes", { pacientes: datos, fotoPerfil:fotoPerfil, nombreUsuario:nombreUsuario });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error al listar pacientes");

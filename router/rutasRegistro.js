@@ -24,18 +24,9 @@ router.post("/paciente/agregar-cama", async (req, res) => {
 });
 
 //PROTOCOLOS GET
-
-//Buscar paciente por DNI
-router.get('/paciente/buscar/:dni', async (req, res) => {
-  pacienteController.buscarPacientePorDni(req, res);
-});
-router.get("/paciente/ultimo-paciente-nn", async (req, res) => {
-  pacienteController.buscarUltimoPacienteNN(req, res);
-});
-
-
-
 router.get("/", async function (req, res, next) {
+  const fotoPerfil = req.user.foto_perfil;
+  const nombreUsuario = req.user.usuario;
   try {
     const alas = await alasController.listarAlas();
     const medicos = await medicosController.listaMedicos();
@@ -51,6 +42,8 @@ router.get("/", async function (req, res, next) {
       alas: alas,
       medicos: medicos,
       activarModal: activarModal,
+      fotoPerfil: fotoPerfil,
+      nombreUsuario: nombreUsuario
     };
 
     res.render("index", locals);
@@ -58,5 +51,18 @@ router.get("/", async function (req, res, next) {
     next(error);
   }
 });
+
+
+
+//Buscar paciente por DNI
+router.get('/paciente/buscar/:dni', async (req, res) => {
+  pacienteController.buscarPacientePorDni(req, res);
+});
+router.get("/paciente/ultimo-paciente-nn", async (req, res) => {
+  pacienteController.buscarUltimoPacienteNN(req, res);
+});
+
+
+
 
 module.exports = router;

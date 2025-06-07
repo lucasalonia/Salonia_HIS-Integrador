@@ -1,13 +1,27 @@
-html
+
+mixin navBar(fotoPerfil, nombreUsuario)
   link(rel='stylesheet', href= '/css/estiloHeader.css')
   header
-        nav
-          ul
-            li: a(href='/') Registro 
-            li: a(href='/pacientes/listaPacientes') Pacientes
-            li: a(href='/enfermeria/principal') Enfermeria
-            li: a(href='#') Medicina 
-            li: a(href='/administracion/principal') Administracion Interna
-          div.cerrar  
-            img.cerrar-logo(src='/images/cerrar.png', alt='Logo')
-            p Cerrar sesion
+    nav
+      div.fotoPerfil  
+        img.fotoPerfil-logo(src=fotoPerfil || '/images/default-avatar.png')
+        h3 #{nombreUsuario}
+      ul
+        li: a.linkNav(href='/') Registro 
+        li: a.linkNav(href='/pacientes/listaPacientes') Pacientes
+        li: a.linkNav(href='/enfermeria/principal') Enfermeria
+        li: a.linkNav(href='#') Medicina 
+        li: a.linkNav(href='/administracion/principal') Administracion Interna
+      div.cerrar  
+        img.cerrar-logo(src='/images/cerrar.png', alt='Logo')
+        a(href='/autenticacion/logout') Cerrar sesion
+
+  script.
+    document.querySelectorAll('.cerrar').forEach(function(cerrarDiv) {
+      cerrarDiv.addEventListener('click', function () {
+        const link = this.querySelector('a');
+        if (link) {
+          link.click();
+        }
+      });
+    });

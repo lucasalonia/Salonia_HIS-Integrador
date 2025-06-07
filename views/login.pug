@@ -2,20 +2,12 @@
 doctype html
 html
   head
-    title= title
+    meta(charset="utf-8")
+    title Login
     link(rel='stylesheet', href= '/css/estiloIngreso.css')
   body
-    h1 Bienvenido a HIS 
-    div.validacion 
-        h2 Ingreso al sistema 
-        form(action='/ingreso', method='POST')
-            div
-                label(for='usuario') Usuario:
-                input(type='text', name='usuario', required=true)
-            div
-                label(for='contraseña') Contraseña:
-                input(type='contraseña', name='contraseña', required=true)
-            div
-                button(type='submit') Ingresar POST a /login
+    div.logContainer
+      h1 Ingresar al sistema usando Google 
+      a.google-btn(href="/autenticacion/google") Google+
 
  

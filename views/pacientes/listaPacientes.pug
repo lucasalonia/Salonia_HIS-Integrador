@@ -6,6 +6,7 @@ html
   body
 
     include ../includes/navBar.pug
+    +navBar(fotoPerfil, nombreUsuario)
     section.tablaPacientes
         h2 Lista de Pacientes Internados
         h3 Total de Pacientes: #{pacientes ? pacientes.length : 0}
@@ -62,7 +63,7 @@ html
 
                 else
                     tr
-                        td(colspan="14") No hay pacientes registrados.
+                        td(colspan="17") No hay pacientes registrados.
 
     section.modalConfirmacion 
         div.contenidoConfirmacion

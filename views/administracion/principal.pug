@@ -5,10 +5,11 @@ html
   body
 
     include ../includes/navBar.pug
+    +navBar(fotoPerfil, nombreUsuario)
 
     section.administracion 
       div.contenedorUno
-        a(href='/administracion/medicos')
+        a(href='#')
           div.medicos
             img(src='/images/doctor.png')
             h1 Gestion Medicos
@@ -18,7 +19,7 @@ html
             img(src='/images/hospital-bed.png')
             h1 Gestion Camas
 
-        a(href='/administracion/enfermeros')
+        a(href='#')
           div.enfermeros
             img(src='/images/nurse.png') 
             h1 Gestion Enfermeros

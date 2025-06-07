@@ -1,16 +1,33 @@
-
 const express = require("express");
 const app = express();
 const directorioVistas = __dirname + "/views";
 const pug = require("pug");
-const fs = require("fs");
-const path = require("path");
+const keys = require('./config/keys');
+const passport = require('passport');
+const session = require('express-session');
+
 const PORT = 3000;
 
+
+const passportSetup = require("./config/passport-setup");
 const rutasRegistro = require("./router/rutasRegistro");
 const rutasEnfermeria = require("./router/rutasEnfermeria");
 const rutasPacientes = require("./router/rutasPacientes");
 const rutasAdministracion = require("./router/rutasAdministracion");
+const { router: rutaAutenticacion, autenticacionCheck } = require("./router/autenticacion");
+
+
+
+app.use(session({
+  secret: keys.session.cookieKey,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000
+  }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.urlencoded());
 app.use(express.json());
@@ -19,50 +36,24 @@ app.use(express.static("public"));
 app.set("view engine", "pug");
 app.set("views", directorioVistas);
 
+
+app.use("/autenticacion", rutaAutenticacion);
+
 //Registro / INDEX
-app.use("/", rutasRegistro);
+app.use("/",autenticacionCheck, rutasRegistro);
 
 //ENFERMERIA ROUTING
-app.use("/enfermeria", rutasEnfermeria);
+app.use("/enfermeria",autenticacionCheck, rutasEnfermeria);
 
 //PACIENTES ROUTING
-app.use("/pacientes", rutasPacientes);
+app.use("/pacientes", autenticacionCheck,rutasPacientes);
 
 
 //ADMINISTRACION ROUTING
-app.use("/administracion", rutasAdministracion);
+app.use("/administracion",autenticacionCheck, rutasAdministracion);
 
-//GET LOGIN
-app.get("/login", function (req, res, next) {
-  // Your route code
-  res.render("login", {
-    error: "Usuario o contraseña incorrectos",
-  });
-});
-//Test POST LOGIN
-app.post("/ingreso", (req, res) => {
-  const { usuario, contraseña } = req.body;
 
-  const usuariosPath = path.join(__dirname, "ingresoTest.json");
 
-  fs.readFile(usuariosPath, "utf8", (err, data) => {
-    if (err) {
-      console.error("Error leyendo usuarios.json:", err);
-      return res.status(500).send("Error interno del servidor");
-    }
-
-    const usuarioGuardado = JSON.parse(data);
-
-    if (
-      usuario === usuarioGuardado.nombre &&
-      contraseña === usuarioGuardado.contraseña
-    ) {
-      res.redirect("index"); //
-    } else {
-      res.render("login", { error: "Usuario o contraseña incorrectos" });
-    }
-  });
-});
 
 //REDIRECCIONAMIENTO DE RUTAS
 app.use((req, res, next) => {
@@ -73,3 +64,5 @@ app.use((req, res, next) => {
 app.listen(PORT, () => {
   console.log("Servidor en puerto http://localhost:3000");
 });
+
+module.exports = app;

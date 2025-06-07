@@ -5,31 +5,32 @@ html
   body
 
     include ../includes/navBar.pug
+    +navBar(fotoPerfil, nombreUsuario)
 
     section.enfermeria 
       div.contenedorUno
-        a(href='/enfermeria/infoPaciente')
+        a(href='#')
           div.info
             img(src='/images/paciente.png')
             h1 Informacion del Paciente
 
-        a(href='/enfermeria/historial')
+        a(href='#')
           div.historial
             img(src='/images/historial.png')
             h1 Historial Medico
 
-        a(href='/enfermeria/motivoInternacion')
+        a(href='#')
           div.motivo
             img(src='/images/motivo.png') 
             h1 Motivo Internacion
 
       div.contenedorDos
-        a(href='/enfermeria/evaluacionFisica')    
+        a(href='#')    
             div.evaluacion
               img(src='/images/evaluacion.png')   
               h1 Evaluacion Fisica Basica
 
-        a(href='/enfermeria/planCuidados')
+        a(href='#')
           div.cuidados
             img(src='/images/cuidados.png')  
             h1 Plan de Cuidados 

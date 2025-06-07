@@ -1,7 +1,59 @@
+doctype html
 html
   head
-    title Enfermeria
-    link(rel="stylesheet", href="/css/estiloAdministracionPrincipal.css")
+    title= "Camas"
+    link(rel='stylesheet', href='/css/estiloListaCamas.css')
   body
 
     include ../includes/navBar.pug
+    +navBar(fotoPerfil, nombreUsuario)
+
+    section.tablaCamas
+      h2 Lista de Camas
+      h3 Total de Camas: #{camas ? camas.length : 0}
+      h3 Camas Ocupadas: #{camas ? camas.filter(c => c.ocupada === true).length : 0}
+      h3 Camas Higienizadas: #{camas ? camas.filter(c => c.higienizada === true).length : 0}
+      
+      div
+        input(type="text", name="buscar", placeholder="Buscar por número o habitación")
+        label(for="buscar") Búsqueda
+
+      table
+        thead
+          tr
+            th ID Cama
+            th Número
+            th Habitación
+            th Ala
+            th Ocupada
+            th Higienizada
+            th Acciones
+        tbody
+          if camas && camas.length > 0
+            each cama in camas
+              tr(class= cama.ocupada ? "fila-ocupada" : "")
+                td
+                  a.linkId(href=`detalle-cama/${cama.id}`)= cama.id
+                td= cama.numero
+                td= cama.habitacion
+                td= cama.ala
+                td= cama.ocupada ? 'Sí' : 'No'
+                td= cama.higienizada ? 'Sí' : 'No'
+                td
+                  button.boton-eliminar(type="button", onclick="abrirConfirmacionCama(this)", data-id=cama.id) Desocupar
+          else
+            tr
+              td(colspan="7") No hay camas registradas.
+
+    section.modalConfirmacion 
+      div.contenidoConfirmacion
+        div.cabeceraModal
+          h2 ¿Desea eliminar esta cama?
+          p ID Cama: 
+            span#idCama 
+          p.descripcion Esta acción eliminará la cama del registro. Asegúrese de que no esté ocupada antes de continuar.
+        div.botonesModal
+          button.botonEnviarConfirmacion(type='button', onclick='eliminarCama()') Sí 
+          button.botonCerrarConfirmacion(type='button', onclick='cerrarConfirmacionCama()') No
+
+    script(src='/script/gestionarCamas.js')

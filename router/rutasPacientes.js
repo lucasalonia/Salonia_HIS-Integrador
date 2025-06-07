@@ -6,6 +6,7 @@ const pacienteController = require("../controllers/controllerPaciente");
 
 //GETS
 router.get("/listaPacientes", function (req, res, next) {
+     
    pacienteController.listarPacientes(req, res);    
 });
 router.get('/ficha-paciente/:id', (req, res) => {
