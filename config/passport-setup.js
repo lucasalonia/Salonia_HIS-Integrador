@@ -1,5 +1,5 @@
 const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 require('dotenv').config();
 const Administrativo = require('../models/Administrativo.js')
 
