@@ -1,7 +1,9 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
-const keys = require("./keys");
+require('dotenv').config();
 const Administrativo = require('../models/Administrativo.js')
+
+
 
 passport.serializeUser((user, done)=>{
     done(null,user.id_administrativo);
@@ -18,8 +20,8 @@ passport.use(
     new GoogleStrategy({
     //opciones de la strategia
         callbackURL:"/autenticacion/google/redirect",
-        clientID:keys.google.clientID,
-        clientSecret: keys.google.clienteSecret
+        clientID: process.env.CLIENTID,
+        clientSecret: process.env.CLIENTSECRET,
     }, async (accesToken, refreshToken, profile, done)=>{
         //Funciones callback de passport
         const id_administrativo = profile.id;

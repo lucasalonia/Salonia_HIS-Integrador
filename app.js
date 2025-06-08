@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const directorioVistas = __dirname + "/views";
 const pug = require("pug");
-const keys = require('./config/keys');
 const passport = require('passport');
 const session = require('express-session');
 require('dotenv').config();
@@ -19,7 +18,7 @@ const { router: rutaAutenticacion, autenticacionCheck } = require("./router/aute
 
 
 app.use(session({
-  secret: keys.session.cookieKey,
+  secret: process.env.COOKIEKEY,
   resave: false,
   saveUninitialized: false,
   cookie: {
