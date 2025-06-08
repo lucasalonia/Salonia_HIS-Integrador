@@ -5,8 +5,8 @@ const pug = require("pug");
 const keys = require('./config/keys');
 const passport = require('passport');
 const session = require('express-session');
-
-const PORT = 3000;
+require('dotenv').config();
+const PORT = process.env.PORT;
 
 
 const passportSetup = require("./config/passport-setup");
@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 ;
 //ESCUCHANDO PUERTO DETERMINADO POR CONSTANTE "PORT"
 app.listen(PORT, () => {
-  console.log("Servidor en puerto http://localhost:3000");
+  console.log(`Servidor en puerto http://localhost:${PORT}`);
 });
 
 module.exports = app;
