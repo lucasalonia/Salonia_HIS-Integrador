@@ -293,7 +293,7 @@ async function enviarInformacion() {
       direccion,
       medios_ingreso,
       ciudad,
-      borradoLogico
+      borradoLogico,
     },
     mutual: {
       obra_social,
@@ -323,7 +323,9 @@ async function enviarInformacion() {
       mostrarModalExito(true);
       vaciarInputs(data.success);
       bloquearCampos(false);
-      location.reload();
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
     } else {
       console.log("Error en agregar paciente");
     }
@@ -615,7 +617,7 @@ function traerUltimoPacienteNN() {
     })
     .then((data) => {
       if (data.paciente !== null) {
-          const paciente = data.paciente;
+        const paciente = data.paciente;
         nombreInput.value = "Sin Asignar";
         apellidoInput.value = "Sin Asignar";
         emailInput.value = "xxxxx@xxxx.xxx";
@@ -637,7 +639,7 @@ function traerUltimoPacienteNN() {
         apellidoInput.value = "Sin Asignar";
         emailInput.value = "xxxxx@xxxx.xxx";
         telefonoInput.value = "0";
-        fechaNacimientoInput.value ="2000-01-01";
+        fechaNacimientoInput.value = "2000-01-01";
         sexoInput.value = "Otro";
         direccionInput.value = "Sin Asignar";
         ciudadInput.value = "Sin Asignar";

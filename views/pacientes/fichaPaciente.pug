@@ -42,9 +42,9 @@ html
                         label(for="apellido") Apellido:
                         input#apellido(type="text", name="apellido", value=paciente.apellido required)
 
-                    div.form-group
-                        label(for="dni") DNI:
-                        input#dni(type="text", name="dni", value=paciente.dni required)
+                    div#divDNI.form-group
+                        label#labelDNI(for="dni") DNI:
+                        input#dni(type="text", name="dni", value=paciente.dni, pattern="[0-9]{8}", title="El DNI debe tener 8 dígitos", maxlength="8", minlength="8", inputmode="numeric", required)
 
                     div.form-group
                         label(for="numero_emergencia") Número de Emergencia:
@@ -52,7 +52,9 @@ html
 
                     div.form-group
                         label(for="fecha_nacimiento") Fecha de Nacimiento:
-                        input#fecha_nacimiento(type="date", name="fecha_nacimiento", value=paciente.fecha_nacimiento required )
+                        - const hoy = new Date().toISOString().split('T')[0];
+                        input#fecha_nacimiento(type="date", name="fecha_nacimiento", value=paciente.fecha_nacimiento, max=hoy, required)
+
 
                     div.form-group
                         label(for="sexo") Sexo:
@@ -89,6 +91,19 @@ html
 
                     button.enviarDatos(type="button" onclick=`enviarEdicionPaciente(${paciente.id})`) Guardar Cambios   
 
-
+    div#modalErrorDni.modalError()
+        div.modalError-content
+            span#cerrarError.closeModalError(onclick="cerrarModalError()") ×
+            h3 Error
+            p Paciente no agregado: El DNI corresponde con otro paciente internado
+            button(type="button", onclick="cerrarModalError()") Cerrar
+    section.modalExito
+        div.contenidoExito
+          div.cabeceraExito
+            h2 ¡Paciente modificado!
+          div.cuerpoExito
+            p Los datos se enviaron correctamente.
+          div.botonesExito
+            button.botonCerrarExito(type='button') Cerrar
         script(src='/script/fichaPacienteModal.js')
     

@@ -44,7 +44,12 @@ async function enviarEdicionPaciente(pacienteId) {
   }
   const nombre = document.querySelector("#nombre").value;
   const apellido = document.querySelector("#apellido").value;
-  const dni = document.querySelector("#dni").value;
+  let dniInput = document.querySelector("#dni");
+  let dni = 0;
+
+  if (dniInput) {
+    dni = dniInput.value;
+  }
   const numero_emergencia = document.querySelector("#numero_emergencia").value;
   const fecha_nacimiento = document.querySelector("#fecha_nacimiento").value;
   const sexo = document.querySelector("#sexo").value;
@@ -82,9 +87,15 @@ async function enviarEdicionPaciente(pacienteId) {
     const data = await respuesta.json();
     console.log(data);
 
+    if (!data.exito) {
+      abrirModalError();
+    }
+
     if (data.exito) {
-      alert("Paciente actualizado con éxito.");
-      location.reload();
+       mostrarModalExito();
+       setTimeout(() => {
+        location.reload();
+      }, 2000);
     } else {
       console.error("Error al actualizar paciente");
     }
@@ -92,7 +103,40 @@ async function enviarEdicionPaciente(pacienteId) {
     console.error("Error en enviarEdicionPaciente:", error);
   }
 }
+function abrirModalError() {
+  document.getElementById("modalErrorDni").style.display = "flex";
+}
+function cerrarModalError() {
+  document.getElementById("modalErrorDni").style.display = "none";
+}
 
+function mostrarModalExito() {
+  const modalExito = document.querySelector(".modalExito");
+  const modalEditar = document.getElementById("modalEditar");
+
+    modalExito.style.display = "flex";
+    modalEditar.style.display = "none";
+}
+
+function cerrarModalExito() {
+  const modalExito = document.querySelector(".modalExito");
+  if (modalExito) {
+    modalExito.style.display = "none"; 
+  }
+}
+function detectarTipoDNI() {
+  const dniInput = document.querySelector("#dni");
+  const dniLabel = document.getElementById("labelDNI");
+  const divDNI = document.getElementById("divDNI");
+  const dni = dniInput.value;
+
+  if (!dni.startsWith("0")) {
+    dniInput.remove();
+    dniLabel.remove();
+    divDNI.remove();
+  }
+}
 document.addEventListener("DOMContentLoaded", () => {
   cerrarModal();
+  detectarTipoDNI();
 });

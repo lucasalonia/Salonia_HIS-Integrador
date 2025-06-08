@@ -110,6 +110,7 @@ static async modificarDatosPaciente(id, nuevosDatos, options = {}) {
       if (!paciente) {
         throw new Error("Paciente no encontrado");
       }
+      delete nuevosDatos.dni;
       await paciente.update(nuevosDatos, options);
       return paciente;
     } catch (error) {

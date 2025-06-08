@@ -337,6 +337,7 @@ const modificarDatosPaciente = async (req, res) => {
       } else if (
         pacienteConDniExistente &&
         pacienteConDniExistente.borradoLogico == true
+        
       ) {
         await transaction.rollback();
         console.log("Los DNI coinciden entre paciente DESCONOCIDO y CONOCIDO");
@@ -344,6 +345,7 @@ const modificarDatosPaciente = async (req, res) => {
         return res.status(409).json({
           mensaje:
             "Error en el DNI: El paciente con ese documento ya se encuentra internado",
+          dni: pacienteConDniExistente.dni,  
         });
       } else {
         // Caso: Paciente NN y el nuevo DNI no existe previamente
@@ -369,8 +371,10 @@ const modificarDatosPaciente = async (req, res) => {
     //Evitamos que se ingrese un DNI repetido con un paciente que NO es NN
 
     const consultarPaciente = await Paciente.buscarPacientePorDni(paciente.dni);
+    
     if (consultarPaciente === null) {
       // Caso: Paciente con DNI ya válido, solo se actualizan datos
+      
       await Paciente.modificarDatosPaciente(id, paciente, { transaction });
       console.log("entro aca");
       console.log(id);
