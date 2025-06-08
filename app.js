@@ -18,7 +18,7 @@ const { router: rutaAutenticacion, autenticacionCheck } = require("./router/aute
 
 
 app.use(session({
-  secret: process.env.COOKIEKEY,
+  secret: process.env.COOKIE_KEY,
   resave: false,
   saveUninitialized: false,
   cookie: {

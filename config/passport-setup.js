@@ -20,8 +20,8 @@ passport.use(
     new GoogleStrategy({
     //opciones de la strategia
         callbackURL:"/autenticacion/google/redirect",
-        clientID: process.env.CLIENTID,
-        clientSecret: process.env.CLIENTSECRET,
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }, async (accesToken, refreshToken, profile, done)=>{
         //Funciones callback de passport
         const id_administrativo = profile.id;
