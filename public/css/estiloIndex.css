@@ -28,14 +28,14 @@ div.formularioPaciente {
     top: 100px; /* Baja el formulario un poco para evitar el header */
 }
 
-/* Estilo general para el formulario */
+
 form {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Espaciado entre los contenedores */
+    gap: 20px; 
     width: 100%;
-    position: relative; /* Necesario para posicionar el botón */
-    padding-bottom: 60px; /* Espacio para el botón */
+    position: relative;
+    padding-bottom: 60px; 
 }
 
 /* Dividir los contenedores en dos columnas */
@@ -420,9 +420,9 @@ input.error, select.error {
 }
 
 
-/* Modal de DNI */
+
 .modalDni {
-    display: none; /* Oculta la modal por defecto */
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
@@ -435,10 +435,10 @@ input.error, select.error {
   }
   
   .contenidoModalDni {
-    background-color: #fff; /* Fondo blanco */
+    background-color: #fff; 
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     width: 300px;
     text-align: center;
   }
@@ -446,7 +446,7 @@ input.error, select.error {
   .cabeceraModalDni h2 {
     margin: 0;
     font-size: 24px;
-    color:  #368fee; /* Verde para indicar éxito */
+    color:  #368fee; 
   }
   
   .cuerpoModalDni p {
@@ -463,8 +463,7 @@ input.error, select.error {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #368fee;/* Verde */
-    color: white;
+    background-color: #368fee;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -491,10 +490,10 @@ input.error, select.error {
   }
   
   .contenidoModalCamasAdvertencia {
-    background-color: #fff; /* Fondo blanco */
+    background-color: #fff; 
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     width: 400px;
     text-align: center;
   }
@@ -502,7 +501,7 @@ input.error, select.error {
   .cabeceraModalCamasAdvertencia h2 {
     margin: 0;
     font-size: 24px;
-    color:  #ec1717; /* Verde para indicar éxito */
+    color:  #ec1717; 
   }
   
   .cuerpoModalCamasAdvertencia p {
@@ -519,7 +518,7 @@ input.error, select.error {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #ee3636;/* Verde */
+    background-color: #ee3636;
     color: white;
     font-size: 16px;
     cursor: pointer;

@@ -15,12 +15,13 @@ section.tablaPacientes {
 }
 h3{
     margin: 0px;
+    color: #333;
 }
 h4{
     
     margin-top: 20px;
     margin-bottom: 10px;
-    color: red;
+    color: rgb(16, 19, 228);
 }
 a.linkId {
   display: inline-block;      
@@ -304,3 +305,7 @@ section.tablaPacientes table tbody tr:hover:not(.fila-roja) {
         font-weight: bolder;
 
  }
+ section h3{
+    margin: 0px;
+    color: #333;
+}

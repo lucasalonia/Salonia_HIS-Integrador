@@ -276,7 +276,7 @@ async function enviarInformacion() {
   const ciudad = document.querySelector(".ciudad").value;
   let medico_derivador = document.querySelector(".medico").value;
   const numero_obra_social = document.querySelector(".numeroObraSocial").value;
-
+  const borradoLogico = true;
   if (medico_derivador.trim() === "") {
     medico_derivador = null;
   }
@@ -293,6 +293,7 @@ async function enviarInformacion() {
       direccion,
       medios_ingreso,
       ciudad,
+      borradoLogico
     },
     mutual: {
       obra_social,
