@@ -5,7 +5,7 @@ const Cama = require('./Cama');
 const ObraSocial = require('./ObraSocial');
 const Medico = require('./Medico');
 const Habitacion = require('./Habitacion');
-const Ala = require('./ALa');
+const Ala = require('./Ala');
 
 
 const models = {
