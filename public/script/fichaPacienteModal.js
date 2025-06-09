@@ -94,8 +94,8 @@ async function enviarEdicionPaciente(pacienteId) {
     if (data.exito) {
        mostrarModalExito();
        setTimeout(() => {
-        location.reload();
-      }, 2000);
+        window.location.href = "/pacientes/listaPacientes";
+      }, 1000);
     } else {
       console.error("Error al actualizar paciente");
     }
