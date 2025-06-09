@@ -32,7 +32,8 @@ html
             div.modal-content
                 span#cerrarModal.close ×
                 h3 Editar Datos del Paciente ID: #{paciente.id}
-                if paciente.dni.startsWith('0') 
+                - const dniStr = paciente.dni ? paciente.dni.toString() : ''
+                if dniStr.startsWith('0') 
                     h3 PACIENTE DESCONOCIDO
                 form#formEditarPaciente(method="POST" action=`/modificar-datos/${paciente.id}`)
                     div.form-group

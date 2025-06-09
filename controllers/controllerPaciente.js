@@ -274,7 +274,7 @@ const modificarDatosPaciente = async (req, res) => {
       return res.status(404).json({ mensaje: "Paciente no encontrado" });
     }
 
-    const dniTemporal = pacienteExistente.dni;
+    const dniTemporal = pacienteExistente.dni ? pacienteExistente.dni.toString() : '';
     const nn = pacienteExistente.es_nn;
 
     // Caso: Paciente con DNI temporal (NN)
@@ -372,7 +372,7 @@ const modificarDatosPaciente = async (req, res) => {
 
     const consultarPaciente = await Paciente.buscarPacientePorDni(paciente.dni);
     
-    if (consultarPaciente === null) {
+    if (consultarPaciente) {
       // Caso: Paciente con DNI ya válido, solo se actualizan datos
       
       await Paciente.modificarDatosPaciente(id, paciente, { transaction });
