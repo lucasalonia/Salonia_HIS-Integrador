@@ -1,15 +1,16 @@
 # Salonia_HIS-Integrador
+Proyecto integrador de desarrollo web (Node.js + Pug + CSS). Este sistema de gestión hospitalaria (HIS) está orientado a ser ejecutado en entornos de desarrollo y fue realizado con fines académicos.
 
 # EJECUCION DESDE CONSOLA:
 nodemon start
 
 # PARAMETRO DE CONEXION:
-DB_HOST=shuttle.proxy.rlwy.net
-DB_USER=root
-DB_PASSWORD=yRHwIqPMXYicnrkQYAadJVNjNQsvICrw
-DB_NAME=railway
+DB_HOST=your_host
+DB_USER=your_user
+DB_PASSWORD=your_password
+DB_NAME=your_db_name
 DB_TIMEZONE=-03:00
-DB_PORT=45987
+DB_PORT=your_db_port
 PORT=3000
 
 # ACLARACIONES SOBRE EL DESARROLLO:
