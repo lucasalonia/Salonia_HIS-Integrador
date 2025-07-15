@@ -464,7 +464,7 @@ function bloquearCampos(desbloquear) {
 
 function buscarPacientePorDni() {
   const dniInput = document.querySelector(".dni");
-  console.log(dniInput);
+  
   let flag = true;
 
   if (dniInput && dniInput.value.trim() === "") {

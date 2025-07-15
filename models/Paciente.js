@@ -6,6 +6,10 @@ class Paciente extends Model {
     Paciente.hasMany(models.Internacion, { foreignKey: "id_paciente" });
     Paciente.hasOne(models.ObraSocial, { foreignKey: "id_paciente" });
     Paciente.hasMany(models.Derivacion, { foreignKey: "id_paciente" });
+    Paciente.belongsToMany(models.Alergias, {
+      through: models.HistorialAlergias,
+      foreignKey: "id_paciente",
+    });
   }
 
   static async crearPaciente(pacienteData, options = {}) {
@@ -54,7 +58,7 @@ class Paciente extends Model {
     try {
       const ultimoNN = await this.findOne({
         where: { es_nn: true },
-        order: [['id', 'DESC']],
+        order: [["id", "DESC"]],
       });
 
       return ultimoNN;
@@ -63,13 +67,13 @@ class Paciente extends Model {
       throw error;
     }
   }
-  static async borrarLogicoPaciente(id, options = {} ) {
+  static async borrarLogicoPaciente(id, options = {}) {
     try {
       const paciente = await Paciente.findByPk(id);
       if (!paciente) {
         throw new Error("Paciente no encontrado");
       }
-      await paciente.update({ borradoLogico: false },options);
+      await paciente.update({ borradoLogico: false }, options);
       return { mensaje: "Paciente eliminado correctamente" };
     } catch (error) {
       console.error("Error al eliminar el paciente:", error);
@@ -77,7 +81,7 @@ class Paciente extends Model {
     }
   }
 
-  static async eliminacionCompletaPacienteNN(id, options = {} ) {
+  static async eliminacionCompletaPacienteNN(id, options = {}) {
     try {
       const paciente = await Paciente.findByPk(id);
       if (!paciente) {
@@ -91,20 +95,20 @@ class Paciente extends Model {
     }
   }
 
-    static async altaLogicoPaciente(id, options = {} ) {
+  static async altaLogicoPaciente(id, options = {}) {
     try {
       const paciente = await Paciente.findByPk(id);
       if (!paciente) {
         throw new Error("Paciente no encontrado");
       }
-      await paciente.update({ borradoLogico: true },options);
+      await paciente.update({ borradoLogico: true }, options);
       return { mensaje: "Paciente eliminado correctamente" };
     } catch (error) {
       console.error("Error al eliminar el paciente:", error);
       throw error;
     }
   }
-static async modificarDatosPaciente(id, nuevosDatos, options = {}) {
+  static async modificarDatosPaciente(id, nuevosDatos, options = {}) {
     try {
       const paciente = await Paciente.findByPk(id);
       if (!paciente) {
@@ -143,7 +147,6 @@ static async modificarDatosPaciente(id, nuevosDatos, options = {}) {
       console.error("Error al cambiar el estado NN del paciente:", error);
       throw error;
     }
-
   }
 }
 
@@ -163,7 +166,7 @@ Paciente.init(
       unique: true,
       validate: {
         is: {
-          args: /^\d{8}$/, 
+          args: /^\d{8}$/,
           msg: "El DNI debe tener exactamente 8 números",
         },
       },

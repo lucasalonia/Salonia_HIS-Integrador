@@ -2,53 +2,65 @@ html
   head
     title Historial
     link(rel="stylesheet", href="/css/estiloEnfermeriaHistorial.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    link(href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet")
+    script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
+
   body
 
     include ../includes/navBar.pug
+    +navBar(fotoPerfil, nombreUsuario)
 
     section.info 
       h1.titulo Buscar un paciente
       div.infoBusqueda
-        form.infoBusqueda(action="/buscar" method="get")
-          input(type="text" name="query" placeholder="Buscar paciente...")
-          button(type="submit") Buscar
-      div.seleccionPaciente
-        select.alas(name="alas")
-          option(value="") Alas
-          option(value="ala1") Ala 1
-          option(value="ala2") Ala 2
-
-        select.habitaciones(name="habitaciones")
-          option(value="") Habitaciones
-          option(value="habitacion1") Habitación 1
-          option(value="habitacion2") Habitación 2
-
-        select.pacientes(name="pacientes")
-          option(value="") Pacientes
-          option(value="paciente1") Nombre - DNI - ID
-          option(value="paciente2") Nombre - DNI - ID
+        div.dniPaciente
+          input.dniBusqueda(type="text" name="dni" placeholder="Ingrese DNI del paciente que desea buscar...")
+          button.buscarDni(type="button") Buscar
+        span.error-message(data-field="dni")
 
 
       div.historial
         h2 Historial Medico 
         h2 Paciente:
         h2.paciente
-        form.historialMedico(onsubmit="return false;")
-          label(for="enfermedadesPrevias") Enfermedades Previa
-          input.enfermedadesPrevias(type='text', name='enfermedadesPrevias', required=true) 
+        form.historialMedico(onsubmit="return false;")    
+          label(for="select-alergias") Alergias
+          select#select-alergias.select2(name="alergias" multiple style="width: 500px;")
+            each alergia in alergias
+              option(value=alergia.id_alergia)= alergia.descripcion
 
-          label(for="cirugias") Cirugias
-          input.cirugias(type='text', name='cirugias', required=true) 
 
-          label(for="alergias") Alergias
-          input.alergias(type='text', name='alergias', required=true) 
+          label(for="select-enfermedades") Enfermedades Previas
+          select#select-enfermedades.select2(name="enfermedades" multiple style="width: 500px;")
+            each enfermedad in enfermedades
+              option(value=enfermedad.id_alergia)= enfermedad.descripcion
 
-          label(for="medicamentosActuales") Medicamentos actuales
-          input.medicamentosActuales(type='text', name='medicamentosActuales', required=true)  
 
-          label(for="antecedentes") Antecedentes
-          input.antecedentes(type='text', name='antecedentes', required=true)
+          label(for="select-cirugias") Cirugias Previas
+          select#select-cirugias.select2(name="cirugias" multiple style="width: 500px;")
+            each cirugia in cirugias
+              option(value=cirugia.id_cirugias)= cirugia.descripcion
 
-          button(type="submit") Guardar
 
-    script(src='/script/modificacionHistorial.js')     
+          label(for="select-antecedentes") Antecedentes Familiares
+          select#select-antecedentes.select2(name="antecedentes" multiple style="width: 500px;")
+            each antecedente in antecedentes
+              option(value=antecedente.id_antecedente)= antecedente.descripcion
+
+
+          label(for="select-medicamentos") Medicamentos actuales
+          select#select-medicamentos.select2(name="medicamentos" multiple style="width: 500px; ")
+            each medicamento in medicamentos
+              option(value=medicamento.id_medicamento)= medicamento.descripcion
+
+          button#guardarHistorial(type="button") Guardar
+
+
+    script(src='/script/modificacionHistorial.js')
+
+    script.
+      $('.select2').select2({
+        placeholder: 'Seleccione una opción...',
+        allowClear: true
+      });

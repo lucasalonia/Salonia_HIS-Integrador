@@ -1,26 +1,32 @@
 section.info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 80px;
-    gap: 20px;
-    min-height: calc(100vh - 80px);
-    background-color: #f9f9f9;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+  gap: 20px;
+  min-height: calc(100vh - 80px);
+  background-color: #f9f9f9;
+  width: 100%;
 }
-h1{
-    height: 50px;
-    margin: 0px;
-    margin-top: 20px;
+h1 {
+  height: 50px;
+  margin: 0px;
+  margin-top: 20px;
+}
 
+div.dniPaciente {
+  display: flex;
+  width: 50%;
+  gap: 10px;
 }
 .infoBusqueda {
-    margin-left: auto;
+  margin-left: auto;
   margin-right: auto;
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 5px;
   width: 60%;
-
+  align-items: center;
   margin: 0 auto;
 }
 
@@ -35,12 +41,11 @@ h1{
 .infoBusqueda input[type="text"]:focus {
   outline: none;
   border-color: #000000;
-
 }
 
-.infoBusqueda button[type="submit"] {
+.infoBusqueda button[type="button"] {
   padding: 10px 20px;
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
   font-size: 16px;
   border: none;
@@ -49,86 +54,86 @@ h1{
   transition: background-color 0.3s ease;
 }
 
-.infoBusqueda button[type="submit"]:hover {
+.infoBusqueda button[type="button"]:hover {
   background-color: #0056b3;
 }
 
+.error-message{
+  color: red;
+}
+
 div.seleccionPaciente {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    width: 150%;
-    max-width: 700px;
-    margin: 0 auto;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 150%;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 div.seleccionPaciente select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #333;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
 }
 
 div.historial {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 150%;
-    max-width: 600px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150%;
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
 }
 
 div.historial h2 {
-    font-size: 20px;
-    color: #333;
-    margin: 0px;
+  font-size: 20px;
+  color: #333;
+  margin: 0px;
 }
-
 form.historialMedico {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 form.historialMedico label {
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 15px;
-    color: #333;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  color: #444;
 }
 
-form.historialMedico input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #333;
-    width: 100%;
-    box-sizing: border-box;
+form.historialMedico .select2-container--default .select2-selection--multiple {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  min-height: 40px;
 }
 
-form.historialMedico button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    margin-top: 15px;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 50%;
-    align-self: center;
+form.historialMedico button#guardarHistorial{
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: center;
+  width: 50%;
 }
 
-form.historialMedico button:hover {
-    background-color: #0056b3;
+form.historialMedico button#guardarHistorial:hover {
+  background-color: #218838;
 }
-
