@@ -1,24 +1,24 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../../config/db.js");
 
-class Enfermedades extends Model {
+class Necesidades extends Model {
   static associate(models) {
-    Enfermedades.belongsToMany(models.Paciente, {
-      through: models.HistorialEnfermedades,
-      foreignKey: "id_enfermedad",
+    Necesidades.belongsToMany(models.Paciente, {
+      through: models.PacienteNecesidades,
+      foreignKey: "id_necesidad",
     });
   }
-  static async listarEnfermedades() {
-    const enfermedades = await Enfermedades.findAll();
-    return enfermedades;
+  static async listarNecesidades() {
+    const necesidades = await Necesidades.findAll();
+    return necesidades;
   }
  
   
 }
 
-Enfermedades.init(
+Necesidades.init(
   {
-    id_enfermedad: {
+    id_necesidad: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -31,10 +31,10 @@ Enfermedades.init(
   },
   {
     sequelize,
-    modelName: "Enfermedades",
-    tableName: "enfermedades",
+    modelName: "Necesidades",
+    tableName: "necesidades",
     timestamps: false,
   }
 );
 
-module.exports = Enfermedades;
+module.exports = Necesidades;

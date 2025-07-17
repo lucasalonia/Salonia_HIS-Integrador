@@ -6,9 +6,40 @@ class Paciente extends Model {
     Paciente.hasMany(models.Internacion, { foreignKey: "id_paciente" });
     Paciente.hasOne(models.ObraSocial, { foreignKey: "id_paciente" });
     Paciente.hasMany(models.Derivacion, { foreignKey: "id_paciente" });
+
     Paciente.belongsToMany(models.Alergias, {
       through: models.HistorialAlergias,
       foreignKey: "id_paciente",
+    });
+    Paciente.belongsToMany(models.Antecedentes, {
+      through: models.HistorialAntecedentes,
+      foreignKey: "id_paciente",
+    });
+    Paciente.belongsToMany(models.Cirugias, {
+      through: models.HistorialCirugias,
+      foreignKey: "id_paciente",
+    });
+    Paciente.belongsToMany(models.Enfermedades, {
+      through: models.HistorialEnfermedades,
+      foreignKey: "id_paciente",
+    });
+    Paciente.belongsToMany(models.Medicamentos, {
+      through: models.HistorialMedicamentos,
+      foreignKey: "id_paciente",
+    });
+
+    Paciente.belongsToMany(models.Sintomas, {
+      through: models.PacienteSintomas,
+      foreignKey: "id_paciente",
+    });
+
+    Paciente.belongsToMany(models.Necesidades, {
+      through: models.PacienteNecesidades,
+      foreignKey: "id_paciente",
+    });
+    Paciente.hasMany(models.EvaluacionBasica, {
+      foreignKey: "id_paciente",
+      as: "evaluaciones",
     });
   }
 
@@ -46,6 +77,7 @@ class Paciente extends Model {
     try {
       const paciente = await Paciente.findOne({
         where: { dni },
+        borradoLogico: true,
       });
       return paciente;
     } catch (error) {

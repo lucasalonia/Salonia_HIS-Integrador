@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const pacienteController = require("../controllers/controllerPaciente"); 
+const { Paciente } = require('../models');
 
 //GETS
 router.get("/listaPacientes", function (req, res, next) {
@@ -12,6 +13,7 @@ router.get("/listaPacientes", function (req, res, next) {
 router.get('/ficha-paciente/:id', (req, res) => {
      pacienteController.recuperarDatosPaciente(req, res);  
 });
+
 
 
 //POSTS

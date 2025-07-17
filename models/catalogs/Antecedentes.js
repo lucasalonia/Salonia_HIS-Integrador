@@ -3,9 +3,9 @@ const { sequelize } = require("../../config/db.js");
 
 class Antecedentes extends Model {
   static associate(models) {
-    Alergias.belongsToMany(models.Paciente, {
-      through: models.HistorialAlergias,
-      foreignKey: "id_alergia",
+    Antecedentes.belongsToMany(models.Paciente, {
+      through: models.HistorialAntecedentes,
+      foreignKey: "id_antecedente",
     });
   }
   static async listarAntecedentes() {
@@ -18,7 +18,7 @@ class Antecedentes extends Model {
 
 Antecedentes.init(
   {
-    id_antecedentes: {
+    id_antecedente: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,

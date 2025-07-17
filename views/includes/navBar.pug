@@ -5,7 +5,7 @@ mixin navBar(fotoPerfil, nombreUsuario)
     nav
       div.fotoPerfil  
         img.fotoPerfil-logo(src=fotoPerfil || '/images/default-avatar.png')
-        h3 #{nombreUsuario}
+        h3.userName #{nombreUsuario}
       ul
         li: a.linkNav(href='/') Registro 
         li: a.linkNav(href='/pacientes/listaPacientes') Pacientes

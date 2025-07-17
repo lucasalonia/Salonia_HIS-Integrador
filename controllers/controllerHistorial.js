@@ -6,6 +6,11 @@ const {
   Cirugias,
   Medicamentos,
   HistorialAlergias,
+  HistorialAntecedentes,
+  HistorialCirugias,
+  HistorialEnfermedades,
+  HistorialMedicamentos
+
 } = require("../models/index.js");
 
 const { sequelize } = require("../config/db");
@@ -63,7 +68,24 @@ const obtnerDatosHistorial = async (req, res) => {
   const dni = req.params.dni;
   
   const paciente = await Paciente.buscarPacientePorDni(dni);
-  const alergias = await Alergias.findAll({
+
+  let alergias;
+  let enfermedades;
+  let cirugias;
+  let antecedentes;
+  let medicamentos;
+
+  if(paciente){
+
+    alergias =  await Alergias.findAll({
+    include: {
+      model: Paciente,
+      where: { id: paciente.id },
+      attributes: [],
+      through: { attributes: [] },
+    },
+  });
+    enfermedades = await Enfermedades.findAll({
     include: {
       model: Paciente,
       where: { id: paciente.id },
@@ -72,31 +94,71 @@ const obtnerDatosHistorial = async (req, res) => {
     },
   });
 
-  if (!paciente && !alergias) {
-    return res.json({ paciente: null, alergias: null});
-  }
+  
 
-  res.json({paciente, alergias});
+    cirugias = await Cirugias.findAll({
+    include: {
+      model: Paciente,
+      where: { id: paciente.id },
+      attributes: [],
+      through: { attributes: [] },
+    },
+  });
+    antecedentes = await Antecedentes.findAll({
+    include: {
+      model: Paciente,
+      where: { id: paciente.id },
+      attributes: [],
+      through: { attributes: [] },
+    },
+  });
+    medicamentos = await Medicamentos.findAll({
+    include: {
+      model: Paciente,
+      where: { id: paciente.id },
+      attributes: [],
+      through: { attributes: [] },
+    },
+  });
+    
+  res.json({paciente, alergias, enfermedades, cirugias, antecedentes, medicamentos});
+}
+
+  
 };
 
 const crearHistorial = async (req, res) => {
   const transaction = await sequelize.transaction();
 
   try {
-    const { dni, alergias } = req.body;
+    const { dni, alergias, cirugias, enfermedades, antecedentes, medicamentos } = req.body;
 
+    
     const paciente = await Paciente.buscarPacientePorDni(dni);
     if (!paciente) {
-      await t.rollback();
+      await transaction.rollback();
       return res.status(404).json({ error: "Paciente no encontrado" });
     }
 
-    await HistorialAlergias.crearHistorial(paciente.id, alergias, {
+    await HistorialAlergias.crearHistorialAlergia(paciente.id, alergias, {
+      transaction,
+    });
+    await HistorialAntecedentes.crearHistorialAntecedente(paciente.id, antecedentes, {
+      transaction,
+    });
+    await HistorialCirugias.crearHistorialCirugia(paciente.id, cirugias, {
+      transaction,
+    });
+    await HistorialEnfermedades.crearHistorialEnfermedad(paciente.id, enfermedades, {
+      transaction,
+    });
+    await HistorialMedicamentos.crearHistorialMedicamento(paciente.id, medicamentos, {
       transaction,
     });
 
     await transaction.commit();
-
+    console.log("paso el commit");
+    
     res.json({ message: "Historial creado correctamente" });
   } catch (error) {
     await transaction.rollback();

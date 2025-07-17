@@ -6,9 +6,16 @@ const Paciente = require("./Paciente.js");
 class Internacion extends Model {
   static associate(models) {
     Internacion.belongsTo(models.Paciente, { foreignKey: "id_paciente" });
+
     Internacion.belongsTo(models.Cama, { foreignKey: "id_cama" });
+
+    Internacion.hasOne(models.InternacionPrioridad, {
+      foreignKey: "id_internacion",
+      as: "prioridad",
+    });
   }
-  static async crearInternacion(internacionData, options = {} ) {
+
+  static async crearInternacion(internacionData, options = {}) {
     try {
       const nuevaInternacion = await this.create(internacionData, options);
       return nuevaInternacion;
@@ -20,7 +27,7 @@ class Internacion extends Model {
   static async listarInternaciones() {
     return await Internacion.findAll();
   }
-  static async buscarInternacionPorIdPaciente(id_paciente ) {
+  static async buscarInternacionPorIdPaciente(id_paciente) {
     try {
       const internacion = await Internacion.findOne({
         where: { id_paciente },
@@ -32,23 +39,25 @@ class Internacion extends Model {
     }
   }
 
-static async darAlta(id_paciente, options = {}) {
-  try {
-    const internacion = await Internacion.findOne({ where: { id_paciente } });
+  static async darAlta(id_paciente, options = {}) {
+    try {
+      const internacion = await Internacion.findOne({ where: { id_paciente } });
 
-    if (!internacion) {
-      throw new Error("Internación no encontrada");
+      if (!internacion) {
+        throw new Error("Internación no encontrada");
+      }
+
+      await internacion.update(
+        { internado: false, fecha_egreso: new Date() },
+        options
+      );
+
+      return { mensaje: "Internación actualizada correctamente" };
+    } catch (error) {
+      console.error("Error al actualizar la internación:", error);
+      throw error;
     }
-
-    await internacion.update({ internado: false, fecha_egreso: new Date() }, options);
-
-    return { mensaje: "Internación actualizada correctamente" };
-  } catch (error) {
-    console.error("Error al actualizar la internación:", error);
-    throw error;
   }
-}
- 
 }
 
 Internacion.init(

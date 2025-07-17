@@ -2,66 +2,55 @@ html
   head
     title Informacion Paciente
     link(rel="stylesheet", href="/css/estiloEnfermeriaInfo.css")
-  body
+   
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
 
+  body
+    
     include ../includes/navBar.pug
     +navBar(fotoPerfil, nombreUsuario)
+    include ../includes/botonesIzqDer.pug
+    +paginado(false,true,"#","/enfermeria/historial","#","Historial")
 
     section.informacionPaciente
-      h1.titulo Informacion Pacientes
+      h1.titulo Ingrese Nombre, Apellido o DNI del paciente
       div.infoBusqueda
         form.infoBusqueda(action="/buscar" method="get")
-          input(type="text" name="query" placeholder="Buscar paciente...")
+          select#buscarPaciente(name="query" style="width: 300px" required)
+            each paciente in pacientes
+              option(value=paciente.id)= paciente.id + " - " + paciente.dni + " - " +  paciente.apellido + " - " + paciente.nombre
           button(type="submit") Buscar
-      div.infoContainer 
-        div.datosPaciente.bloqueUno 
-          h3.nombre Nombre:  
-            span.valorNombre Luca 
-          h3.apellido Apellido: 
-            span.valorApellido  Salonia
 
-          h3.dni DNI:  
-            span.valorDni 40722588  
-
-          h3.numeroEmergencia Numero Emergencia: 
-            span.valorNumeroEmergencia  2664688406
-
-          h3.fechaNacimiento Fecha Nacimiento:  
-            span.valorfechaNacimiento 16/10/1997  
-
-          h3.sexo Sexo: 
-            span.valorSexo Otro
-
-          h3.direccion Direccion:  
-            span.valorDireccion Rivadaiva 1080  
-
-          h3.ciudad Ciudad:  
-            span.valorCiudad San Luis
-
-          h3.correro Correro Electronico: 
-            span.valorCorreo  salonialuca97@gmail.com
-  
-          h3.obraSocial Obra Social: 
-            span.valorObraSocial  Medife
-
-          h3.numeroObraSocila Numero Obra Social:  
-            span.valorNumeroObraSocial 487855484845645 
-          
-          h3.alaAlojado Ala:
-            span.valorAlaAlojado Cirugia
-
-          h3.habitacionAlojado Habitacion:
-            span.valorHabitacionAlojado 1
-
-          h3.camaAlojado Cama Ocupada:
-            span.valorCamaAlojado  1
-
-          h3.fechaIngreso Fecha de Ingreso: 
-            span.valorFechaIngreso 25/05/2025
-
-          button.imprimirBtn(type="button" onclick="window.print()") Imprimir  
-
-
-             
+    section.fichaPaciente 
+          h2 Ficha del Paciente
+          div.fichaPaciente__datos
+              p#nombreActual Nombre:
+              p#apellidoActual Apellido: 
+              p#dniActual DNI: 
+              p#numeroEmergenciaActual Numero Emergencia: 
+              p#fechaNacimientoActual Fecha de Nacimiento: 
+              p#sexoActual Sexo: 
+              p#direccionActual Direccion: 
+              p#emailActual Correo Electronico: 
+              p#ciudadActual Ciudad: 
+              p#medioIngresoActual Medio de Ingreso:
+              p#medicoActual Medico: 
+              p#obraSocialActual Obra Social:
+              p#numeroObraSocialActual Numero Obra Social: 
+              p#fechaIngresoActual Fecha de Ingreso: 
+              p#camaActual Cama: 
+          div.fichaPaciente__acciones
+                 
+    
+    script.
+      $(document).ready(function () {
+        $('#buscarPaciente').select2({
+          placeholder: "Busqueda...",
+          allowClear: true,
+          dropdownParent: $('#buscarPaciente').parent()
+        });
+      });
 
        

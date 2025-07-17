@@ -95,10 +95,40 @@ const crearPaciente = async (req, res) => {
   }
 };
 
+const listarPacientesOpcionLimpia = async () =>{
+  const pacientes = await Paciente.findAll({
+      where: {
+        borradoLogico: true,
+      },
+      include: [
+        {
+          model: Internacion,
+          include: [Cama],
+          required: false,
+        },
+        {
+          model: Derivacion,
+          include: [Medico],
+          required: false,
+        },
+        {
+          model: ObraSocial,
+          required: false,
+        },
+      ],
+    });
+
+    const pacientesInternados = pacientes.filter(
+      (p) => p.Internacions && p.Internacions.length > 0
+    );
+    
+    return pacientesInternados;
+}
+
 const listarPacientes = async (req, res) => {
   try {
     const fotoPerfil = req.user.foto_perfil;
-  const nombreUsuario = req.user.usuario;
+    const nombreUsuario = req.user.usuario;
     const pacientes = await Paciente.findAll({
       where: {
         borradoLogico: true,
@@ -179,7 +209,11 @@ const listarPacientes = async (req, res) => {
       };
     });
 
-    res.render("pacientes/listaPacientes", { pacientes: datos, fotoPerfil:fotoPerfil, nombreUsuario:nombreUsuario });
+    res.render("pacientes/listaPacientes", {
+      pacientes: datos,
+      fotoPerfil: fotoPerfil,
+      nombreUsuario: nombreUsuario,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error al listar pacientes");
@@ -258,10 +292,9 @@ const recuperarDatosPaciente = async (req, res) => {
 };
 
 const modificarDatosPaciente = async (req, res) => {
-  
   const id = req.params.id;
   const { paciente, mutual } = req.body;
-  if ( !paciente ) {
+  if (!paciente) {
     return res.status(400).json({ mensaje: "Faltan datos requeridos" });
   }
   const transaction = await sequelize.transaction();
@@ -269,17 +302,17 @@ const modificarDatosPaciente = async (req, res) => {
   try {
     const pacienteExistente = await Paciente.buscarPacientePorId(id);
     if (!pacienteExistente) {
-      
       await transaction.rollback();
       return res.status(404).json({ mensaje: "Paciente no encontrado" });
     }
 
-    const dniTemporal = pacienteExistente.dni ? pacienteExistente.dni.toString() : '';
+    const dniTemporal = pacienteExistente.dni
+      ? pacienteExistente.dni.toString()
+      : "";
     const nn = pacienteExistente.es_nn;
 
     // Caso: Paciente con DNI temporal (NN)
     if (dniTemporal.startsWith("0") && nn) {
-      
       const dniIngresado = paciente.dni;
       const pacienteConDniExistente = await Paciente.buscarPacientePorDni(
         dniIngresado
@@ -290,7 +323,7 @@ const modificarDatosPaciente = async (req, res) => {
 
       if (pacienteConDniExistente && !pacienteConDniExistente.borradoLogico) {
         // Caso: ya existe un paciente con el DNI ingresado
-        
+
         const internacion = await Internacion.buscarInternacionPorIdPaciente(
           pacienteExistente.id
         );
@@ -331,13 +364,12 @@ const modificarDatosPaciente = async (req, res) => {
         await transaction.commit();
         return res
           .status(200)
-          .json({exito:true, mensaje: "Paciente actualizado correctamente" });
+          .json({ exito: true, mensaje: "Paciente actualizado correctamente" });
 
         //Si coincide el DNI ingresado con un paciente que SI esta internado (borradoLogico en true, es decir existe en el sistema)
       } else if (
         pacienteConDniExistente &&
         pacienteConDniExistente.borradoLogico == true
-        
       ) {
         await transaction.rollback();
         console.log("Los DNI coinciden entre paciente DESCONOCIDO y CONOCIDO");
@@ -345,7 +377,7 @@ const modificarDatosPaciente = async (req, res) => {
         return res.status(409).json({
           mensaje:
             "Error en el DNI: El paciente con ese documento ya se encuentra internado",
-          dni: pacienteConDniExistente.dni,  
+          dni: pacienteConDniExistente.dni,
         });
       } else {
         // Caso: Paciente NN y el nuevo DNI no existe previamente
@@ -364,17 +396,20 @@ const modificarDatosPaciente = async (req, res) => {
         await transaction.commit();
         return res
           .status(200)
-          .json({exito:true, mensaje: "Paciente NN actualizado con nuevo DNI" });
+          .json({
+            exito: true,
+            mensaje: "Paciente NN actualizado con nuevo DNI",
+          });
       }
     }
-    
+
     //Evitamos que se ingrese un DNI repetido con un paciente que NO es NN
 
     const consultarPaciente = await Paciente.buscarPacientePorDni(paciente.dni);
-    
+
     if (consultarPaciente) {
       // Caso: Paciente con DNI ya válido, solo se actualizan datos
-      
+
       await Paciente.modificarDatosPaciente(id, paciente, { transaction });
       console.log("entro aca");
       console.log(id);
@@ -391,7 +426,10 @@ const modificarDatosPaciente = async (req, res) => {
       await transaction.commit();
       return res
         .status(200)
-        .json({exito:true, mensaje: "Datos del paciente actualizados correctamente" });
+        .json({
+          exito: true,
+          mensaje: "Datos del paciente actualizados correctamente",
+        });
     } else {
       await transaction.rollback();
       console.log("Los DNI coinciden entre pacientes CONOCIDOS");
@@ -440,6 +478,13 @@ const boradoLogicoPaciente = async (req, res) => {
     res.status(500).json({ mensaje: "Error al eliminar el paciente" });
   }
 };
+const buscarPacientePorDniGenerico = async (req, res) => {
+  const dni = req.params.dni;
+
+  const paciente = await Paciente.buscarPacientePorDni(dni);
+
+  res.json({ paciente });
+};
 
 module.exports = {
   crearPaciente,
@@ -449,4 +494,6 @@ module.exports = {
   boradoLogicoPaciente,
   recuperarDatosPaciente,
   modificarDatosPaciente,
+  buscarPacientePorDniGenerico,
+  listarPacientesOpcionLimpia
 };

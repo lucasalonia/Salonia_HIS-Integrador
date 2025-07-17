@@ -1,7 +1,22 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db.js');
 
-class HistorialEnfermedades extends Model {}
+class HistorialEnfermedades extends Model {
+
+  static async crearHistorialEnfermedad(id_paciente, enfermedades = [], options = {}) {
+    if (!enfermedades || enfermedades.length === 0) {
+      return;
+    }
+
+    const registros = enfermedades.map((idEnfermedad) => ({
+      id_paciente: id_paciente,
+      id_enfermedad: idEnfermedad,
+    }));
+
+    await HistorialEnfermedades.bulkCreate(registros, {...options, ignoreDuplicates: true});
+  }
+
+}
 
 HistorialEnfermedades.init({
   id_paciente: {

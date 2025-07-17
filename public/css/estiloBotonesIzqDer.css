@@ -1,0 +1,51 @@
+.flotante-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+  user-select: none;
+}
+
+.flotante-btn:hover {
+  background-color: #0056b3;
+}
+
+
+.flotante-btn.left {
+  left: 100px;
+}
+
+/* Botón derecha */
+.flotante-btn.right {
+  right: 100px;
+}
+
+/* Triángulo apuntando a la izquierda */
+.triangulo-left {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 12px solid white;
+}
+
+/* Triángulo apuntando a la derecha */
+.triangulo-right {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 12px solid white;
+}

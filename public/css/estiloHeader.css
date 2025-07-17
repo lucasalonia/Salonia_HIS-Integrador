@@ -115,6 +115,6 @@ nav ul li a.linkNav:hover {
   border: 2px solid rgb(50, 221, 50);
   cursor: pointer;
 }
-h3 {
+h3.userName {
   color: rgb(50, 221, 50);
 }

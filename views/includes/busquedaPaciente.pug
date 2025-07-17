@@ -1,0 +1,29 @@
+link(rel="stylesheet", href="/css/estiloBusquedaPacienteGenerico.css")
+
+mixin busquedaPacienteGenerica(ruta)
+  - var ruta
+  div#app(data-ruta=ruta)
+  section.info 
+    h1.titulo Ingrese DNI del paciente al que asignará los datos
+    div.infoBusqueda
+      div.dniPaciente
+        input.dniBusqueda(type="text" name="dni" placeholder="Buscar DNI...")
+        button.buscarDni(type="button") Buscar
+      span.error-message(data-field="dni")
+
+
+    div.mostrarPacienteDatos
+      p  
+        strong Apellido:  
+        span.valor#apellidoPaciente= apellido
+      p 
+        strong Nombre: 
+        span.valor#nombrePaciente= nombre
+      p 
+        strong DNI: 
+        span.valor#dniPaciente= dni
+      p 
+        strong Clave ID: 
+        span.valor#idPaciente= id
+
+    

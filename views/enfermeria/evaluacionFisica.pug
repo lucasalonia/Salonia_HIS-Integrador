@@ -1,7 +1,71 @@
 html
   head
-    title
+    title Evaluacion Fisica Basica
+    link(rel="stylesheet", href="/css/estiloEnfermeriaEvaluacion.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
+    link(href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet")
+    
   body
 
     include ../includes/navBar.pug
     +navBar(fotoPerfil, nombreUsuario)
+
+    include ../includes/botonesIzqDer.pug
+    +paginado(true,true,"/enfermeria/motivoInternacion","/enfermeria/planCuidados","Motiv. internacion", "Plan de cuidados")
+
+    include ../includes/busquedaPaciente.pug
+    +busquedaPacienteGenerica("evaluacionFisica")
+
+    section.evaluacion(style="opacity: 0.5; pointer-events: none;")
+      h2 Evaluación física básica
+      hr 
+      form.evaluacionBasica(onsubmit="return false;")    
+        div.contenedorEvaluacionBasica
+          label(for="presion_arterial") Presión Arterial
+          input(type="number", id="presion_arterial", name="presion_arterial", min="30", max="300", required)
+
+        div.contenedorEvaluacionBasica
+          label(for="frecuencia_cardiaca") Frecuencia Cardíaca
+          input(type="number", id="frecuencia_cardiaca", name="frecuencia_cardiaca", min="30", max="220", required)
+
+        div.contenedorEvaluacionBasica
+          label(for="frecuencia_respiratoria") Frecuencia Respiratoria
+          input(type="number", id="frecuencia_respiratoria", name="frecuencia_respiratoria", min="10", max="60", required)
+
+        div.contenedorEvaluacionBasica
+          label(for="temperatura_corporal") Temperatura Corporal (°C)
+          input(type="number", id="temperatura_corporal", name="temperatura_corporal", min="30", max="45", step="0.1", required)
+
+        div.contenedorEvaluacionBasica.colorPiel
+          label(for="color_piel") Color de Piel
+          select(name="color_piel", id="color_piel", required)
+            option(value="" disabled selected) Selección
+            option(value="cianotica") Cianótica
+            option(value="palida") Pálida
+            option(value="icterica") Ictérica
+            option(value="enrojecida") Enrojecida
+            option(value="sudorosa") Sudorosa
+            option(value="seca") Seca
+            option(value="moteada") Moteada
+            option(value="hiperpigmentada") Hiperpigmentada
+            option(value="hipopigmentada") Hipopigmentada  
+
+        div.contenedorEvaluacionBasica.respuestaEstimulos
+          label Respuesta a Estímulos
+          label
+            input(type="radio", name="respuesta_estimulo", value="true", required)
+            | Sí
+          label
+            input(type="radio", name="respuesta_estimulo", value="false")
+            | No
+
+
+      button#guardarEvaluacion(type="button") Guardar
+       
+    include ../includes/modalExito.pug
+
+    script(src="/script/busquedaPacienteGenrica.js")
+    script(src="/script/modificacionEvaluacion.js")
+    script(src="/script/modalExitoGenerico.js")
+

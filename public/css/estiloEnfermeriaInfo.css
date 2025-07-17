@@ -1,19 +1,30 @@
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  display: flex;
+  
+  justify-content: center; 
+  align-items: center;   
 }
-.informacionPaciente{
-    margin-top: 70px;
+
+.informacionPaciente {
+  margin-top: 0; 
+  margin-bottom: 200px; 
+  max-width: 600px;
+    background-color: #8d8e8f52;
+    border-radius: 10px ;
+    padding: 50px;
 }
 .infoBusqueda {
   width: 100%;
   max-width: 600px;
   display: flex;
   justify-content: center;
+
+}
+h1.titulo {
+  text-align: center;
 }
 
 form.infoBusqueda {
@@ -78,21 +89,109 @@ form.infoBusqueda button:hover {
 }
 
 
-.imprimirBtn {
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 20px;
-  align-self: center;
-  display: block;
-  width: fit-content;
+.select2-container {
+  width: 500px !important; 
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
 }
 
-.imprimirBtn:hover {
-  background-color: #0056b3;
+/* Caja de selección (la parte visible antes de abrir el dropdown) */
+.select2-selection {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 12px;
+  background-color: white;
+  min-height: 38px;
 }
+
+/* Cuando está enfocado */
+.select2-selection--single:focus, 
+.select2-selection.select2-selection--single:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 3px #007bff;
+  outline: none;
+}
+
+/* Texto dentro */
+.select2-selection__rendered {
+  color: #333;
+}
+
+/* Flechita del dropdown */
+.select2-selection__arrow {
+  height: 36px;
+  right: 8px;
+  width: 20px;
+}
+
+/* Opciones desplegables */
+.select2-dropdown {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Opciones dentro del dropdown */
+.select2-results__option {
+  padding: 8px 12px;
+}
+
+
+.select2-results__option--highlighted {
+  background-color: #007bff;
+  color: white;
+}
+
+.fichaPaciente {
+  max-width: 700px;
+  margin: 80px auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  padding: 30px 40px;
+  box-sizing: border-box;
+}
+
+.fichaPaciente h2 {
+    margin-top: 0px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+.fichaPaciente__datos p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  line-height: 1.4;
+  border-bottom: 1px solid #e1e8f0;
+  padding-bottom: 8px;
+  color: #34495e;
+}
+
+.fichaPaciente__datos p:last-child {
+  border-bottom: none;
+}
+
+.fichaPaciente__acciones {
+  width: 0; 
+  height: 0; 
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 25px solid #007bff; 
+  cursor: pointer; 
+  transition: border-left-color 0.3s ease;
+  margin-top: 10px;
+  margin-left: 300px;
+}
+
+
+.fichaPaciente__acciones:hover {
+  border-left-color: #0056b3;
+}
+
+
+
+
+

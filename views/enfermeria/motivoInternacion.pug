@@ -1,47 +1,58 @@
 html
   head
-    title Motivos de Internacion 
-    link(rel="stylesheet", href="/css/estiloEnfermeriaMotivos.css")
+    title Motivos Internacion
+    link(rel="stylesheet", href="/css/estiloEnfermeriaMotivoInternacion.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
+    link(href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet")
+    
   body
 
     include ../includes/navBar.pug
     +navBar(fotoPerfil, nombreUsuario)
 
-    section.motivoInternacion
-      h1 Motivos de Internacion
-      div.busquedaManual
-        input(type="text")
-        button(type="submit") Buscar
-      div.seleccionPaciente
-        select.alas(name="alas")
-          option(value="") Alas
-          option(value="ala1") Ala 1
-          option(value="ala2") Ala 2
+    include ../includes/botonesIzqDer.pug
+    +paginado(true,true,"/enfermeria/historial","/enfermeria/evaluacionFisica","Historial", "Ev. fisica")
+    
+    include ../includes/busquedaPaciente.pug
+    +busquedaPacienteGenerica("motivoInternacion")
+    
 
-        select.habitaciones(name="habitaciones")
-          option(value="") Habitaciones
-          option(value="habitacion1") Habitación 1
-          option(value="habitacion2") Habitación 2
+    
+    section.motivo(style="opacity: 0.5; pointer-events: none;")
+        h2 Motivos de internacion  
+        form.motivoInternacion(onsubmit="return false;")    
 
-        select.pacientes(name="pacientes")
-          option(value="") Pacientes
-          option(value="paciente1") Nombre - DNI - ID
-          option(value="paciente2") Nombre - DNI - ID
+          label(for="select-sintomas") Sintomas
+          select#select-sintomas.select2(name="sintomas" multiple style="width: 500px;")
+              each sintoma in sintomas
+                option(value=sintoma.id_sintoma)= sintoma.descripcion
 
-      div.motivoIternacionConteiner 
-        form.motivoInternacionFormulario(action="")
-          div.formSeccionUno
-            label(for="motivo") Motivo Internacion
-            input(type="text", name="motivo")
 
-            label(for="prioridad") Prioridad
-            input(type="text", name="prioridad")
+          label(for="select-necesidades") Necesidades Inmediatas
+          select#select-necesidades.select2(name="necesidades" multiple style="width: 500px;")
+            each necesidad in necesidades
+              option(value=necesidad.id_necesidad)= necesidad.descripcion
 
-            label(for="necesidades") Necesidades Inmediatas
-            input(type="text", name="necesidades")
 
-          div.formSeccionDos
-            label(for="sintomas") Sintomas
-            textarea#sintomas(name="sintomas")
+          h3.prioridad(for="select-antecedentes")
+            | Prioridad:
+            span.prioridadValor -
+                    
 
-          button(type="onsubmit") Guardar Informacion    
+          button#guardarMotivo(type="button") Guardar
+    
+
+    include ../includes/modalExito.pug
+
+    script(src="/script/busquedaPacienteGenrica.js")
+    script(src="/script/modificacionMotivos.js")
+    script(src="/script/modalExitoGenerico.js")
+
+
+
+    script.
+      $('.select2').select2({
+        placeholder: 'Seleccione una opción...',
+        allowClear: true
+      });

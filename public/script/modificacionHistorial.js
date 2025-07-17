@@ -1,8 +1,26 @@
+function desbloquearHistorial() {
+  const bloqueHistorial = document.querySelector(".historial");
+  if (bloqueHistorial) {
+    bloqueHistorial.style.opacity = "1";
+    bloqueHistorial.style.pointerEvents = "auto";
+  }
+}
+
+function bloquearHistorial() {
+  const bloqueHistorial = document.querySelector(".historial");
+  if (bloqueHistorial) {
+    bloqueHistorial.style.opacity = "0.5";
+    bloqueHistorial.style.pointerEvents = "none";
+  }
+}
+
+
 function mostrarPaciente(descripcionPaciente) {
   const textoPaciente = document.querySelector(".paciente");
   textoPaciente.textContent = descripcionPaciente;
   textoPaciente.style.color = "#007BFF";
 }
+
 function buscarPacientePorDni() {
   const dniInput = document.querySelector(".dniBusqueda");
   let flag = true;
@@ -57,6 +75,8 @@ function buscarPacientePorDni() {
           const apellido = data.paciente.apellido;
 
           const descripcionPaciente = `${id} - ${dni} - ${apellido} - ${nombre}`;
+
+          desbloquearHistorial();
           mostrarPaciente(descripcionPaciente);
 
           if (data.alergias) {
@@ -64,6 +84,31 @@ function buscarPacientePorDni() {
               (alergia) => alergia.id_alergia
             );
             $("#select-alergias").val(idsAlergias).trigger("change");
+          }
+          
+          if (data.enfermedades) {
+            const idsEnfermedades = data.enfermedades.map(
+              (enfermedad) => enfermedad.id_enfermedad
+            );
+            $("#select-enfermedades").val(idsEnfermedades).trigger("change");
+          }
+          if (data.cirugias) {
+            const idsCirugias = data.cirugias.map(
+              (cirugia) => cirugia.id_cirugia
+            );
+            $("#select-cirugias").val(idsCirugias).trigger("change");
+          }
+          if (data.antecedentes) {
+            const idsAntecedentes = data.antecedentes.map(
+              (antecedente) => antecedente.id_antecedente
+            );
+            $("#select-antecedentes").val(idsAntecedentes).trigger("change");
+          }
+          if (data.medicamentos) {
+            const idsMedicamentos = data.medicamentos.map(
+              (medicamento) => medicamento.id_medicamento
+            );
+            $("#select-medicamentos").val(idsMedicamentos).trigger("change");
           }
         } else {
           console.log("No se encontró el paciente con DNI:", dni);
@@ -87,10 +132,18 @@ function enviarHistorial() {
   const dniInput = document.querySelector(".dniBusqueda");
   const dni = dniInput.value.trim();
   const alergiasSeleccionadas = $("#select-alergias").val();
+  const cirugiasSeleccionadas = $("#select-cirugias").val();
+  const enfermedadesSeleccionadas = $("#select-enfermedades").val();
+  const antecedentesSeleccionadas = $("#select-antecedentes").val();
+  const medicamentosSeleccionadas = $("#select-medicamentos").val();
 
   const data = {
     dni: dni,
     alergias: alergiasSeleccionadas,
+    cirugias: cirugiasSeleccionadas,
+    enfermedades: enfermedadesSeleccionadas,
+    antecedentes: antecedentesSeleccionadas,
+    medicamentos: medicamentosSeleccionadas,
   };
 
   fetch("/enfermeria/historial/enviar-historial", {
@@ -108,10 +161,30 @@ function enviarHistorial() {
     })
     .then((data) => {
       console.log("Respuesta del servidor:", data);
+      vaciarCampos();
+      bloquearHistorial();
+      mostrarPaciente("");
+      mostrarModalExito();
     })
     .catch((error) => {
       console.error("Error:", error);
     });
+}
+
+function vaciarCampos(){
+  const dniInput = document.querySelector(".dniBusqueda");
+  dniInput.value = "";
+  const selects = [
+  "#select-alergias",
+  "#select-enfermedades",
+  "#select-cirugias",
+  "#select-antecedentes",
+  "#select-medicamentos",
+];
+
+selects.forEach(selector => {
+  $(selector).empty().trigger('change');
+});
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -123,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
       dniError.classList.remove("active");
     }
   });
+
   //Buscar paciente
   const botonBuscarDni = document.querySelector(".buscarDni");
   if (botonBuscarDni) {

@@ -3,7 +3,7 @@ const { sequelize } = require("../config/db.js");
 
 class HistorialAlergias extends Model {
 
-  static async crearHistorial(id_paciente, alergias = [], options = {}) {
+  static async crearHistorialAlergia(id_paciente, alergias = [], options = {}) {
     if (!alergias || alergias.length === 0) {
       return;
     }

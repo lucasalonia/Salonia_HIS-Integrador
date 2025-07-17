@@ -1,7 +1,60 @@
 html
   head
-    title
+    title Motivos Internacion
+    link(rel="stylesheet", href="/css/estiloEnfermeriaMotivoInternacion.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
+    link(href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet")
+    
   body
 
     include ../includes/navBar.pug
     +navBar(fotoPerfil, nombreUsuario)
+
+    include ../includes/botonesIzqDer.pug
+    +paginado(true,false,"/enfermeria/evaluacionFisica","#","Ev. fisica", "#")
+    
+    include ../includes/busquedaPaciente.pug
+    +busquedaPacienteGenerica("planCuidados")
+
+    
+    section.motivo(style="opacity: 1; pointer-events: ;")
+        h2 Plan de Cuidados Preliminar  
+        form.motivoInternacion(onsubmit="return false;")    
+
+          label(for="select-sintomas") Intervenciones Inmediatas
+          select#select-sintomas.select2(name="sintomas" multiple style="width: 500px;")
+              //- each sintoma in sintomas
+              //-   option(value=sintoma.id_sintoma)= sintoma.descripcion
+
+
+          label(for="select-necesidades") Administrar Medicamentos Prescriptos
+          select#select-necesidades.select2(name="necesidades" multiple style="width: 500px;")
+            //- each necesidad in necesidades
+            //-   option(value=necesidad.id_necesidad)= necesidad.descripcion
+
+          h3 ¿Proporcionar tratamiento para el dolor?
+          label
+            input(type="radio" name="tratamiento" value="si")
+            | Sí
+          label
+            input(type="radio" name="tratamiento" value="no")
+            | No
+                    
+
+          button#guardarMotivo(type="button") Guardar
+    
+
+    include ../includes/modalExito.pug
+
+    script(src="/script/busquedaPacienteGenrica.js")
+    script(src="/script/modificacionMotivos.js")
+    script(src="/script/modalExitoGenerico.js")
+
+
+
+    script.
+      $('.select2').select2({
+        placeholder: 'Seleccione una opción...',
+        allowClear: true
+      });

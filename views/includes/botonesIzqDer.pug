@@ -1,0 +1,14 @@
+link(rel="stylesheet", href="/css/estiloBotonesIzqDer.css")
+
+
+mixin paginado(izquierda, derecha,enlaceIzqu, enlaceDer, anterior, siguiente)
+    -if(izquierda)
+        button.flotante-btn.left(onclick=`window.location.href='${enlaceIzqu}'`)
+            .triangulo-left
+            =   anterior
+
+    -if(derecha)
+        button.flotante-btn.right(onclick=`window.location.href='${enlaceDer}'`)
+            =   siguiente
+            .triangulo-right
+        

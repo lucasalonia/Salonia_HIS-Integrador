@@ -4,7 +4,6 @@ section.info {
   align-items: center;
   padding-top: 80px;
   gap: 20px;
-  min-height: calc(100vh - 80px);
   background-color: #f9f9f9;
   width: 100%;
 }
