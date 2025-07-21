@@ -1,0 +1,34 @@
+html
+  head
+    title Medicina
+    link(rel="stylesheet", href="/css/estiloEnfermeriaPrincipal.css")
+  body
+
+    include ../includes/navBar.pug
+    +navBar(fotoPerfil, nombreUsuario)
+
+    section.enfermeria 
+      div.contenedorUno
+        include ../includes/infoPacienteGenerico.pug
+        +rutaInfo("medicina")
+        
+        a(href='/medicina/evaluacionMedica')
+          div.historial
+            img(src='/images/diagnosis.png')
+            h1 Evaluacion Medica
+
+        a(href='/medicina/seguimiento')
+          div.motivo
+            img(src='/images/seguimiento.png') 
+            h1 Seguimiento
+
+        a(href='/medicina/altas')    
+            div.evaluacion
+              img(src='/images/altas.png')   
+              h1 Altas
+
+        
+
+      
+      
+    

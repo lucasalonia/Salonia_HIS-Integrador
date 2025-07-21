@@ -1,10 +1,19 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/db'); 
+const { sequelize } = require("../../config/db.js");
 
-class Intervencion extends Model {
+class Intervenciones extends Model {
+
+    static associate(models) {
+    Intervenciones.belongsToMany(models.Paciente, {
+      through: models.PlanIntervenciones,
+      foreignKey: "id_intervencion",
+    });
+  }
+
+
      static async listarIntervenciones() {
     try {
-      const intervenciones = await Intervencion.findAll();
+      const intervenciones = await Intervenciones.findAll();
       return intervenciones;
     } catch (error) {
       console.error("Error al obtener las intervenciones:", error);
@@ -13,9 +22,9 @@ class Intervencion extends Model {
   }
 }
 
-Intervencion.init(
+Intervenciones.init(
   {
-    id_intervenciones: {
+    id_intervencion: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
@@ -27,10 +36,10 @@ Intervencion.init(
   },
   {
     sequelize,
-    modelName: 'Intervencion',
+    modelName: 'Intervenciones',
     tableName: 'intervenciones',
     timestamps: false 
   }
 );
 
-module.exports = Intervencion;
+module.exports = Intervenciones;

@@ -2,18 +2,19 @@ body{
        background-color: #f9f9f9;
 }
 section.evaluacion {
-  background-color: #e6e1e185;
-  padding: 2rem;
-  border-radius: 10px;
-  max-width: 600px;
-  margin: auto;
-  width: 40%;
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  margin-bottom: 20px;
-
+display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150%;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0px auto;
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
 .evaluacion hr{
     width: 80%;

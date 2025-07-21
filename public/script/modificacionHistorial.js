@@ -183,7 +183,7 @@ function vaciarCampos(){
 ];
 
 selects.forEach(selector => {
-  $(selector).empty().trigger('change');
+  $(selector).val(null).trigger('change');
 });
 }
 

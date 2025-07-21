@@ -1,0 +1,67 @@
+body{
+  background-color: #f9f9f9;
+}
+section.plan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150%;
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0px auto;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+div.plan h2 {
+  font-size: 20px;
+  color: #333;
+  margin: 0px;
+}
+form.planCuidados {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+form.planCuidados label {
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+form.planCuidados .select2-container--default .select2-selection--multiple {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  min-height: 50px;
+}
+
+form.planCuidados button#guardarPlan{
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: center;
+  width: 50%;
+}
+
+form.planCuidados button#guardarPlan:hover {
+  background-color: #218838;
+}
+h3.tratamiento{
+  text-align: center;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,6 +1,6 @@
 html
   head
-    title Plan De Cuidados
+    title Evaluacion Medica
     link(rel="stylesheet", href="/css/estiloEnfermeriaPlanCuidados.css")
     script(src="https://code.jquery.com/jquery-3.6.0.min.js")
     script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
@@ -12,36 +12,26 @@ html
     +navBar(fotoPerfil, nombreUsuario)
 
     include ../includes/botonesIzqDer.pug
-    +paginado(true,false,"/enfermeria/evaluacionFisica","#","Ev. fisica", "#")
+    +paginado(true,true,"/medicina/infoPaciente","/medicina/seguimiento","Info. Paciente", "Seguimiento")
     
     include ../includes/busquedaPaciente.pug
     +busquedaPacienteGenerica("planCuidados")
 
     
     section.plan(style="opacity: 0.5; pointer-events: none;")
-        h2 Plan de Cuidados Preliminar
+        h2 Evaluacion Medica
         form.planCuidados(onsubmit="return false;")    
 
           label(for="select-intervenciones") Intervenciones Inmediatas
           select#select-intervenciones.select2(name="intervenciones" multiple style="width: 500px;")
-              each intervencion in intervenciones
-                option(value=intervencion.id_intervencion)= intervencion.descripcion
+            //-   each intervencion in intervenciones
+            //-     option(value=intervencion.id_intervencion)= intervencion.descripcion
 
 
           label(for="select-medicamentos") Administrar Medicamentos Prescriptos
           select#select-medicamentos.select2(name="medicamentos" multiple style="width: 500px; ")
-            each medicamento in medicamentos
-              option(value=medicamento.id_medicamento)= medicamento.descripcion 
-
-          h3.tratamiento ¿Proporcionar tratamiento para el dolor?
-            label
-              input(type="radio" name="tratamiento" value="si")
-              | Sí
-            label
-              input(type="radio" name="tratamiento" value="no")
-              | No
-                    
-
+            //- each medicamento in medicamentos
+            //-   option(value=medicamento.id_medicamento)= medicamento.descripcion 
           button#guardarPlan(type="button") Guardar
     
 

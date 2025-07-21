@@ -5,6 +5,7 @@ const historialController = require('../controllers/controllerHistorial');
 const motivosController = require('../controllers/controllerMotivos');
 const pacienteController = require("../controllers/controllerPaciente"); 
 const  evaluacionController = require("../controllers/controllerEvaluacion"); 
+const  planController = require("../controllers/controllerPlan"); 
 
 
 //METODOS POST
@@ -26,6 +27,11 @@ router.post("/evaluacionFisica/enviar-evaluacion", function (req, res, next) {
   
 });
 
+router.post("/planCuidados/enviar-plan", function (req, res, next) {
+
+  planController.crearPlan(req, res);
+  
+});
 
 
 //METODOS GET
@@ -114,17 +120,30 @@ router.get("/evaluacionFisica", function (req, res, next) {
 
 router.get("/evaluacionFisica/busqueda-generica/:dni", (req, res) => {
     const paciente= pacienteController.buscarPacientePorDniGenerico(req, res);
-    
-     
 });
-router.get("/planCuidados", function (req, res, next) {
+
+router.get("/planCuidados", async function (req, res, next) {
   const fotoPerfil = req.user.foto_perfil;
   const nombreUsuario = req.user.usuario;
+
+  const medicamentos = await planController.obtenerMedicamentos();
+  const intervenciones = await planController.obtenerIntervenciones();
+  
+  
   var locals = {
     fotoPerfil: fotoPerfil,
     nombreUsuario: nombreUsuario,
+    medicamentos:medicamentos,
+    intervenciones:intervenciones
   };
   res.render("enfermeria/planCuidados", locals);
+});
+
+
+router.get("/planCuidados/busqueda-generica/:dni", (req, res) => {
+    const paciente= pacienteController.buscarPacientePorDniGenerico(req, res);
+    
+     
 });
 
 module.exports = router;

@@ -23,12 +23,14 @@ function buscarPacientePorDni() {
   if (
     (dniInput && !/^\d{8}$/.test(dniInput.value.trim())) ||
     dniInput.value.trim().length !== 8
+
   ) {
     const dniError = document.querySelector('.error-message[data-field="dni"]');
     if (dniError) {
       dniError.textContent = "El DNI debe tener exactamente 8 números.";
       dniError.classList.add("active");
       bloquear();
+      mostrarPaciente("");
     }
     flag = false;
     return;
@@ -39,6 +41,7 @@ function buscarPacientePorDni() {
       dniError.textContent = "El DNI no puede comenzar con 0.";
       dniError.classList.add("active");
       bloquear();
+      mostrarPaciente("");
     }
     flag = false;
     return;

@@ -18,6 +18,7 @@ const HistorialCirugias = require("./HistorialCirugias");
 
 const Medicamentos = require("./catalogs/Medicamentos");
 const HistorialMedicamentos = require("./HistorialMedicamentos");
+const PlanMedicamentos = require("./PlanMedicamentos");
 
 const Antecedentes = require("./catalogs/Antecedentes");
 const HistorialAntecedentes = require("./HistorialAntecedentes");
@@ -30,6 +31,11 @@ const PacienteSintomas = require("./PacienteSintomas");
 
 const InternacionPrioridad = require("./InternacionPrioridad");
 const EvaluacionBasica = require("./EvaluacionBasica");
+
+const Intervenciones = require("./catalogs/Intervenciones");
+const PlanIntervenciones = require("./PlanIntervenciones");
+
+const PlanTratamiento = require("./PlanTratamiento");
 
 const models = {
   Paciente,
@@ -55,7 +61,11 @@ const models = {
   Sintomas,
   PacienteSintomas,
   InternacionPrioridad,
-  EvaluacionBasica
+  EvaluacionBasica,
+  Intervenciones,
+  PlanIntervenciones,
+  PlanMedicamentos,
+  PlanTratamiento
 };
 
 Object.values(models).forEach((model) => {

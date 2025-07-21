@@ -13,6 +13,7 @@ const rutasRegistro = require("./router/rutasRegistro");
 const rutasEnfermeria = require("./router/rutasEnfermeria");
 const rutasPacientes = require("./router/rutasPacientes");
 const rutasAdministracion = require("./router/rutasAdministracion");
+const rutasMedicina = require("./router/rutasMedicina");
 const { router: rutaAutenticacion, autenticacionCheck } = require("./router/autenticacion");
 
 
@@ -43,6 +44,9 @@ app.use("/",autenticacionCheck, rutasRegistro);
 
 //ENFERMERIA ROUTING
 app.use("/enfermeria",autenticacionCheck, rutasEnfermeria);
+
+//MEDICINA ROUTING
+app.use("/medicina",autenticacionCheck, rutasMedicina);
 
 //PACIENTES ROUTING
 app.use("/pacientes", autenticacionCheck,rutasPacientes);
