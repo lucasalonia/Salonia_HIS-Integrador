@@ -1,7 +1,7 @@
 html
   head
-    title Evaluacion Medica
-
+    title Seguimiento
+    link(rel="stylesheet", href="/css/estiloMedicinaSeguimiento.css")
     script(src="https://code.jquery.com/jquery-3.6.0.min.js")
     script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
     link(href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet")
@@ -12,7 +12,77 @@ html
     +navBar(fotoPerfil, nombreUsuario)
 
     include ../includes/botonesIzqDer.pug
-    +paginado(true,true,"/medicina/evaluacionMedica","/medicina/altas","Evaluacion Fisica", "Altas")
+    +paginado(true,true,"/medicina/evaluacionMedica","/medicina/altas","Evaluacion Medica", "Altas")
     
     include ../includes/busquedaPaciente.pug
     +busquedaPacienteGenerica("seguimiento")
+
+    section.seguimiento(style="opacity: 1;")
+        h2 Seguimiento del paciente (Aplicacion de procedimientos)
+
+        form.aplicarSeguimiento(onsubmit="return false;")    
+
+          label(for="select-tratMedico") Tratamientos medicos
+          select#select-tratMedico.select2(name="tratMedico" multiple style="width: 500px;")
+            //-   each tipo_analisis in analisis
+            //-     option(value=tipo_analisis.id_anilisis)= tipo_analisis.descripcion
+
+
+          label(for="select-tratFisico") Terapias fisicas (fisioterapia)
+          select#select-tratFisico.select2(name="tratFisico" multiple style="width: 500px; ")
+            //- each resonancia in resonancias
+            //-   option(value=resonancia.id_resonancia)= resonancia.descripcion 
+
+          label(for="select-tratOcupacional") Terapias ocupacionales
+          select#select-tratOcupacional.select2(name="tratOcupacional" multiple style="width: 500px; ")
+            //- each radiografia in radiografias
+            //-   option(value=medicamento.id_radiografia)= radiografia.descripcion 
+
+          button#botonConsultarMedicamentos(type="button") Medicacion 
+
+          button#guardarSeguimiento(type="button") Aplicar tratamientos
+    
+    section.modalMedicamentos(style="display: none;")
+      
+      div.modalMedicamentos__administracion
+        h3 Paciente 
+        button.cerrar-modal(type="button") ×
+        form.modalMedicamentos__administracion__formulario
+  
+          div.modalMedicamentos__administracion__formulario__prescriptos
+            label(for="select-medicamentos") Lista medicamentos + medicacion actual
+            select#select-medicamentos.select2(name="medicamentos" multiple style="width: 500px; ")
+              //- each medicamento in medicamentos
+              //-   option(value=medicamento.id_medicamento)= medicamento.descripcion
+
+          div.modalMedicamentos__administracion__formulario__dosis.divInterno
+            label(for="dosis") Administrar dosis:
+            select#select-dosis(name="dosis" )
+              option(value="") 0.25mg
+              option(value="") 0.50mg
+              option(value="") 0.75mg
+              option(value="") 1 mg
+
+          div.modalMedicamentos__administracion__formulario__duracion.divInterno
+            label(for="duracion") Administrar duracion:
+            select#select-duracion(name="duracion" )
+              option(value="") 3 Dias
+              option(value="") 7 Dias
+              option(value="") 30 Dias
+
+          button#guardarMedicamentos(type="button") Suministrar medicacion
+
+
+    include ../includes/modalExito.pug
+
+    script(src="/script/busquedaPacienteGenrica.js")
+    script(src="/script/modificacionSeguimiento.js")
+    script(src="/script/modalExitoGenerico.js")
+
+
+
+    script.
+      $('.select2').select2({
+        placeholder: 'Seleccione una opción...',
+        allowClear: true
+      });

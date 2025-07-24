@@ -1,7 +1,7 @@
 html
   head
     title Altas
-
+    link(rel='stylesheet', href= '/css/estiloFichaPaciente.css')
     script(src="https://code.jquery.com/jquery-3.6.0.min.js")
     script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
     link(href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet")
@@ -15,4 +15,43 @@ html
     +paginado(true,false,"/medicina/seguimiento","#","Seguimiento", "#")
     
     include ../includes/busquedaPaciente.pug
-    +busquedaPacienteGenerica("planCuidados")
+    +busquedaPacienteGenerica("altas")
+    body
+
+      section.fichaPaciente 
+          h2 Ficha del Paciente
+          div.fichaPaciente__datos
+              p#nombreActual Nombre: 
+                span.nombre -
+              p#apellidoActual Apellido: 
+                span.apellido -
+              p#dniActual DNI: 
+                span.dni -
+              p#numeroEmergenciaActual Numero Emergencia: 
+                span.numero -
+              p#fechaNacimientoActual Fecha de Nacimiento: 
+                span.nacimiento -
+              p#sexoActual Sexo:
+                span.sexo -
+              p#direccionActual Direccion: 
+                span.direccion -
+              p#emailActual Correo Electronico: 
+                span.mail -
+              p#ciudadActual Ciudad: 
+                span.ciudad -
+              p#medioIngresoActual Medio de Ingreso: 
+                span.medios -
+              p#medicoActual Medico: 
+                span.medico -
+              p#obraSocialActual Obra Social: 
+                span.obraSocial -
+              p#numeroObraSocialActual Numero Obra Social: 
+                span.numeroObra -
+              p#fechaIngresoActual Fecha de Ingreso: 
+                span.ingreso -
+              p#camaActual Cama: 
+                span.cama -
+
+          div.fichaPaciente__acciones
+              button.boton-editar(type="button", onclick="abrirModal()") Dar alta medica
+      script(src="/script/busquedaPacienteGenrica.js")

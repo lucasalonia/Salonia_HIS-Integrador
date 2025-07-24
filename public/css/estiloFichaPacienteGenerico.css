@@ -1,0 +1,106 @@
+.fichaPaciente {
+  max-width: 700px;
+  margin: 80px auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  padding: 30px 40px;
+  box-sizing: border-box;
+}
+.fichaPaciente {
+  display: none;
+}
+
+.fichaPaciente.active {
+  display: block;
+}
+
+.fichaPaciente h2 {
+    margin-top: 0px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+.fichaPaciente__datos p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  line-height: 1.4;
+  border-bottom: 1px solid #e1e8f0;
+  padding-bottom: 8px;
+  color: #34495e;
+}
+
+.fichaPaciente__datos p:last-child {
+  border-bottom: none;
+}
+
+
+.fichaPaciente__acciones {
+  width: 0; 
+  height: 0; 
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 25px solid #007bff; 
+  cursor: pointer; 
+  transition: border-left-color 0.3s ease;
+  margin-left: 250px;
+}
+
+
+.fichaPaciente__accionesDer:hover {
+  border-left-color: #0056b3;
+}
+
+
+
+div.contAction{
+  position: relative;
+  height: 50px;
+}
+.fichaPaciente__accionesDer {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 0; 
+  height: 0; 
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 25px solid #007bff; 
+  cursor: pointer; 
+  transition: border-left-color 0.3s ease;
+
+}
+
+
+.fichaPaciente__accionesDer:hover {
+  border-left-color: #0056b3;
+}
+
+.fichaPaciente__accionesIzq {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 0; 
+  height: 0; 
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-right: 25px solid #007bff; 
+  cursor: pointer; 
+  transition: border-left-color 0.3s ease;
+
+}
+
+
+.fichaPaciente__accionesIzq:hover {
+  border-left-color: #0056b3;
+}
+
+
+
+
+
+

@@ -50,10 +50,22 @@ class Paciente extends Model {
       through: models.PlanIntervenciones,
       foreignKey: "id_paciente",
     });
-    
+
     Paciente.hasOne(models.PlanTratamiento, {
       foreignKey: "id_paciente",
       as: "tratamiento",
+    });
+    Paciente.belongsToMany(models.Radiografias, {
+      through: models.PacienteRadiografia,
+      foreignKey: "id_paciente",
+    });
+    Paciente.belongsToMany(models.Resonancias, {
+      through: models.PacienteResonancia,
+      foreignKey: "id_paciente",
+    });
+    Paciente.belongsToMany(models.Analisis, {
+      through: models.PacienteAnalisis,
+      foreignKey: "id_paciente",
     });
   }
 
@@ -113,6 +125,7 @@ class Paciente extends Model {
       throw error;
     }
   }
+
   static async borrarLogicoPaciente(id, options = {}) {
     try {
       const paciente = await Paciente.findByPk(id);
@@ -154,6 +167,7 @@ class Paciente extends Model {
       throw error;
     }
   }
+
   static async modificarDatosPaciente(id, nuevosDatos, options = {}) {
     try {
       const paciente = await Paciente.findByPk(id);
@@ -168,6 +182,7 @@ class Paciente extends Model {
       throw error;
     }
   }
+  
   static async buscarPacientePorId(id) {
     try {
       const paciente = await Paciente.findByPk(id);

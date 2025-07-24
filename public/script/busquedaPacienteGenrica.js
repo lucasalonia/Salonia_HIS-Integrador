@@ -8,9 +8,11 @@ function mostrarPaciente(paciente) {
 function buscarPacientePorDni() {
   const dniInput = document.querySelector(".dniBusqueda");
   let flag = true;
+ let dniError = document.querySelector('.error-message[data-field="dni"]');
 
+ dniError.textContent="";
   if (dniInput && dniInput.value.trim() === "") {
-    const dniError = document.querySelector('.error-message[data-field="dni"]');
+     dniError = document.querySelector('.error-message[data-field="dni"]');
     if (dniError) {
       dniError.textContent =
         "Ingrese un numero valido para realizar la busqueda del paciente";
@@ -25,7 +27,7 @@ function buscarPacientePorDni() {
     dniInput.value.trim().length !== 8
 
   ) {
-    const dniError = document.querySelector('.error-message[data-field="dni"]');
+     dniError = document.querySelector('.error-message[data-field="dni"]');
     if (dniError) {
       dniError.textContent = "El DNI debe tener exactamente 8 números.";
       dniError.classList.add("active");

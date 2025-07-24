@@ -116,6 +116,7 @@ selects.forEach(selector => {
  $(selector).val(null).trigger('change');
 });
 }
+
 function enviarMotivos() {
   const dniInput = document.querySelector(".dniBusqueda");
   const dni = dniInput.value.trim();

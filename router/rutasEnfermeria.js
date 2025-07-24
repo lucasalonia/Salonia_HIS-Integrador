@@ -49,7 +49,6 @@ router.get("/infoPaciente", async function (req, res, next) {
   const fotoPerfil = req.user.foto_perfil;
   const nombreUsuario = req.user.usuario;
    const pacientes= await pacienteController.listarPacientesOpcionLimpia();
-   console.log(pacientes.nombre);
    
   var locals = {
     fotoPerfil: fotoPerfil,

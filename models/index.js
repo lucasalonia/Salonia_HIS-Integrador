@@ -37,6 +37,17 @@ const PlanIntervenciones = require("./PlanIntervenciones");
 
 const PlanTratamiento = require("./PlanTratamiento");
 
+const Analisis = require("./catalogs/Analisis");
+const PacienteAnalisis = require("./PacienteAnalisis");
+
+const Resonancias = require("./catalogs/Resonancias");
+const PacienteResonancia = require("./PacienteResonancia");
+
+const Radiografias = require("./catalogs/Radiografias");
+const PacienteRadiografia = require("./PacienteRadiografia");
+
+
+
 const models = {
   Paciente,
   Internacion,
@@ -65,7 +76,14 @@ const models = {
   Intervenciones,
   PlanIntervenciones,
   PlanMedicamentos,
-  PlanTratamiento
+  PlanTratamiento,
+  Analisis,
+  Resonancias,
+  Radiografias,
+  PacienteAnalisis,
+  PacienteResonancia,
+  PacienteRadiografia
+
 };
 
 Object.values(models).forEach((model) => {

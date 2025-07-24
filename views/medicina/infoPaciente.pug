@@ -2,6 +2,7 @@ html
   head
     title Informacion Paciente
     link(rel="stylesheet", href="/css/estiloEnfermeriaInfo.css")
+    link(rel="stylesheet", href="/css/estiloFichaPacienteGenerico.css")
    
     link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css")
     script(src="https://code.jquery.com/jquery-3.6.0.min.js")
@@ -23,25 +24,8 @@ html
               option(value=paciente.id)= paciente.id + " - " + paciente.dni + " - " +  paciente.apellido + " - " + paciente.nombre
           button(type="submit") Buscar
 
-    section.fichaPaciente 
-          h2 Ficha del Paciente
-          div.fichaPaciente__datos
-              p#nombreActual Nombre:
-              p#apellidoActual Apellido: 
-              p#dniActual DNI: 
-              p#numeroEmergenciaActual Numero Emergencia: 
-              p#fechaNacimientoActual Fecha de Nacimiento: 
-              p#sexoActual Sexo: 
-              p#direccionActual Direccion: 
-              p#emailActual Correo Electronico: 
-              p#ciudadActual Ciudad: 
-              p#medioIngresoActual Medio de Ingreso:
-              p#medicoActual Medico: 
-              p#obraSocialActual Obra Social:
-              p#numeroObraSocialActual Numero Obra Social: 
-              p#fechaIngresoActual Fecha de Ingreso: 
-              p#camaActual Cama: 
-          div.fichaPaciente__acciones
+
+    include ../includes/fichaPacienteGenerico.pug
                  
     
     script.

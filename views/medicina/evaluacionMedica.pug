@@ -1,7 +1,7 @@
 html
   head
     title Evaluacion Medica
-    link(rel="stylesheet", href="/css/estiloEnfermeriaPlanCuidados.css")
+    link(rel="stylesheet", href="/css/estiloMedicinaEvaluacionMedica.css")
     script(src="https://code.jquery.com/jquery-3.6.0.min.js")
     script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
     link(href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet")
@@ -15,30 +15,38 @@ html
     +paginado(true,true,"/medicina/infoPaciente","/medicina/seguimiento","Info. Paciente", "Seguimiento")
     
     include ../includes/busquedaPaciente.pug
-    +busquedaPacienteGenerica("planCuidados")
+    +busquedaPacienteGenerica("evaluacionMedica")
 
     
-    section.plan(style="opacity: 0.5; pointer-events: none;")
-        h2 Evaluacion Medica
-        form.planCuidados(onsubmit="return false;")    
+    section.evaluacionMedica(style="opacity: 0.5; pointer-events: none;")
+        h2 Solicitar estudios para evluacion medica
 
-          label(for="select-intervenciones") Intervenciones Inmediatas
-          select#select-intervenciones.select2(name="intervenciones" multiple style="width: 500px;")
-            //-   each intervencion in intervenciones
-            //-     option(value=intervencion.id_intervencion)= intervencion.descripcion
+        form.solicitarEvaluacion(onsubmit="return false;")    
+
+          label(for="select-analisis") Analisis de Sangre
+          select#select-analisis.select2(name="analisis" multiple style="width: 500px;")
+              each tipo_analisis in analisis
+                option(value=tipo_analisis.id_analisis)= tipo_analisis.descripcion
 
 
-          label(for="select-medicamentos") Administrar Medicamentos Prescriptos
-          select#select-medicamentos.select2(name="medicamentos" multiple style="width: 500px; ")
-            //- each medicamento in medicamentos
-            //-   option(value=medicamento.id_medicamento)= medicamento.descripcion 
-          button#guardarPlan(type="button") Guardar
+          label(for="select-resonancias") Resonacias Magneticas
+          select#select-resonancias.select2(name="resonancias" multiple style="width: 500px; ")
+            each resonancia in resonancias
+              option(value=resonancia.id_resonancia)= resonancia.descripcion 
+
+          label(for="select-radiografias") Radiografias
+          select#select-radiografias.select2(name="radiografias" multiple style="width: 500px; ")
+            each radiografia in radiografias
+              option(value=radiografia.id_radiografia)= radiografia.descripcion 
+
+          button#guardarSolicitudEvaluacion(type="button") Solicitar informacion
     
 
     include ../includes/modalExito.pug
 
     script(src="/script/busquedaPacienteGenrica.js")
-    script(src="/script/modificacionPlanCuidados.js")
+    script(src="/script/modificacionEvaluacionMedica.js")
+    
     script(src="/script/modalExitoGenerico.js")
 
 
