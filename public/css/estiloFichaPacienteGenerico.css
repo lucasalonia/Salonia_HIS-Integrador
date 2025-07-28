@@ -98,6 +98,9 @@ div.contAction{
 .fichaPaciente__accionesIzq:hover {
   border-left-color: #0056b3;
 }
+span{
+  font-weight: bold;
+}
 
 
 

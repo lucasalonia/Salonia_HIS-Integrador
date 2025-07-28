@@ -80,14 +80,34 @@ function enviarEvaluacionMedica() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    
-  document.getElementById("guardarSolicitudEvaluacion").addEventListener("click", function () {
-    const form = document.querySelector("form.solicitarEvaluacion");
-    if (form.checkValidity()) {
-      enviarEvaluacionMedica(); 
-    } else {
-      form.reportValidity(); 
-    }
+document
+  .getElementById("guardarSolicitudEvaluacion")
+  .addEventListener("click", function () {
+    document
+      .getElementById("guardarSolicitudEvaluacion")
+      .addEventListener("click", function () {
+        const analisis = $("#select-analisis").val();
+        const resonancias = $("#select-resonancias").val();
+        const radiografias = $("#select-radiografias").val();
+
+        const seleccionValida =
+          (analisis && analisis.length > 0) ||
+          (resonancias && resonancias.length > 0) ||
+          (radiografias && radiografias.length > 0);
+
+        if (!seleccionValida) {
+          alert(
+            "Debe seleccionar al menos una opción en análisis de sangre, resonancias o radiografías."
+          );
+          return;
+        }
+
+        const form = document.querySelector("form.solicitarEvaluacion");
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        enviarEvaluacionMedica();
+      });
   });
-});

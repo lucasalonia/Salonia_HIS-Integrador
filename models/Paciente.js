@@ -67,6 +67,26 @@ class Paciente extends Model {
       through: models.PacienteAnalisis,
       foreignKey: "id_paciente",
     });
+
+    Paciente.belongsToMany(models.Fisioterapias, {
+      through: models.PacienteFisioterapias,  
+      foreignKey: "id_paciente",
+    });
+
+    Paciente.belongsToMany(models.Ocupacionales, {
+      through: models.PacienteOcupacionales,
+      foreignKey: "id_paciente",
+    });
+    
+    Paciente.belongsToMany(models.Tratamientos, {
+      through: models.PacienteTratamientos,
+      foreignKey: "id_paciente",
+    });
+
+     Paciente.belongsToMany(models.Medicamentos, {
+      through: models.PacienteMedicamentos,
+      foreignKey: "id_paciente",
+    });
   }
 
   static async crearPaciente(pacienteData, options = {}) {
@@ -183,18 +203,25 @@ class Paciente extends Model {
     }
   }
   
-  static async buscarPacientePorId(id) {
-    try {
-      const paciente = await Paciente.findByPk(id);
-      if (!paciente) {
-        throw new Error("Paciente no encontrado");
+static async buscarPacientePorId(id) {
+  try {
+    const paciente = await Paciente.findOne({
+      where: {
+        id: id,
+        borradoLogico: true
       }
-      return paciente;
-    } catch (error) {
-      console.error("Error al buscar el paciente por ID:", error);
-      throw error;
+    });
+
+    if (!paciente) {
+      throw new Error("Paciente no encontrado");
     }
+
+    return paciente;
+  } catch (error) {
+    console.error("Error al buscar el paciente por ID:", error);
+    throw error;
   }
+}
 
   static async anularEstadoNN(id, options = {}) {
     try {

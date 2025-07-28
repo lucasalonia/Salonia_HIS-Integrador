@@ -5,6 +5,9 @@ const {
   ObraSocial,
   Medico,
   Cama,
+  Alergias,
+  Enfermedades,
+  Cirugias
 } = require("../models/index.js");
 
 const { sequelize } = require("../config/db");
@@ -95,35 +98,35 @@ const crearPaciente = async (req, res) => {
   }
 };
 
-const listarPacientesOpcionLimpia = async () =>{
+const listarPacientesOpcionLimpia = async () => {
   const pacientes = await Paciente.findAll({
-      where: {
-        borradoLogico: true,
+    where: {
+      borradoLogico: true,
+    },
+    include: [
+      {
+        model: Internacion,
+        include: [Cama],
+        required: false,
       },
-      include: [
-        {
-          model: Internacion,
-          include: [Cama],
-          required: false,
-        },
-        {
-          model: Derivacion,
-          include: [Medico],
-          required: false,
-        },
-        {
-          model: ObraSocial,
-          required: false,
-        },
-      ],
-    });
+      {
+        model: Derivacion,
+        include: [Medico],
+        required: false,
+      },
+      {
+        model: ObraSocial,
+        required: false,
+      },
+    ],
+  });
 
-    const pacientesInternados = pacientes.filter(
-      (p) => p.Internacions && p.Internacions.length > 0
-    );
-    
-    return pacientesInternados;
-}
+  const pacientesInternados = pacientes.filter(
+    (p) => p.Internacions && p.Internacions.length > 0
+  );
+
+  return pacientesInternados;
+};
 
 const listarPacientes = async (req, res) => {
   try {
@@ -394,12 +397,10 @@ const modificarDatosPaciente = async (req, res) => {
         );
 
         await transaction.commit();
-        return res
-          .status(200)
-          .json({
-            exito: true,
-            mensaje: "Paciente NN actualizado con nuevo DNI",
-          });
+        return res.status(200).json({
+          exito: true,
+          mensaje: "Paciente NN actualizado con nuevo DNI",
+        });
       }
     }
 
@@ -424,12 +425,10 @@ const modificarDatosPaciente = async (req, res) => {
       );
 
       await transaction.commit();
-      return res
-        .status(200)
-        .json({
-          exito: true,
-          mensaje: "Datos del paciente actualizados correctamente",
-        });
+      return res.status(200).json({
+        exito: true,
+        mensaje: "Datos del paciente actualizados correctamente",
+      });
     } else {
       await transaction.rollback();
       console.log("Los DNI coinciden entre pacientes CONOCIDOS");
@@ -486,6 +485,60 @@ const buscarPacientePorDniGenerico = async (req, res) => {
   res.json({ paciente });
 };
 
+const obtenerDatosPaciente = async (idPaciente) => {
+  try {
+    const paciente = await Paciente.buscarPacientePorId(idPaciente);
+    if (!paciente) {
+      throw new Error("Paciente no encontrado");
+    }
+    const internacionCama = await Internacion.findOne({
+      where: { id_paciente: idPaciente },
+      include: { model: Cama },
+    });
+
+    //Info basica
+    const cama = internacionCama.Cama;
+    const internacion = await Internacion.buscarInternacionPorIdPaciente(
+      idPaciente
+    );
+    const obraSocial = await ObraSocial.buscarObraSocialPorIdPaciente(
+      idPaciente
+    );
+
+    const medicoDerivacion = await Derivacion.findOne({
+      where: { id_paciente: idPaciente },
+      include: { model: Medico },
+    });
+    const medico = medicoDerivacion ? medicoDerivacion.Medico : "Sin Asignar";
+
+    //Info Historial
+    const pacienteConAlergias = await Paciente.findOne({
+      where: { id: idPaciente },
+      include: Alergias,
+    });
+    const pacienteEnfermedades = await Paciente.findOne({
+      where: { id: idPaciente },
+      include: Enfermedades,
+    });
+
+    const pacienteCirugias = await Paciente.findOne({
+      where: { id: idPaciente },
+      include: Cirugias,
+    });
+
+    const alergias = pacienteConAlergias ? pacienteConAlergias.Alergias : [];
+    const enfermedades = pacienteEnfermedades ? pacienteEnfermedades.Enfermedades : [];
+    const cirugias = pacienteCirugias ? pacienteCirugias.Cirugias : [];
+
+    
+
+    return { paciente, cama, internacion, obraSocial, medico, alergias, enfermedades,cirugias };
+  } catch (error) {
+    console.error("Error al obtener los datos del paciente:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   crearPaciente,
   listarPacientes,
@@ -495,5 +548,6 @@ module.exports = {
   recuperarDatosPaciente,
   modificarDatosPaciente,
   buscarPacientePorDniGenerico,
-  listarPacientesOpcionLimpia
+  listarPacientesOpcionLimpia,
+  obtenerDatosPaciente,
 };

@@ -17,26 +17,26 @@ html
     include ../includes/busquedaPaciente.pug
     +busquedaPacienteGenerica("seguimiento")
 
-    section.seguimiento(style="opacity: 1;")
+    section.seguimiento(style="opacity: 0.5; pointer-events: none;")
         h2 Seguimiento del paciente (Aplicacion de procedimientos)
 
         form.aplicarSeguimiento(onsubmit="return false;")    
 
           label(for="select-tratMedico") Tratamientos medicos
-          select#select-tratMedico.select2(name="tratMedico" multiple style="width: 500px;")
-            //-   each tipo_analisis in analisis
-            //-     option(value=tipo_analisis.id_anilisis)= tipo_analisis.descripcion
+          select#select-tratMedico.select2(name="tratMedico" multiple style="width: 500px;" required)
+              each tratamiento in tratamientos
+                option(value=tratamiento.id_tratamiento)= tratamiento.descripcion
 
 
           label(for="select-tratFisico") Terapias fisicas (fisioterapia)
-          select#select-tratFisico.select2(name="tratFisico" multiple style="width: 500px; ")
-            //- each resonancia in resonancias
-            //-   option(value=resonancia.id_resonancia)= resonancia.descripcion 
+          select#select-tratFisico.select2(name="tratFisico" multiple style="width: 500px; " required)
+            each fisioterapia in fisioterapias
+              option(value=fisioterapia.id_fisioterapia)= fisioterapia.descripcion 
 
           label(for="select-tratOcupacional") Terapias ocupacionales
-          select#select-tratOcupacional.select2(name="tratOcupacional" multiple style="width: 500px; ")
-            //- each radiografia in radiografias
-            //-   option(value=medicamento.id_radiografia)= radiografia.descripcion 
+          select#select-tratOcupacional.select2(name="tratOcupacional" multiple style="width: 500px; " required)
+            each ocupacional in ocupacionales
+              option(value=ocupacional.id_ocupacional)= ocupacional.descripcion 
 
           button#botonConsultarMedicamentos(type="button") Medicacion 
 
@@ -51,24 +51,24 @@ html
   
           div.modalMedicamentos__administracion__formulario__prescriptos
             label(for="select-medicamentos") Lista medicamentos + medicacion actual
-            select#select-medicamentos.select2(name="medicamentos" multiple style="width: 500px; ")
-              //- each medicamento in medicamentos
-              //-   option(value=medicamento.id_medicamento)= medicamento.descripcion
+            select#select-medicamentos(name="medicamentos" style="width: 500px; ")
+              each medicamento in medicamentos
+                option(value=medicamento.id_medicamento)= medicamento.descripcion
 
           div.modalMedicamentos__administracion__formulario__dosis.divInterno
             label(for="dosis") Administrar dosis:
             select#select-dosis(name="dosis" )
-              option(value="") 0.25mg
-              option(value="") 0.50mg
-              option(value="") 0.75mg
-              option(value="") 1 mg
+              option(value="0.25mg") 0.25mg
+              option(value="0.50mg") 0.50mg
+              option(value="0.75mg") 0.75mg
+              option(value="1 mg") 1 mg
 
           div.modalMedicamentos__administracion__formulario__duracion.divInterno
             label(for="duracion") Administrar duracion:
             select#select-duracion(name="duracion" )
-              option(value="") 3 Dias
-              option(value="") 7 Dias
-              option(value="") 30 Dias
+              option(value="3 Dias") 3 Dias
+              option(value="7 Dias") 7 Dias
+              option(value="30 Dias") 30 Dias
 
           button#guardarMedicamentos(type="button") Suministrar medicacion
 

@@ -46,6 +46,18 @@ const PacienteResonancia = require("./PacienteResonancia");
 const Radiografias = require("./catalogs/Radiografias");
 const PacienteRadiografia = require("./PacienteRadiografia");
 
+const Fisioterapias = require("./catalogs/Fisioterapias");
+const PacienteFisioterapias = require("./PacienteFisioterapias");
+
+const Ocupacionales = require("./catalogs/Ocupacionales");
+const PacienteOcupacionales = require("./PacienteOcupacionales");
+
+const Tratamientos = require("./catalogs/Tratamientos");
+const PacienteTratamientos = require("./PacienteTratamientos");
+
+
+const PacienteMedicamentos = require("./PacienteMedicamentos");
+
 
 
 const models = {
@@ -82,8 +94,14 @@ const models = {
   Radiografias,
   PacienteAnalisis,
   PacienteResonancia,
-  PacienteRadiografia
-
+  PacienteRadiografia,
+  Fisioterapias,
+  PacienteFisioterapias,  
+  Ocupacionales,
+  PacienteOcupacionales,
+  Tratamientos,
+  PacienteTratamientos, 
+  PacienteMedicamentos
 };
 
 Object.values(models).forEach((model) => {

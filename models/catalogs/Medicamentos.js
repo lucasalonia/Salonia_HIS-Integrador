@@ -11,6 +11,10 @@ class Medicamentos extends Model {
       through: models.PlanMedicamentos,
       foreignKey: "id_medicamento",
     });
+    Medicamentos.belongsToMany(models.Paciente, {
+      through: models.PacienteMedicamentos,
+      foreignKey: "id_medicamento",
+    });
     
   }
   static async listarMedicamentos() {

@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const pacienteController = require("../controllers/controllerPaciente");
+
 const evaluacionMedicaController = require("../controllers/controllerEvaluacionMedica");
+
+const seguimientoController = require("../controllers/controllerSeguimiento");
 
 //METODOS POST
 router.post("/evaluacionMedica/enviar-evaluacionMedica", function (req, res, next) {
@@ -10,7 +13,17 @@ router.post("/evaluacionMedica/enviar-evaluacionMedica", function (req, res, nex
   
 });
 
+router.post("/seguimiento/enviar-seguimiento", function (req, res, next) {
 
+
+  seguimientoController.crearSeguimiento(req, res);
+  
+});
+
+router.post("/seguimiento/enviar-medicacion", function (req, res, next) { 
+  seguimientoController.crearSeguimientoMedicamentos(req, res);
+  
+});
 
 
 
@@ -50,12 +63,20 @@ router.get("/evaluacionMedica/busqueda-generica/:dni", (req, res) => {
      
 });
 
-router.get("/seguimiento", function (req, res, next) {
+router.get("/seguimiento",async function (req, res, next) {
   const fotoPerfil = req.user.foto_perfil;
   const nombreUsuario = req.user.usuario;
+  const fisioterapias = await seguimientoController.obtenerFisioterapias();
+  const tratamientos = await seguimientoController.obtenerTratamientos();
+  const ocupacionales = await seguimientoController.obtenerOcupacionales();
+  const medicamentos = await seguimientoController.obtenerMedicamentos();
   var locals = {
     fotoPerfil: fotoPerfil,
     nombreUsuario: nombreUsuario,
+    fisioterapias: fisioterapias,
+    tratamientos: tratamientos,
+    ocupacionales: ocupacionales,
+    medicamentos: medicamentos,
   };
   res.render("medicina/seguimiento", locals);
 });
@@ -95,6 +116,13 @@ router.get("/infoPaciente", async function (req, res, next) {
     pacientes: pacientes,
   };
   res.render("medicina/infoPaciente", locals);
+});
+
+router.get("/infoPaciente/obtenerDatos", async function (req, res) {
+  const idPaciente = req.query.id;
+
+  const paciente = await pacienteController.obtenerDatosPaciente(idPaciente); 
+  res.json(paciente);
 });
 
 module.exports = router;

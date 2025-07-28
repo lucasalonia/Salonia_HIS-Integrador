@@ -22,12 +22,12 @@ html
           select#buscarPaciente(name="query" style="width: 300px" required)
             each paciente in pacientes
               option(value=paciente.id)= paciente.id + " - " + paciente.dni + " - " +  paciente.apellido + " - " + paciente.nombre
-          button(type="submit") Buscar
+          button#botonBuscarPaciente(type="button") Buscar
 
 
     include ../includes/fichaPacienteGenerico.pug
                  
-    
+    script(src="/script/modificacionInfoPaciente.js")
     script.
       $(document).ready(function () {
         $('#buscarPaciente').select2({
