@@ -6,6 +6,7 @@ class Tratamientos extends Model {
     Tratamientos.belongsToMany(models.Paciente, {
       through: models.PacienteTratamientos,
       foreignKey: "id_tratamiento",
+      as: "pacientesTratamientos",
     });
   }
 

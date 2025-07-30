@@ -6,6 +6,7 @@ class Radiografias extends Model {
     Radiografias.belongsToMany(models.Paciente, {
       through: models.PacienteRadiografia,
       foreignKey: "id_radiografia",
+      as: "pacientesRadiografias",
     });
   }
   static async listarRadiografias() {

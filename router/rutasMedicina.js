@@ -7,25 +7,26 @@ const evaluacionMedicaController = require("../controllers/controllerEvaluacionM
 const seguimientoController = require("../controllers/controllerSeguimiento");
 
 //METODOS POST
-router.post("/evaluacionMedica/enviar-evaluacionMedica", function (req, res, next) {
-
-  evaluacionMedicaController.crearEvaluacionMedica(req, res);
-  
-});
+router.post(
+  "/evaluacionMedica/enviar-evaluacionMedica",
+  function (req, res, next) {
+    evaluacionMedicaController.crearEvaluacionMedica(req, res);
+  }
+);
 
 router.post("/seguimiento/enviar-seguimiento", function (req, res, next) {
-
-
   seguimientoController.crearSeguimiento(req, res);
-  
 });
 
-router.post("/seguimiento/enviar-medicacion", function (req, res, next) { 
+router.post("/seguimiento/enviar-medicacion", function (req, res, next) {
   seguimientoController.crearSeguimientoMedicamentos(req, res);
-  
 });
 
 
+//METODO PATCH
+router.patch('/altas/darAlta/:id', (req, res) => {
+     pacienteController.boradoLogicoPaciente(req, res);      
+});
 
 
 //METODOS GET
@@ -58,12 +59,10 @@ router.get("/evaluacionMedica", async function (req, res, next) {
 });
 
 router.get("/evaluacionMedica/busqueda-generica/:dni", (req, res) => {
-    const paciente= pacienteController.buscarPacientePorDniGenerico(req, res);
-    
-     
+  const paciente = pacienteController.buscarPacientePorDniGenerico(req, res);
 });
 
-router.get("/seguimiento",async function (req, res, next) {
+router.get("/seguimiento", async function (req, res, next) {
   const fotoPerfil = req.user.foto_perfil;
   const nombreUsuario = req.user.usuario;
   const fisioterapias = await seguimientoController.obtenerFisioterapias();
@@ -82,11 +81,8 @@ router.get("/seguimiento",async function (req, res, next) {
 });
 
 router.get("/seguimiento/busqueda-generica/:dni", (req, res) => {
-    const paciente= pacienteController.buscarPacientePorDniGenerico(req, res);
-    
-     
+  const paciente = pacienteController.buscarPacientePorDniGenerico(req, res);
 });
-
 
 router.get("/altas", function (req, res, next) {
   const fotoPerfil = req.user.foto_perfil;
@@ -99,9 +95,7 @@ router.get("/altas", function (req, res, next) {
 });
 
 router.get("/altas/busqueda-generica/:dni", (req, res) => {
-    const paciente= pacienteController.buscarPacientePorDniGenerico(req, res);
-    
-     
+  const paciente = pacienteController.buscarPacientePorDniGenerico(req, res);
 });
 
 router.get("/infoPaciente", async function (req, res, next) {
@@ -121,7 +115,7 @@ router.get("/infoPaciente", async function (req, res, next) {
 router.get("/infoPaciente/obtenerDatos", async function (req, res) {
   const idPaciente = req.query.id;
 
-  const paciente = await pacienteController.obtenerDatosPaciente(idPaciente); 
+  const paciente = await pacienteController.obtenerDatosPaciente(idPaciente);
   res.json(paciente);
 });
 

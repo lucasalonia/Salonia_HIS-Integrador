@@ -1,7 +1,7 @@
 html
   head
     title Altas
-    link(rel='stylesheet', href= '/css/estiloMedicionaAltas.css')
+    link(rel='stylesheet', href= '/css/estiloMedicinaAltas.css')
     script(src="https://code.jquery.com/jquery-3.6.0.min.js")
     script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
     link(href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet")
@@ -22,6 +22,15 @@ html
         button#botonHistorial(type="button") Consultar historial clinico
         button#botonFichaPaciente(type="button") Ficha del paciente
         button#botonMedico(type="button") Seguimiento y tratamientos del paciente
+
+
+      section#modalConfirmacion(style="display: none;")
+        div.contenedorConfirmacion
+          p El paciente sera dado de alta medica, ¿desea continuar?
+          button#confirmarSi(type="button") Sí
+          button#confirmarNo(type="button") No
+      
+      include ../includes/modalExito.pug
 
       //- section.fichaPaciente 
       //-     h2 Ficha del Paciente
@@ -59,5 +68,8 @@ html
 
       //-     div.fichaPaciente__acciones
       //-         button.boton-editar(type="button", onclick="abrirModal()") Dar alta medica
-
+      
       script(src="/script/busquedaPacienteGenrica.js")
+      script(src="/script/modificacionAltas.js")
+      script(src="/script/modalExitoGenerico.js")
+      

@@ -6,6 +6,7 @@ class Resonancias extends Model {
     Resonancias.belongsToMany(models.Paciente, {
       through: models.PacienteResonancia,
       foreignKey: "id_resonancia",
+      as: "pacientesResonancias",
     });
   }
   static async listarResonancias() {

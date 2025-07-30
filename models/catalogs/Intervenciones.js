@@ -7,6 +7,7 @@ class Intervenciones extends Model {
     Intervenciones.belongsToMany(models.Paciente, {
       through: models.PlanIntervenciones,
       foreignKey: "id_intervencion",
+      as:"intervencionesPaciente",
     });
   }
 

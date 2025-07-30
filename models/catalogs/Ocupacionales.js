@@ -6,6 +6,7 @@ class Ocupacionales extends Model {
     Ocupacionales.belongsToMany(models.Paciente, {
       through: models.PacienteOcupacionales,
       foreignKey: "id_ocupacional",
+      as: "pacientesOcupacionales",
     });
   }
 

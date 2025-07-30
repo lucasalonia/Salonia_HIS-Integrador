@@ -26,10 +26,14 @@ class Paciente extends Model {
     Paciente.belongsToMany(models.Medicamentos, {
       through: models.HistorialMedicamentos,
       foreignKey: "id_paciente",
+      as: "historialMedicamentos",
     });
+
+
     Paciente.belongsToMany(models.Medicamentos, {
       through: models.PlanMedicamentos,
       foreignKey: "id_paciente",
+      as: "planMedicamentos",
     });
 
     Paciente.belongsToMany(models.Sintomas, {
@@ -86,6 +90,7 @@ class Paciente extends Model {
      Paciente.belongsToMany(models.Medicamentos, {
       through: models.PacienteMedicamentos,
       foreignKey: "id_paciente",
+      as: "medicamentosEvaluacionMedica",
     });
   }
 

@@ -6,16 +6,18 @@ class Medicamentos extends Model {
     Medicamentos.belongsToMany(models.Paciente, {
       through: models.HistorialMedicamentos,
       foreignKey: "id_medicamento",
+      as: "pacientesHistorial",
     });
     Medicamentos.belongsToMany(models.Paciente, {
       through: models.PlanMedicamentos,
       foreignKey: "id_medicamento",
+      as: "pacientesPlan",
     });
     Medicamentos.belongsToMany(models.Paciente, {
       through: models.PacienteMedicamentos,
       foreignKey: "id_medicamento",
+      as: "pacientesMedicamentosSeguimiento",
     });
-    
   }
   static async listarMedicamentos() {
     const medicacion = await Medicamentos.findAll();

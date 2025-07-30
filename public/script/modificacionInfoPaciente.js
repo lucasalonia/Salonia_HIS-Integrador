@@ -1,3 +1,15 @@
+function abrirModalFichas() {
+  const modal = document.querySelector(".informacionCompleta");
+  if (modal) {
+    modal.style.display = "block";
+  }
+}
+function cerrarModalFichas() {
+  const modal = document.querySelector(".informacionCompleta");
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
 function abrirFichas() {
   const pacienteSeleccionado = document.getElementById("buscarPaciente").value;
 
@@ -9,8 +21,36 @@ function abrirFichas() {
       return response.json();
     })
     .then((data) => {
-      const { paciente, cama, internacion, obraSocial, medico, alergias, enfermedades, cirugias } =
-        data;
+      const {
+        paciente,
+        cama,
+        internacion,
+        obraSocial,
+        medico,
+        alergias,
+        enfermedades,
+        cirugias,
+        antecedentes,
+        medicamentosHistorial,
+        sintomas,
+        necesidades,
+        prioridad,
+        presion_arterial,
+        frecuencia_cardiaca,
+        frecuencia_respiratoria,
+        temperatura_corporal,
+        color_piel,
+        medicamentosPlan,
+        intervenciones,
+        analisis,
+        radiografias,
+        resonancia,
+        tratamientos,
+        fisioterapias,
+        ocupacionales,
+        medicamentosMedico,
+        medicamentoEspecificaciones,
+      } = data;
 
       document.querySelector("span.nombre").textContent =
         paciente.nombre || "-";
@@ -41,38 +81,101 @@ function abrirFichas() {
 
       document.querySelector("span.alergias").textContent =
         alergias.length > 0
-          ? alergias.map((a) => a.descripcion).join(", ") 
+          ? alergias.map((a) => a.descripcion).join(", ")
           : "-";
-        document.querySelector("span.enfermedadesPrevias").textContent  =
+      document.querySelector("span.enfermedadesPrevias").textContent =
         enfermedades.length > 0
-          ? enfermedades.map((a) => a.descripcion).join(", ") 
+          ? enfermedades.map((a) => a.descripcion).join(", ")
           : "-";
-        document.querySelector("span.cirugias").textContent  =
+      document.querySelector("span.cirugias").textContent =
         cirugias.length > 0
-          ? cirugias.map((a) => a.descripcion).join(", ") 
+          ? cirugias.map((a) => a.descripcion).join(", ")
           : "-";
-      //   document.querySelector("span.antecedentes").textContent = historial.antecedentes || "-";
-      //   document.querySelector("span.medicacionActual").textContent = historial.medicacionActual || "-";
-      //   document.querySelector("span.sintomas").textContent = historial.sintomas || "-";
-      //   document.querySelector("span.necesidades").textContent = historial.necesidades || "-";
-      //   document.querySelector("span.prioridad").textContent = historial.prioridad || "-";
-      //   document.querySelector("span.presion").textContent = historial.presion || "-";
-      //   document.querySelector("span.frecuenciaCardiaca").textContent = historial.frecuenciaCardiaca || "-";
-      //   document.querySelector("span.frecuenciaRespiratoria").textContent = historial.frecuenciaRespiratoria || "-";
-      //   document.querySelector("span.temperatura").textContent = historial.temperatura || "-";
-      //   document.querySelector("span.colorPiel").textContent = historial.colorPiel || "-";
-      //   document.querySelector("span.medicacionSuministrada").textContent = historial.medicacionSuministrada || "-";
-      //   document.querySelector("span.intervenciones").textContent = historial.intervenciones || "-";
+      document.querySelector("span.antecedentes").textContent =
+        antecedentes.length > 0
+          ? antecedentes.map((a) => a.descripcion).join(", ")
+          : "-";
+      document.querySelector("span.medicacionActual").textContent =
+        medicamentosHistorial.length > 0
+          ? medicamentosHistorial.map((a) => a.descripcion).join(", ")
+          : "-";
+      document.querySelector("span.sintomas").textContent =
+        sintomas.length > 0
+          ? sintomas.map((a) => a.descripcion).join(", ")
+          : "-";
+      document.querySelector("span.necesidades").textContent =
+        necesidades.length > 0
+          ? necesidades.map((a) => a.descripcion).join(", ")
+          : "-";
 
-      //   document.querySelector("span.analisis").textContent = medicina.analisis || "-";
-      //   document.querySelector("span.resonancia").textContent = medicina.resonancia || "-";
-      //   document.querySelector("span.radiografia").textContent = medicina.radiografia || "-";
-      //   document.querySelector("span.tratamientoMedico").textContent = medicina.tratamientoMedico || "-";
-      //   document.querySelector("span.tratamientoFisico").textContent = medicina.tratamientoFisico || "-";
-      //   document.querySelector("span.tratamientoOcupacional").textContent = medicina.tratamientoOcupacional || "-";
-      //   document.querySelector("span.medicacionPrescripta").textContent = medicina.medicacionPrescripta || "-";
-      //   document.querySelector("span.medicacionDosis").textContent = medicina.medicacionDosis || "-";
-      //   document.querySelector("span.medicacionDuracion").textContent = medicina.medicacionDuracion || "-";
+      const prioridadSpan = document.querySelector("span.prioridad");
+      prioridadSpan.textContent = prioridad || "-";
+      if (prioridad == "Baja") {
+        prioridadSpan.style.color = "green";
+      } else if (prioridad == "Media") {
+        prioridadSpan.style.color = "orange";
+      } else if (prioridad == "Alta") {
+        prioridadSpan.style.color = "red";
+      } else {
+        prioridadSpan.style.color = "black";
+      }
+      document.querySelector("span.presion").textContent =
+        presion_arterial || "-";
+      document.querySelector("span.frecuenciaCardiaca").textContent =
+        frecuencia_cardiaca || "-";
+      document.querySelector("span.frecuenciaRespiratoria").textContent =
+        frecuencia_respiratoria || "-";
+      document.querySelector("span.temperatura").textContent =
+        temperatura_corporal || "-";
+      document.querySelector("span.colorPiel").textContent = color_piel || "-";
+      document.querySelector("span.medicacionSuministrada").textContent =
+        medicamentosPlan.length > 0
+          ? medicamentosPlan.map((a) => a.descripcion).join(", ")
+          : "-";
+      document.querySelector("span.intervenciones").textContent =
+        intervenciones.length > 0
+          ? intervenciones.map((a) => a.descripcion).join(", ")
+          : "-";
+
+      document.querySelector("span.analisis").textContent =
+        analisis.length > 0
+          ? analisis.map((a) => a.descripcion).join(", ")
+          : "-";
+
+      document.querySelector("span.resonancia").textContent =
+        radiografias.length > 0
+          ? radiografias.map((a) => a.descripcion).join(", ")
+          : "-";
+      document.querySelector("span.radiografia").textContent =
+        resonancia.length > 0
+          ? resonancia.map((a) => a.descripcion).join(", ")
+          : "-";
+      document.querySelector("span.tratamientoMedico").textContent =
+        tratamientos.length > 0
+          ? tratamientos.map((a) => a.descripcion).join(", ")
+          : "-";
+      document.querySelector("span.tratamientoFisico").textContent =
+        fisioterapias.length > 0
+          ? fisioterapias.map((a) => a.descripcion).join(", ")
+          : "-";
+      document.querySelector("span.tratamientoOcupacional").textContent =
+        ocupacionales.length > 0
+          ? ocupacionales.map((a) => a.descripcion).join(", ")
+          : "-";
+
+      document.querySelector("span.medicacionPrescripta").textContent =
+        medicamentosMedico.length > 0
+          ? medicamentosMedico.map((a) => a.descripcion).join(", ")
+          : "-";
+      document.querySelector("span.medicacionDosis").textContent =
+        medicamentoEspecificaciones.length > 0
+          ? medicamentoEspecificaciones.map((a) => a.dosis).join(", ")
+          : "-";
+      document.querySelector("span.medicacionDuracion").textContent =
+        medicamentoEspecificaciones.length > 0
+          ? medicamentoEspecificaciones.map((a) => a.duracion).join(", ")
+          : "-";
+      abrirModalFichas();
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -86,4 +189,9 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", function () {
       abrirFichas();
     });
+  document.querySelectorAll(".cerrar-modal").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      cerrarModalFichas();
+    });
+  });
 });

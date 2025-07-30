@@ -6,6 +6,7 @@ class Analisis extends Model {
     Analisis.belongsToMany(models.Paciente, {
       through: models.PacienteAnalisis,
       foreignKey: "id_analisis",
+      as: "pacientesAnalisis",
     });
   }
   static async listarAnalisis() {

@@ -113,13 +113,16 @@ const obtnerDatosHistorial = async (req, res) => {
     },
   });
     medicamentos = await Medicamentos.findAll({
-    include: {
-      model: Paciente,
-      where: { id: paciente.id },
-      attributes: [],
-      through: { attributes: [] },
-    },
-  });
+      include: {
+        model: Paciente,
+        as: "pacientesHistorial",
+        where: { id: paciente.id },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
     
   res.json({paciente, alergias, enfermedades, cirugias, antecedentes, medicamentos});
 }

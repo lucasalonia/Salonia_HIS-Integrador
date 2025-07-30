@@ -1,3 +1,18 @@
+section.informacionCompleta {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  display: none; 
+   overflow-y: auto;
+}
+
 .fichaPaciente {
   max-width: 700px;
   margin: 80px auto;
@@ -6,6 +21,19 @@
   box-shadow: 0 4px 14px rgba(0,0,0,0.1);
   padding: 30px 40px;
   box-sizing: border-box;
+  position: relative;
+}
+.cerrar-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+.cerrar-modal:hover{
+  color: red;
 }
 .fichaPaciente {
   display: none;

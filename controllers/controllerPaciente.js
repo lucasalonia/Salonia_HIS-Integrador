@@ -7,7 +7,21 @@ const {
   Cama,
   Alergias,
   Enfermedades,
-  Cirugias
+  Cirugias,
+  Antecedentes,
+  Medicamentos,
+  Sintomas,
+  Necesidades,
+  InternacionPrioridad,
+  EvaluacionBasica,
+  Intervenciones,
+  Analisis,
+  Radiografias,
+  Resonancias,
+  Fisioterapias,
+  Tratamientos,
+  Ocupacionales,
+  PacienteMedicamentos,
 } = require("../models/index.js");
 
 const { sequelize } = require("../config/db");
@@ -448,7 +462,10 @@ const modificarDatosPaciente = async (req, res) => {
 };
 
 const boradoLogicoPaciente = async (req, res) => {
+  
   const id = req.params.id;
+ 
+  
   const transaction = await sequelize.transaction();
 
   try {
@@ -477,6 +494,8 @@ const boradoLogicoPaciente = async (req, res) => {
     res.status(500).json({ mensaje: "Error al eliminar el paciente" });
   }
 };
+
+
 const buscarPacientePorDniGenerico = async (req, res) => {
   const dni = req.params.dni;
 
@@ -525,14 +544,212 @@ const obtenerDatosPaciente = async (idPaciente) => {
       where: { id: idPaciente },
       include: Cirugias,
     });
+    const pacienteAntecedentes = await Paciente.findOne({
+      where: { id: idPaciente },
+      include: Antecedentes,
+    });
+    const medicamentosHistorial = await Medicamentos.findAll({
+      include: {
+        model: Paciente,
+        as: "pacientesHistorial",
+        where: { id: idPaciente },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
 
     const alergias = pacienteConAlergias ? pacienteConAlergias.Alergias : [];
-    const enfermedades = pacienteEnfermedades ? pacienteEnfermedades.Enfermedades : [];
+    const enfermedades = pacienteEnfermedades
+      ? pacienteEnfermedades.Enfermedades
+      : [];
     const cirugias = pacienteCirugias ? pacienteCirugias.Cirugias : [];
+    const antecedentes = pacienteAntecedentes
+      ? pacienteAntecedentes.Antecedentes
+      : [];
 
-    
+    //Info Motivos
+    const pacienteSintomas = await Paciente.findOne({
+      where: { id: idPaciente },
+      include: Sintomas,
+    });
+    const pacienteNecesidades = await Paciente.findOne({
+      where: { id: idPaciente },
+      include: Necesidades,
+    });
+    const internacionPrioridad = await InternacionPrioridad.findOne({
+      where: { id_internacion: internacion.id_internacion },
+    });
 
-    return { paciente, cama, internacion, obraSocial, medico, alergias, enfermedades,cirugias };
+    const sintomas = pacienteSintomas ? pacienteSintomas.Sintomas : [];
+    const necesidades = pacienteNecesidades
+      ? pacienteNecesidades.Necesidades
+      : [];
+    const prioridad = internacionPrioridad
+      ? internacionPrioridad.prioridad
+      : "Sin Asignar";
+
+    //Info Evaluacion Basica
+    const evaluacionBasica = await EvaluacionBasica.findOne({
+      where: { id_paciente: idPaciente },
+    });
+    const presion_arterial = evaluacionBasica
+      ? evaluacionBasica.presion_arterial
+      : "Sin Asignar";
+    const frecuencia_cardiaca = evaluacionBasica
+      ? evaluacionBasica.frecuencia_cardiaca
+      : "Sin Asignar";
+    const frecuencia_respiratoria = evaluacionBasica
+      ? evaluacionBasica.frecuencia_respiratoria
+      : "Sin Asignar";
+    const temperatura_corporal = evaluacionBasica
+      ? evaluacionBasica.temperatura_corporal
+      : "Sin Asignar";
+    const color_piel = evaluacionBasica
+      ? evaluacionBasica.color_piel
+      : "Sin Asignar";
+
+    //Plan Preeliminar
+    const medicamentosPlan = await Medicamentos.findAll({
+      include: {
+        model: Paciente,
+        as: "pacientesPlan",
+        where: { id: idPaciente },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+
+    const intervenciones = await Intervenciones.findAll({
+      include: {
+        model: Paciente,
+        as: "intervencionesPaciente",
+        where: { id: idPaciente },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+
+    //Parte medica
+    //Evaluacion Medica
+    const analisis = await Analisis.findAll({
+      include: {
+        model: Paciente,
+        as: "pacientesAnalisis",
+        where: { id: idPaciente },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    const radiografias = await Radiografias.findAll({
+      include: {
+        model: Paciente,
+        as: "pacientesRadiografias",
+        where: { id: idPaciente },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    const resonancia = await Resonancias.findAll({
+      include: {
+        model: Paciente,
+        as: "pacientesResonancias",
+        where: { id: idPaciente },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+
+    //Seguimiento
+    const fisioterapias = await Fisioterapias.findAll({
+      include: {
+        model: Paciente,
+        as: "pacientesFisioterapias",
+        where: { id: idPaciente },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    const ocupacionales = await Ocupacionales.findAll({
+      include: {
+        model: Paciente,
+        as: "pacientesOcupacionales",
+        where: { id: idPaciente },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    const tratamientos = await Tratamientos.findAll({
+      include: {
+        model: Paciente,
+        as: "pacientesTratamientos",
+        where: { id: idPaciente },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    const medicamentosMedico = await Medicamentos.findAll({
+      include: {
+        model: Paciente,
+        as: "pacientesMedicamentosSeguimiento",
+        where: { id: idPaciente },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    const medicamentoEspecificaciones = await PacienteMedicamentos.findAll({
+      where: { id_paciente: idPaciente },
+    });
+
+    return {
+      paciente,
+      cama,
+      internacion,
+      obraSocial,
+      medico,
+      alergias,
+      enfermedades,
+      cirugias,
+      antecedentes,
+      medicamentosHistorial,
+      sintomas,
+      necesidades,
+      prioridad,
+      presion_arterial,
+      frecuencia_cardiaca,
+      frecuencia_respiratoria,
+      temperatura_corporal,
+      color_piel,
+      medicamentosPlan,
+      intervenciones,
+      analisis,
+      radiografias,
+      resonancia,
+      tratamientos,
+      fisioterapias,
+      ocupacionales,
+      medicamentosMedico,
+      medicamentoEspecificaciones,
+    };
   } catch (error) {
     console.error("Error al obtener los datos del paciente:", error);
     throw error;

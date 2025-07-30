@@ -6,6 +6,7 @@ class Fisioterapias extends Model {
     Fisioterapias.belongsToMany(models.Paciente, {
       through: models.PacienteFisioterapias,
       foreignKey: "id_fisioterapia",
+      as: "pacientesFisioterapias",
     });
   }
 
