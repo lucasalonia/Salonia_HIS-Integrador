@@ -1,5 +1,8 @@
-
 const sintomasValores = {
+  "Dolor en el pecho": 6,
+  "Fiebre": 5,
+  "Dificultad para respirar": 8,
+  "Dolor abdominal": 5,
   "Dolor de cabeza intenso": 5,
   "Vómitos": 4,
   "Náuseas": 3,
@@ -20,16 +23,7 @@ const sintomasValores = {
   "Dolor al orinar": 3,
   "Ardor o picazón genital": 2,
   "Diarrea": 3,
-  "Estreñimiento severo": 3,
-  "Pérdida de apetito": 4,
-  "Pérdida de peso sin causa aparente": 5,
-  "Fatiga extrema": 4,
-  "Sensación de desmayo": 7,
-  "Confusión o desorientación": 9,
-  "Insomnio": 1,
-  "Dificultad para hablar": 8,
-  "Dolor en oídos": 3,
-  "Dolor dental o de mandíbula": 2
+  "Estreñimiento severo": 3
 };
 
 const necesidadesValores = {
@@ -44,11 +38,11 @@ const necesidadesValores = {
 
 function calcularPrioridad() {
   let suma = 0;
-
-
   const sintomasSeleccionados = $('#select-sintomas').select2('data');
   sintomasSeleccionados.forEach(sintoma => {
     const desc = sintoma.text;
+    console.log(`Sintoma seleccionado: ${desc}, Valor: ${sintomasValores[desc]}`);
+    
     if (sintomasValores[desc]) suma += sintomasValores[desc];
   });
 
