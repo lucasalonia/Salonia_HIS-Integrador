@@ -34,6 +34,7 @@ function cerrarConfirmacion() {
 
 function eliminarPaciente() {
   const idPaciente = document.getElementById("idPaciente").textContent.trim();
+
   fetch(`/pacientes/eliminar/${idPaciente}`, {
     method: "PATCH",
   })

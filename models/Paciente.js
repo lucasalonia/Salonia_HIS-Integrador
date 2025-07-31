@@ -194,19 +194,39 @@ class Paciente extends Model {
   }
 
   static async modificarDatosPaciente(id, nuevosDatos, options = {}) {
-    try {
-      const paciente = await Paciente.findByPk(id);
-      if (!paciente) {
-        throw new Error("Paciente no encontrado");
-      }
-      delete nuevosDatos.dni;
-      await paciente.update(nuevosDatos, options);
-      return paciente;
-    } catch (error) {
-      console.error("Error al modificar los datos del paciente:", error);
-      throw error;
+  try {
+    const paciente = await Paciente.findByPk(id);
+    if (!paciente) {
+      throw new Error("Paciente no encontrado");
     }
+    
+    await paciente.update(nuevosDatos, options);
+    return paciente;
+  } catch (error) {
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      throw new Error("El DNI ya está registrado en otro paciente");
+    }
+    console.error("Error al modificar los datos del paciente:", error);
+    throw error;
   }
+}
+  static async modificarDatosPacienteSinDni(id, nuevosDatos, options = {}) {
+  try {
+    const paciente = await Paciente.findByPk(id);
+    if (!paciente) {
+      throw new Error("Paciente no encontrado");
+    }
+    delete nuevosDatos.dni;
+    await paciente.update(nuevosDatos, options);
+    return paciente;
+  } catch (error) {
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      throw new Error("El DNI ya está registrado en otro paciente");
+    }
+    console.error("Error al modificar los datos del paciente:", error);
+    throw error;
+  }
+}
   
 static async buscarPacientePorId(id) {
   try {

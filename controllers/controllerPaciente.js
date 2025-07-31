@@ -338,8 +338,9 @@ const modificarDatosPaciente = async (req, res) => {
         ? pacienteConDniExistente.id
         : null;
 
+       // Caso: ya existe un paciente con el DNI ingresado
       if (pacienteConDniExistente && !pacienteConDniExistente.borradoLogico) {
-        // Caso: ya existe un paciente con el DNI ingresado
+       
 
         const internacion = await Internacion.buscarInternacionPorIdPaciente(
           pacienteExistente.id
@@ -420,12 +421,12 @@ const modificarDatosPaciente = async (req, res) => {
 
     //Evitamos que se ingrese un DNI repetido con un paciente que NO es NN
 
-    const consultarPaciente = await Paciente.buscarPacientePorDni(paciente.dni);
+    const consultarPaciente = await Paciente.buscarPacientePorId(id);
 
     if (consultarPaciente) {
       // Caso: Paciente con DNI ya válido, solo se actualizan datos
 
-      await Paciente.modificarDatosPaciente(id, paciente, { transaction });
+      await Paciente.modificarDatosPacienteSinDni(id, paciente, { transaction });
       console.log("entro aca");
       console.log(id);
 

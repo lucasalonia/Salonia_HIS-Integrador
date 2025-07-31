@@ -60,7 +60,7 @@ function actualizarPrioridad() {
   let textoPrioridad = "";
 
   if (prioridad === 0) {
-    textoPrioridad = "(ninguna selección)";
+    textoPrioridad = "(Ninguna selección)";
   } else if (prioridad <= 10) {
     textoPrioridad = "Baja";
     document.querySelector(".prioridadValor").style= "color: #33ff00ff "
@@ -76,7 +76,7 @@ function actualizarPrioridad() {
 
   document.querySelector(".prioridadValor").textContent = textoPrioridad;
   if(textoPrioridad == "(ninguna selección)"){
-    document.querySelector(".prioridadValor").style= "color: #000000ff "
+    document.querySelector(".prioridadValor").style= "color: #222121ff "
   }
 }
 
